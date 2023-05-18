@@ -1,0 +1,8 @@
+body {
+    background-color: var(--template-color);
+    color: var(--text-color);
+}
+
+hr{
+    border-color: var(--separator-color);
+}
