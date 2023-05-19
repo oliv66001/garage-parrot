@@ -8,10 +8,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class UsersVoter extends Voter
+class UserVoter extends Voter
 {
-    const EDIT = 'USER_EDIT';
-    const DELETE = 'USER_DELETE';
+    const EDIT = 'ADMIN_COLAB_EDIT';
+    const DELETE = 'ADMIN_COLAB_DELETE';
 
     private $security;
 
@@ -20,20 +20,20 @@ class UsersVoter extends Voter
         $this->security = $security;
     }
 
-    protected function supports(string $attribute, $dishe): bool
+    protected function supports(string $attribute, $user): bool
     {
         if(!in_array($attribute, [self::EDIT, self::DELETE])){
             return false;
         }
-        if(!$dishe instanceof User){
+        if(!$user instanceof User){
             return false;
         }
         return true;
 
-        // return in_array($attribute, [self::EDIT, self::DELETE]) && $dishe instanceof Users;
+        // return in_array($attribute, [self::EDIT, self::DELETE]) && $user instanceof Users;
     }
 
-    protected function voteOnAttribute($attribute, $dishe, TokenInterface $token): bool
+    protected function voteOnAttribute($attribute, $user, TokenInterface $token): bool
     {
         // On récupère l'utilisateur à partir du token
         $user = $token->getUser();
@@ -57,9 +57,9 @@ class UsersVoter extends Voter
     }
 
     private function canEdit(){
-        return $this->security->isGranted('ROLE_USER');
+        return $this->security->isGranted('ROLE_ADMIN');
     }
     private function canDelete(){
-        return $this->security->isGranted('ROLE_USER');
+        return $this->security->isGranted('ROLE_ADMIN');
     }
 }

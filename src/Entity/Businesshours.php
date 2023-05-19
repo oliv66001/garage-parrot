@@ -17,10 +17,16 @@ class Businesshours
     private ?string $day = null;
 
     #[ORM\Column]
-    private ?int $openTime = null;
+    private ?int $openTimeMorning = null;
 
     #[ORM\Column]
-    private ?int $closedTime = null;
+    private ?int $closedTimeMorning = null;
+
+    #[ORM\Column]
+    private ?int $openTimeAfternoon = null;
+
+    #[ORM\Column]
+    private ?int $closedTimeAfternoon = null;
 
     public function getId(): ?int
     {
@@ -39,26 +45,98 @@ class Businesshours
         return $this;
     }
 
-    public function getOpenTime(): ?int
+    /**
+     * Get the value of openTimeMorning
+     *
+     * @return ?int
+     */
+    public function getOpenTimeMorning(): ?int
     {
-        return $this->openTime;
+        return $this->openTimeMorning;
     }
 
-    public function setOpenTime(int $openTime): self
+    /**
+     * Set the value of openTimeMorning
+     *
+     * @param ?int $openTimeMorning
+     *
+     * @return self
+     */
+    public function setOpenTimeMorning(?int $openTimeMorning): self
     {
-        $this->openTime = $openTime;
+        $this->openTimeMorning = $openTimeMorning;
 
         return $this;
     }
 
-    public function getClosedTime(): ?int
+    /**
+     * Get the value of closedTimeMorning
+     *
+     * @return ?int
+     */
+    public function getClosedTimeMorning(): ?int
     {
-        return $this->closedTime;
+        return $this->closedTimeMorning;
     }
 
-    public function setClosedTime(int $closedTime): self
+    /**
+     * Set the value of closedTimeMorning
+     *
+     * @param ?int $closedTimeMorning
+     *
+     * @return self
+     */
+    public function setClosedTimeMorning(?int $closedTimeMorning): self
     {
-        $this->closedTime = $closedTime;
+        $this->closedTimeMorning = $closedTimeMorning;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of openTimeAfternoon
+     *
+     * @return ?int
+     */
+    public function getOpenTimeAfternoon(): ?int
+    {
+        return $this->openTimeAfternoon;
+    }
+
+    /**
+     * Set the value of openTimeAfternoon
+     *
+     * @param ?int $openTimeAfternoon
+     *
+     * @return self
+     */
+    public function setOpenTimeAfternoon(?int $openTimeAfternoon): self
+    {
+        $this->openTimeAfternoon = $openTimeAfternoon;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of closedTimeAfternoon
+     *
+     * @return ?int
+     */
+    public function getClosedTimeAfternoon(): ?int
+    {
+        return $this->closedTimeAfternoon;
+    }
+
+    /**
+     * Set the value of closedTimeAfternoon
+     *
+     * @param ?int $closedTimeAfternoon
+     *
+     * @return self
+     */
+    public function setClosedTimeAfternoon(?int $closedTimeAfternoon): self
+    {
+        $this->closedTimeAfternoon = $closedTimeAfternoon;
 
         return $this;
     }

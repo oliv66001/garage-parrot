@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compte de Mr {{ app.user.username }}{% endblock %}
+
+{% block body %}
+<h1>Compte de Mr {{ app.user.username }}</h1>
+<h2>Accéder à : </h2>
+<ul>
+    <li><a href="{{ path('admin_index') }}">Accueil</a></li>
+    <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+</ul>
+{% endblock %}

@@ -22,17 +22,16 @@ class SecurityController extends AbstractController
     
     #[Route(path: '/connexion', name: 'app_login')]
    
-    public function login(AuthenticationUtils $authenticationUtils, BusinessHoursRepository $businessHoursRepository): Response
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
 
-        $business_hours = $businessHoursRepository->findAll();
+        
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-
+        
         return $this->render('security/login.html.twig', [
-            'business_hours' => $business_hours,
             'last_username' => $lastUsername, 
             'error' => $error
         ]);
@@ -136,6 +135,7 @@ class SecurityController extends AbstractController
                 'passForm' => $form->createView()
             ]);
         }
+        
         $this->addFlash('danger', 'Jeton invalide');
         return $this->redirectToRoute('app_login');
     }
