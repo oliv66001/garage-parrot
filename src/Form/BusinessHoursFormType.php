@@ -6,12 +6,13 @@ use App\Entity\BusinessHours;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class BusinessHoursFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $hours = [];
+        $hours = ['Fermé' => null];
         for ($i = 0; $i < 24; $i++) {
             for ($j = 0; $j < 60; $j += 30) {
                 $hours[sprintf("%02d:%02d", $i, $j)] = sprintf("%02d:%02d", $i, $j);
@@ -35,32 +36,36 @@ class BusinessHoursFormType extends AbstractType
                 ]
             ])
             ->add('openTimeMorning', ChoiceType::class, [
-                'choices' => $hours,
+                 'choices' =>  $hours,
                 'label' => 'Heure d\'ouverture',
                 'attr' => [
                     'class' => 'form-control'
-                ]
+                ],
+                
             ])
             ->add('closedTimeMorning', ChoiceType::class, [
-                'choices' => $hours,
+                 'choices' =>  $hours,
                 'label' => 'Heure de fermeture',
                 'attr' => [
                     'class' => 'form-control'
-                ]
+                ],
+                
             ])
             ->add('openTimeAfternoon', ChoiceType::class, [
-                'choices' => $hours,
+                 'choices' => $hours,
                 'label' => 'Heure d\'ouverture',
                 'attr' => [
                     'class' => 'form-control'
-                ]
+                ],
+                
             ])
             ->add('closedTimeAfternoon', ChoiceType::class, [
-                'choices' => $hours,
+                 'choices' => $hours,
                 'label' => 'Heure de fermeture',
                 'attr' => [
                     'class' => 'form-control'
-                ]
+                ],
+                
                 ]);
             
     }

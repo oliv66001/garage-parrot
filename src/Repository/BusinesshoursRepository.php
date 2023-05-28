@@ -38,29 +38,17 @@ class BusinessHoursRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    
+    public function findAllOrderedByDay(): array
+    {
+        return $this->createQueryBuilder('b')
+            ->orderBy('b.day', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
 
-//    /**
-//     * @return BusinessHours[] Returns an array of BusinessHours objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-//    public function findOneBySomeField($value): ?BusinessHours
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
-}
+
+    }

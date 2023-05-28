@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Horaires d'ouverture
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            {% include "_partials/_adminnav.html.twig" %}
+            <div class="col-9 col-lg-12">
+                <h1 class="text-center">Horaires d'ouverture</h1>
+                <table class="table">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Jour</th>
+                            <th>Ouvert le matin de</th>
+                            <th>Ouvert l'après-midi de
+                            </th>
+
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for hour in hours %}
+                            <tr class="text-center">
+                                <td>{{ hour.day }}</td>
+                                <td>
+                                    {% if hour.openTimeMorning is not null and hour.closedTimeMorning is not null %}
+                                        {{ hour.openTimeMorning }} à {{ hour.closedTimeMorning }}
+                                    {% else %}
+                                        Fermé
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    {% if hour.openTimeAfternoon is not null and hour.closedTimeAfternoon is not null %}
+                                        {{ hour.openTimeAfternoon }} à {{ hour.closedTimeAfternoon }}
+                                    {% else %}
+                                        Fermé
+                                    {% endif %}
+                                </td>
+                                <td></td>
+
+                                <td>
+                                    <a class="btn btn3" href="{{ path('admin_business_hours_edit', {'id': hour.id}) }}">Modifier</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

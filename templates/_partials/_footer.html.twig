@@ -1,29 +1,56 @@
 <hr>
-<div class="container">
-    <h2 class="text-center">Horaires d'ouverture du garage</h2>
-    <ul class="list-unstyled text-center">
-        {% for hours in business_hours %}
-            <li>
-                {{ hours.day }} 
-                {% if hours.openTimeMorning is null and hours.closedTimeMorning is null and hours.openTimeAfternoon is null and hours.closedTimeAfternoon is null %}
-                    Fermé toute la journée
-                {% else %}
-                    {% if hours.openTimeMorning is not null and hours.closedTimeMorning is not null %}
-                        de {{ hours.openTimeMorning }} à {{ hours.closedTimeMorning }} le matin
-                    {% else %}
-                        Fermé le matin
-                    {% endif %}
-                    et
-                    {% if hours.openTimeAfternoon is not null and hours.closedTimeAfternoon is not null %}
-                        de {{ hours.openTimeAfternoon }} à {{ hours.closedTimeAfternoon }} l'après-midi
-                    {% else %}
-                        Fermé l'après-midi
-                    {% endif %}
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+<div class="container my-5">
+   <h2 class="text-center">Horaires d'ouverture du garage</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr class="text-center">
+                    <th>Jour</th>
+                    <th>Ouverture Matin</th>
+                    <th>Fermeture Matin</th>
+                    <th>Ouverture Après-Midi</th>
+                    <th>Fermeture Après-Midi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hours in business_hours %}
+                    <tr class="text-center">
+                        <td>{{ hours.day }}</td>
+                        <td>
+                            {% if hours.openTimeMorning is not null %}
+                                {{ hours.openTimeMorning }}
+                            {% else %}
+                                Fermé
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if hours.closedTimeMorning is not null %}
+                                {{ hours.closedTimeMorning }}
+                            {% else %}
+                                Fermé
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if hours.openTimeAfternoon is not null %}
+                                {{ hours.openTimeAfternoon }}
+                            {% else %}
+                                Fermé
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if hours.closedTimeAfternoon is not null %}
+                                {{ hours.closedTimeAfternoon }}
+                            {% else %}
+                                Fermé
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
+
 <hr>
 
 	<section class="container">
