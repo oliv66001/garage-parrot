@@ -1,4 +1,31 @@
- <hr>
+<hr>
+<div class="container">
+    <h2 class="text-center">Horaires d'ouverture du garage</h2>
+    <ul class="list-unstyled text-center">
+        {% for hours in business_hours %}
+            <li>
+                {{ hours.day }} 
+                {% if hours.openTimeMorning is null and hours.closedTimeMorning is null and hours.openTimeAfternoon is null and hours.closedTimeAfternoon is null %}
+                    Fermé toute la journée
+                {% else %}
+                    {% if hours.openTimeMorning is not null and hours.closedTimeMorning is not null %}
+                        de {{ hours.openTimeMorning }} à {{ hours.closedTimeMorning }} le matin
+                    {% else %}
+                        Fermé le matin
+                    {% endif %}
+                    et
+                    {% if hours.openTimeAfternoon is not null and hours.closedTimeAfternoon is not null %}
+                        de {{ hours.openTimeAfternoon }} à {{ hours.closedTimeAfternoon }} l'après-midi
+                    {% else %}
+                        Fermé l'après-midi
+                    {% endif %}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<hr>
+
 	<section class="container">
 		<div class="row justify-content-center">
 			<article class="col-lg-4 col-md-8 col-sm-12 text-center">

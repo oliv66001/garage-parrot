@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230519103825 extends AbstractMigration
+final class Version20230519140628 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,7 +20,7 @@ final class Version20230519103825 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE businesshours (id INT AUTO_INCREMENT NOT NULL, day VARCHAR(30) NOT NULL, open_time INT NOT NULL, closed_time INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE business_hours (id INT AUTO_INCREMENT NOT NULL, day VARCHAR(30) NOT NULL, open_time_morning VARCHAR(255) NOT NULL, closed_time_morning VARCHAR(255) NOT NULL, open_time_afternoon VARCHAR(255) NOT NULL, closed_time_afternoon VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE categorie (id INT AUTO_INCREMENT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE contact (id INT AUTO_INCREMENT NOT NULL, subject_id INT DEFAULT NULL, firstname VARCHAR(150) NOT NULL, lastname VARCHAR(150) NOT NULL, mail VARCHAR(255) NOT NULL, phone VARCHAR(15) NOT NULL, message LONGTEXT NOT NULL, UNIQUE INDEX UNIQ_4C62E63823EDC87 (subject_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE image (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -38,7 +38,7 @@ final class Version20230519103825 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE contact DROP FOREIGN KEY FK_4C62E63823EDC87');
         $this->addSql('ALTER TABLE vehicle DROP FOREIGN KEY FK_1B80E486BCF5E72D');
-        $this->addSql('DROP TABLE businesshours');
+        $this->addSql('DROP TABLE business_hours');
         $this->addSql('DROP TABLE categorie');
         $this->addSql('DROP TABLE contact');
         $this->addSql('DROP TABLE image');

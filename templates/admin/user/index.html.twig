@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listes des utilisateurs
+{% endblock %}
+
+{% block body %}
+
+
+	<div class="container">
+		<div class="row justify-content-center">
+			{% include "_partials/_adminnav.html.twig" %}
+			<main class="col-12 p-2">
+				<h1 class="text-center">Listes des utilisateurs</h1>
+				<table class="table">
+					<thead>
+						<tr class="text-center">
+							<th>Nom</th>
+							<th>Email</th>
+							<th>Rôles</th>
+							<th>Compte vérifié</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+
+
+					{% for user in user %}
+						<tr class="text-center">
+							<td>{{ user.username }}</td>
+							<td>{{ user.email }}</td>
+
+							<td>
+								{% for role in user.roles %}
+									{% if role == "ROLE_ADMIN" %}
+										{% set name = "Administrateur" %}
+										{% set color = "success" %}
+									{% elseif role == "ROLE_COLAB_ADMIN" %}
+										{% set name = "Employé Admin" %}
+										{% set color = "info" %}
+									{% elseif role == "ROLE_USER" %}
+										{% set name = "Membre" %}
+										{% set color = "warning" %}
+									{% endif %}
+									<span class="badge badge-{{ color }}">{{ name }}</span>
+								{% endfor %}
+							</td>
+							<td>
+
+								<div class="form-check form-switch">
+
+									<input class="form-check-input" type="checkbox" role="switch" id="switch {{ user.id }} " {{ user.isVerified ? "checked" : "" }} disabled>
+									<label class="form-check-label" for="switch {{ user.id }}">{{ user.isVerified }}</label>
+								</div>
+							</td>
+							<td>
+								<a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn">Modifier</a>
+							</td>
+						</tr>
+
+					{% endfor %}
+				</table>
+
+			</main>
+		</div>
+	</div>
+
+
+{% endblock %}

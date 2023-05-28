@@ -76,7 +76,7 @@ class RegistrationController extends AbstractController
            
             
             $mail->send(
-                'quai-antique@crocobingo.fr',
+                'garage-parrot@crocobingo.fr',
                 $user->getEmail(),
                 'Activation de votre compte',
                 'register',
@@ -179,7 +179,7 @@ class RegistrationController extends AbstractController
         );
 
         $mail->send(
-            'quai-antique@crocobingo.fr',
+            'garage-parrot@crocobingo.fr',
             $user->getEmail(),
             'Activation de votre compte',
             'register',

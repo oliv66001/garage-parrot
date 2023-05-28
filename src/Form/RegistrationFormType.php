@@ -33,7 +33,7 @@ class RegistrationFormType extends AbstractType
             ->add('roles', ChoiceType::class, [
                 'label' => 'Rôle',
                 'choices' => [
-                    'Utilisateur' => 'ROLE_COLAB_ADMIN',
+                    'Employé' => 'ROLE_COLAB_ADMIN',
                     'Administrateur' => 'ROLE_ADMIN'
                 ],
                 'attr' => [

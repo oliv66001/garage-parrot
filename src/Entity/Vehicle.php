@@ -5,10 +5,14 @@ namespace App\Entity;
 use App\Repository\VehicleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\MyTrait\SlugTrait;
 
 #[ORM\Entity(repositoryClass: VehicleRepository::class)]
 class Vehicle
 {
+
+    use SlugTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -32,7 +36,7 @@ class Vehicle
     #[ORM\OneToOne(mappedBy: 'subject', cascade: ['persist', 'remove'])]
     private ?Contact $contact = null;
 
-    #[ORM\ManyToOne(inversedBy: 'gender')]
+    #[ORM\ManyToOne(inversedBy: 'vehicleType')]
     private ?Categorie $categorie = null;
 
     public function getId(): ?int

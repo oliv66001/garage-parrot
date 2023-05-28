@@ -3,10 +3,17 @@
 {% block title %}Compte de Mr {{ app.user.username }}{% endblock %}
 
 {% block body %}
-<h1>Compte de Mr {{ app.user.username }}</h1>
-<h2>Accéder à : </h2>
-<ul>
-    <li><a href="{{ path('admin_index') }}">Accueil</a></li>
-    <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+<section class="container">
+<div class="row justify-content-center">
+    <div class="col-12">
+        <h1  class="text-center">Compte de Mr {{ app.user.username }}</h1>
+        <h2  class="text-center">Accéder à : </h2>
+        <ul class="text-center">
+            <ol><a class="btn btn" href="#">Accueil</a></ol>
+            <ol><a class="btn btn" href="{{ path('app_logout') }}">Déconnexion</a></ol>
+        </ul>
+    </div>
+
 </ul>
+{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
 {% endblock %}

@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\BusinesshoursRepository;
+use App\Repository\BusinessHoursRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: BusinesshoursRepository::class)]
-class Businesshours
+#[ORM\Entity(repositoryClass: BusinessHoursRepository::class)]
+class BusinessHours
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,17 +16,17 @@ class Businesshours
     #[ORM\Column(length: 30)]
     private ?string $day = null;
 
-    #[ORM\Column]
-    private ?int $openTimeMorning = null;
+    #[ORM\Column(nullable: true)]
+    private ?string $openTimeMorning = null;
 
-    #[ORM\Column]
-    private ?int $closedTimeMorning = null;
+    #[ORM\Column(nullable: true)]
+    private ?string $closedTimeMorning = null;
 
-    #[ORM\Column]
-    private ?int $openTimeAfternoon = null;
+    #[ORM\Column(nullable: true)]
+    private ?string $openTimeAfternoon = null;
 
-    #[ORM\Column]
-    private ?int $closedTimeAfternoon = null;
+    #[ORM\Column(nullable: true)]
+    private ?string $closedTimeAfternoon = null;
 
     public function getId(): ?int
     {
@@ -45,12 +45,13 @@ class Businesshours
         return $this;
     }
 
+
     /**
      * Get the value of openTimeMorning
      *
-     * @return ?int
+     * @return ?string
      */
-    public function getOpenTimeMorning(): ?int
+    public function getOpenTimeMorning(): ?string
     {
         return $this->openTimeMorning;
     }
@@ -58,11 +59,11 @@ class Businesshours
     /**
      * Set the value of openTimeMorning
      *
-     * @param ?int $openTimeMorning
+     * @param ?string $openTimeMorning
      *
      * @return self
      */
-    public function setOpenTimeMorning(?int $openTimeMorning): self
+    public function setOpenTimeMorning(?string $openTimeMorning): self
     {
         $this->openTimeMorning = $openTimeMorning;
 
@@ -72,9 +73,9 @@ class Businesshours
     /**
      * Get the value of closedTimeMorning
      *
-     * @return ?int
+     * @return ?string
      */
-    public function getClosedTimeMorning(): ?int
+    public function getClosedTimeMorning(): ?string
     {
         return $this->closedTimeMorning;
     }
@@ -82,11 +83,11 @@ class Businesshours
     /**
      * Set the value of closedTimeMorning
      *
-     * @param ?int $closedTimeMorning
+     * @param ?string $closedTimeMorning
      *
      * @return self
      */
-    public function setClosedTimeMorning(?int $closedTimeMorning): self
+    public function setClosedTimeMorning(?string $closedTimeMorning): self
     {
         $this->closedTimeMorning = $closedTimeMorning;
 
@@ -96,9 +97,9 @@ class Businesshours
     /**
      * Get the value of openTimeAfternoon
      *
-     * @return ?int
+     * @return ?string
      */
-    public function getOpenTimeAfternoon(): ?int
+    public function getOpenTimeAfternoon(): ?string
     {
         return $this->openTimeAfternoon;
     }
@@ -106,11 +107,11 @@ class Businesshours
     /**
      * Set the value of openTimeAfternoon
      *
-     * @param ?int $openTimeAfternoon
+     * @param ?string $openTimeAfternoon
      *
      * @return self
      */
-    public function setOpenTimeAfternoon(?int $openTimeAfternoon): self
+    public function setOpenTimeAfternoon(?string $openTimeAfternoon): self
     {
         $this->openTimeAfternoon = $openTimeAfternoon;
 
@@ -120,9 +121,9 @@ class Businesshours
     /**
      * Get the value of closedTimeAfternoon
      *
-     * @return ?int
+     * @return ?string
      */
-    public function getClosedTimeAfternoon(): ?int
+    public function getClosedTimeAfternoon(): ?string
     {
         return $this->closedTimeAfternoon;
     }
@@ -130,11 +131,11 @@ class Businesshours
     /**
      * Set the value of closedTimeAfternoon
      *
-     * @param ?int $closedTimeAfternoon
+     * @param ?string $closedTimeAfternoon
      *
      * @return self
      */
-    public function setClosedTimeAfternoon(?int $closedTimeAfternoon): self
+    public function setClosedTimeAfternoon(?string $closedTimeAfternoon): self
     {
         $this->closedTimeAfternoon = $closedTimeAfternoon;
 

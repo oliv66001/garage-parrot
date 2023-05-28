@@ -51,8 +51,10 @@ class SecurityController extends AbstractController
         UserRepository $usersRepository, 
         TokenGeneratorInterface $tokenGenerator, 
         EntityManagerInterface $entityManager, 
+        BusinessHoursRepository $businessHoursRepository,
         SendMailService $mail): Response
     {
+        $businessHours = $businessHoursRepository->findAll();
         $form = $this->createForm(ResetPasswordRequestFormType::class);
 
         $form->handleRequest($request);
@@ -78,7 +80,7 @@ class SecurityController extends AbstractController
 
                 //Envoi du mail
                 $mail->send(
-                    'quai-antique@crocobingo.fr',
+                    'garage-parrot@crocobingo.fr',
                     $user->getEmail(),
                     'Réinitialisation de mot de passe',
                     'password_reset',
@@ -94,6 +96,7 @@ class SecurityController extends AbstractController
         }
     
         return $this->render('security/reset_password_request.html.twig', [
+            'business_hours' => $businessHours,
             'requestPassForm' => $form->createView()
         ]);
     }
@@ -103,8 +106,10 @@ class SecurityController extends AbstractController
     Request $request, 
     UserRepository $usersRepository, 
     EntityManagerInterface $entityManager, 
+    BusinessHoursRepository $businessHoursRepository,
     UserPasswordHasherInterface $userPasswordHasher): Response
     {
+        $businessHours = $businessHoursRepository->findAll();
         //On vérifie su on a ce token dans la base de donnée
         $user = $usersRepository->findOneByResetToken($token);
         
@@ -132,6 +137,7 @@ class SecurityController extends AbstractController
             }
 
             return $this->render('security/reset_password.html.twig', [
+                'business_hours' => $businessHours,
                 'passForm' => $form->createView()
             ]);
         }

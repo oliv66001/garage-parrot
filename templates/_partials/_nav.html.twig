@@ -38,10 +38,13 @@
 							</a>
 							<div class="dropdown-menu">
 								{% if is_granted('ROLE_COLAB_ADMIN') %}
-									<a class="dropdown-item" href="{{ path('admin_index')}}">Administration</a>
+									<a class="dropdown-item" href="{{ path('admin_index') }}">Administration</a>
 									
 								{% endif %}
 								<a class="dropdown-item" href="#">Compte</a>
+                                {% if is_granted('ROLE_ADMIN') %}
+							    <a class="dropdown-item" href="{{ path('admin_user_add') }}">inscription</a>
+                                {% endif %}
 								<a class="dropdown-item" href="{{ path('app_logout') }}">Me déconnecter</a>
 							</div>
 						</li>
@@ -49,9 +52,7 @@
 						<li class="nav-item">
 							<a class="nav-link" href="{{ path('app_login') }}">Me connecter</a>
 						</li>
-                        <li class="nav-item">
-							<a class="nav-link" href="{{ path('app_register') }}">inscription</a>
-						</li>
+                       
 						
 					{% endif %}
 				</ul>

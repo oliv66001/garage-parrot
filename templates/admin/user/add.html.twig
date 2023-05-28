@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un collaborateur
+{% endblock %}
+
+{% block body %}
+
+	<main class="container text-center">
+		<section class="row justify-content-center">
+			<div class="col-md-6">
+				<h1 class="text-center">Ajouter un collaborateur</h1>
+                {% include "admin/user/_form.html.twig" %}
+			</div>
+		</section>
+	</main>
+
+{% endblock %}

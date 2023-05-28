@@ -2,25 +2,32 @@
 
 namespace App\Entity;
 
-use App\Repository\CategorieRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\MyTrait\SlugTrait;
+use App\Repository\CategorieRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
 {
+
+    use SlugTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Vehicle::class)]
-    private Collection $gender;
+    private Collection $vehicleType;
 
     public function __construct()
     {
-        $this->gender = new ArrayCollection();
+        $this->vehicleType = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -33,27 +40,51 @@ class Categorie
      */
     public function getGender(): Collection
     {
-        return $this->gender;
+        return $this->vehicleType;
     }
 
-    public function addGender(Vehicle $gender): self
+    public function addGender(Vehicle $vehicleType): self
     {
-        if (!$this->gender->contains($gender)) {
-            $this->gender->add($gender);
-            $gender->setCategorie($this);
+        if (!$this->vehicleType->contains($vehicleType)) {
+            $this->vehicleType->add($vehicleType);
+            $vehicleType->setCategorie($this);
         }
 
         return $this;
     }
 
-    public function removeGender(Vehicle $gender): self
+    public function removeGender(Vehicle $vehicleType): self
     {
-        if ($this->gender->removeElement($gender)) {
+        if ($this->vehicleType->removeElement($vehicleType)) {
             // set the owning side to null (unless already changed)
-            if ($gender->getCategorie() === $this) {
-                $gender->setCategorie(null);
+            if ($vehicleType->getCategorie() === $this) {
+                $vehicleType->setCategorie(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * Get the value of name
+     *
+     * @return ?string
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @param ?string $name
+     *
+     * @return self
+     */
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }
