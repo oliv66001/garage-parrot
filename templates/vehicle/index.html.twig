@@ -1,20 +1,115 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello VehicleController!{% endblock %}
+{% block title %}Nos véhicules d'occasion{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1 class="text-center">Nos véhicules d'occasion</h1>
+    <hr>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="container">
+        <form id="filter-form" method="get" action="{{ path('app_vehicle_index') }}">
+            <div class="row">
+                <div class="col-sm-3">
+                    <select class="form-select" name="category">
+                        <option value="">Toutes les catégories</option>
+                        {% for category in categories %}
+                            {% if category is not null %}
+                                <option value="{{ category.name }}" {% if app.request.query.get('category') == category.name %} selected {% endif %}>{{ category.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <input type="number" class="form-control" name="price" placeholder="Prix max" value="{{ app.request.query.get('price') }}">
+                </div>
+                <div class="col-sm-3">
+                    <input type="number" class="form-control" name="year" placeholder="Année min" value="{{ app.request.query.get('year') }}">
+                </div>
+                <div class="col-sm-3">
+                    <input type="number" class="form-control" name="km" placeholder="Km max" value="{{ app.request.query.get('km') }}">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                </div>
+            </div>
+        </form>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/ECF novembre 2023 garage/garage-parrot/src/Controller/VehicleController.php'|file_link(0) }}">src/Controller/VehicleController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/ECF novembre 2023 garage/garage-parrot/templates/vehicle/index.html.twig'|file_link(0) }}">templates/vehicle/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <hr>
+
+    {% set hasVehicles = false %}
+
+    {% if vehicles is not empty %}
+        <div id="vehicles-container">
+            <div class="container category-container" id="category-search">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="category-title">Résultats de la recherche</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for vehicle in vehicles %}
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <img class="card-img-top" src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" class="zoom-card-img card-img-top img-fluid">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ vehicle.brand }}</h4>
+                                    <p class="card-text">{{ vehicle.description }}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">{{ vehicle.price }}€</small>
+                                    <a href="{{ path('app_vehicle_detail', {'slug': vehicle.slug }) }}" class="btn btn2">Détail véhicule</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {% set hasVehicles = true %}
+    {% endif %}
+
+    {% for category in categories %}
+        {% set vehicles = category.getVehicleType %}
+        {% if vehicles|length > 0 %}
+            <div class="container category-container" id="category-{{ category.getId }}">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="category-title">{{ category.getName }}</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    {% set sortedVehicles = vehicles|sort((a, b) => b.year - a.year or b.price - a.price) %}
+                    {% for vehicle in sortedVehicles %}
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <img class="card-img-top" src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" class="zoom-card-img card-img-top img-fluid">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ vehicle.brand }}</h4>
+                                    <p class="card-text">{{ vehicle.description }}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">{{ vehicle.price }}€</small>
+                                    <a href="{{ path('app_vehicle_detail', {'slug': vehicle.slug }) }}" class="btn btn2">Détail véhicule</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    {% if not hasVehicles %}
+        <p>Aucun véhicule correspondant aux critères de recherche n'a été trouvé.</p>
+    {% endif %}
+
+    {{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
+{% endblock %}
+
+{% block javascripts %}
+   <script src="{{ asset('assets/js/zoom.js') }}?v={{ random() }}" defer></script>
 {% endblock %}

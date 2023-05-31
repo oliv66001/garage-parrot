@@ -1,0 +1,66 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Détails de
+	{{ vehicles.brand }}
+{% endblock %}
+
+{% block body %}
+	<main class="container">
+		<section class="row">
+			<div class="col-12">
+				<h1 class="text-center">{{ vehicles.brand }}</h1>
+			</div>
+			<div class="col-6">
+
+				<div id="carouselExampleIndicators" class="carousel slide">
+					<div class="carousel-indicators">
+						{% for iteration in 1..vehicles.image|length %}
+							<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to=" {{ iteration - 1 }} " {{ (loop.first) ? 'class="active" aria-current="true"' : ''}} aria-label="{{ iteration - 1 }}"></button>
+						{% endfor %}
+
+
+					</div>
+					<div class="carousel-inner">
+						{% for image in vehicles.image %}
+							<div class="carousel-item {{ (loop.first) ? 'active' : '' }}">
+								<img src="{{ asset('assets/uploads/') ~ image.name }}" class="d-block w-100" alt=" {{ vehicles.brand }} ">
+							</div>
+						{% endfor %}
+
+
+					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+			</div>
+			<div class="col-6">
+				<p><h4>Marque :</h4>
+					{{ vehicles.brand }}
+				</p>
+				<p><h4>Description :</h4>
+					{{  vehicles.description }}
+				</p>
+				<p><h4>Catégorie :</h4>
+					{{ vehicles.categorie.name }}
+				</p>
+				<p><h4>Année :</h4>
+					{{ vehicles.year }}
+				</p>
+				<p><h4>Nombre de kilomètres :</h4>
+					{{ vehicles.kilometer }} km
+				</p>
+				<p><h4>Prix :</h4>
+					{{ vehicles.price / 100 }}
+					€
+				</p>
+			</div>
+		</section>
+	</main>
+	{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos véhicules d'occasion{% endblock %}
+
+{% block body %}
+
+<div class="card mb-4 shadow-sm">
+  <img src="{{ vehicle.image }}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{ vehicle.brand }}</h5>
+    <p class="card-text">{{ vehicle.description }}</p>
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="btn-group">
+        <a href="{{ path('app_vehicle_detail', {'slug': vehicle.slug}) }}" class="btn btn-sm btn-outline-secondary">Détails</a>
+      </div>
+      <small class="text-muted">{{ vehicle.price }}€</small>
+    </div>
+  </div>
+</div>
+ {{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
+{% endblock %}

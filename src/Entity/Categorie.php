@@ -35,35 +35,36 @@ class Categorie
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Vehicle>
-     */
-    public function getGender(): Collection
-    {
-        return $this->vehicleType;
+   /**
+ * @return Collection<int, Vehicle>
+ */
+public function getVehicleType(): Collection
+{
+    return $this->vehicleType;
+}
+
+public function addVehicleType(Vehicle $vehicleType): self
+{
+    if (!$this->vehicleType->contains($vehicleType)) {
+        $this->vehicleType->add($vehicleType);
+        $vehicleType->setCategorie($this);
     }
 
-    public function addGender(Vehicle $vehicleType): self
-    {
-        if (!$this->vehicleType->contains($vehicleType)) {
-            $this->vehicleType->add($vehicleType);
-            $vehicleType->setCategorie($this);
+    return $this;
+}
+
+public function removeVehicleType(Vehicle $vehicleType): self
+{
+    if ($this->vehicleType->removeElement($vehicleType)) {
+        // set the owning side to null (unless already changed)
+        if ($vehicleType->getCategorie() === $this) {
+            $vehicleType->setCategorie(null);
         }
-
-        return $this;
     }
 
-    public function removeGender(Vehicle $vehicleType): self
-    {
-        if ($this->vehicleType->removeElement($vehicleType)) {
-            // set the owning side to null (unless already changed)
-            if ($vehicleType->getCategorie() === $this) {
-                $vehicleType->setCategorie(null);
-            }
-        }
+    return $this;
+}
 
-        return $this;
-    }
 
     /**
      * Get the value of name

@@ -18,10 +18,10 @@ class CategorieController extends AbstractController
     {
 
         $business_hours = $businessHoursRepository->findAll();
-        $category = $entityManager->getRepository(Categories::class)->findAll();
+        $categorie = $entityManager->getRepository(Categorie::class)->findAll();
         $vehicles = $entityManager->getRepository(Vehicle::class)->findAll();
         return $this->render('categorie/index.html.twig', [
-            'category' => $category,
+            'categorie' => $categorie,
             'vehicles' => $vehicles,
             'business_hours' => $business_hours
         ]);

@@ -39,6 +39,11 @@ class Vehicle
     #[ORM\ManyToOne(inversedBy: 'vehicleType')]
     private ?Categorie $categorie = null;
 
+    #[ORM\Column]
+    private ?int $year = null;
+
+    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -134,6 +139,30 @@ class Vehicle
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of year
+     *
+     * @return ?int
+     */
+    public function getYear(): ?int
+    {
+        return $this->year;
+    }
+
+    /**
+     * Set the value of year
+     *
+     * @param ?int $year
+     *
+     * @return self
+     */
+    public function setYear(?int $year): self
+    {
+        $this->year = $year;
 
         return $this;
     }

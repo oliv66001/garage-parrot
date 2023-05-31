@@ -2,13 +2,18 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Vehicle;
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use App\Entity\Vehicle;
+use App\Entity\Categorie;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class VehicleFixtures extends Fixture
 {
+    public function __construct(private SluggerInterface $slugger)
+    {
+    }
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
@@ -16,14 +21,14 @@ class VehicleFixtures extends Fixture
         for ($i = 0; $i < 20; $i++) {
             $vehicle = new Vehicle();
             $vehicle->setBrand($faker->company);
-            $vehicle->setSlug($faker->slug);
+            $vehicle->setSlug($this->slugger->slug($vehicle->getBrand())->lower());
             $vehicle->setDescription($faker->text);
             $vehicle->setImage($faker->imageUrl());
             $vehicle->setKilometer($faker->numberBetween(0, 200000));
+            $vehicle->setYear($faker->numberBetween(1980, 2022));
             $vehicle->setPrice($faker->numberBetween(10000, 50000));
-            
-            // Assign a random categorie
-            $vehicle->setCategorie($this->getReference('categorie_' . rand(0, 9)));
+            $categoryReference = 'categorie_' . rand(0, 9);
+            $vehicle->setCategorie($this->getReference($categoryReference));
 
             $manager->persist($vehicle);
         }

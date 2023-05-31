@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Vehicle;
-use App\Entity\Images;
+use App\Entity\Image;
 use App\Form\VehicleFormType;
 use App\Repository\VehicleRepository;
 use App\Service\PictureService;
@@ -46,7 +46,7 @@ class VehicleController extends AbstractController
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        // Création d'un nouveau plat
+        // Création d'un nouveau véhicule
         $vehicle = new Vehicle();
 
         // Création du formulaire
@@ -66,7 +66,7 @@ class VehicleController extends AbstractController
                 // Generate a unique name for the file before saving it
                 $fichier = $pictureService->add($image, $folder, 300, 300);
 
-                $img = new Images();
+                $img = new Image();
                 $img->setName($fichier);
                 $vehicle->addImage($img);
                 // Move the file to the directory where brochures are stored
@@ -80,9 +80,9 @@ class VehicleController extends AbstractController
 
 
             //Message flash
-            $this->addFlash('success', 'Le plat a bien été ajouté');
+            $this->addFlash('success', 'Le véhicule a bien été ajouté');
 
-            //Redirection vers la page de détails du plat
+            //Redirection vers la page de détails du véhicule
             return $this->redirectToRoute('admin_vehicle_index', ['slug' => $vehicle->getSlug()]);
         }
 

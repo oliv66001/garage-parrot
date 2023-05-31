@@ -6,3 +6,31 @@ body{
 hr{
     border-color: var(--separator-color);
 }
+
+/*Pages Véhicules*/
+h2.category-title {
+    font-size: 1.5em;
+    text-align: center;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid var(--separator-color);
+    border-radius: 5px;
+    background-color: var(--text-color);
+    color: var(--template-color);
+}
+
+h2.category-title:hover {
+    background-color: var(--template-color);
+    border-radius: 2px solid var(--button2-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+img.zoom-card-img {
+    transition: transform .2s; 
+}
+
+img.zoom-card-img:hover {
+    transform: scale(1.1); 
+}
+
