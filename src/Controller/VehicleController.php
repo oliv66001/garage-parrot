@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,7 +43,7 @@ public function index(
 ): Response {
     // Fetch categories from the database
     $categories = $categorieRepository->findAll();
-
+    $years = range(1960, 2099);
     $businessHours = $businessHoursRepository->findAll();
     $this->logger->info('Searching vehicles');
 
@@ -83,6 +84,7 @@ public function index(
         'categories' => $categories,
         'vehicles' => $vehicles,
         'business_hours' => $businessHours,
+        'years' => $years,
     ]);
 }
 

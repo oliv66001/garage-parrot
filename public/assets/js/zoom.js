@@ -1,34 +1,36 @@
-console.log("Le fichier zoom.js est chargé !");
-
-
 $(document).ready(function() {
     // Fonction pour effectuer la recherche
     function performSearch() {
-        console.log("La fonction performSearch est appelée !");
         $.ajax({
             url: $('#filter-form').attr('action'),
             data: $('#filter-form').serialize(),
             type: 'GET',
             dataType: 'json',
-            
             success: function(data) {
-                console.log('Data received:', data);
+                // Vider le conteneur des résultats
+                $('#vehicles-container').empty();
 
-                // Vider chaque conteneur de catégorie
-                $('.category-container').empty();
-
-                // Parcourir les données renvoyées et ajouter chaque véhicule à son conteneur respectif
-                let hasResults = false;
+                // Parcourir les données renvoyées et trier les véhicules par catégorie
+                let categories = {};
                 $.each(data, function(categoryId, vehicles) {
-                    let categoryContainer = $('#category-' + categoryId);
-                    if (!categoryContainer.length) {
-                        // Si le conteneur de cette catégorie n'existe pas encore, créez-le
-                        categoryContainer = $('<div class="container category-container" id="category-' + categoryId + '">');
-                        $('#vehicles-container').append(categoryContainer);
+                    // Créer un tableau pour chaque catégorie
+                    if (!categories[categoryId]) {
+                        categories[categoryId] = [];
                     }
-                    console.log(performSearch());
 
-                    // Ajouter chaque véhicule de cette catégorie
+                    // Ajouter les véhicules à leur catégorie respective
+                    $.each(vehicles, function(i, vehicle) {
+                        categories[categoryId].push(vehicle);
+                    });
+                });
+
+                // Parcourir les catégories et afficher les véhicules dans chaque catégorie
+                $.each(categories, function(categoryId, vehicles) {
+                    let categoryContainer = $('<div class="container category-container" id="category-' + categoryId + '">');
+                    categoryContainer.append('<div class="row"><div class="col-12"><h2 class="category-title">' + categoryId + '</h2></div></div>');
+                    let row = $('<div class="row">');
+
+                    // Ajouter chaque véhicule de la catégorie à la ligne
                     $.each(vehicles, function(i, vehicle) {
                         console.log('Adding vehicle:', vehicle);
                         let vehicleCard = `
@@ -41,19 +43,22 @@ $(document).ready(function() {
                                     </div>
                                     <div class="card-footer">
                                         <small class="text-muted">${vehicle.price}€</small>
-                                        <a href="${vehicle.slug}" class="btn btn2">Detail véhicule</a>
+                                        <a href="${vehicle.slug}" class="btn btn2">Détail véhicule</a>
                                     </div>
                                 </div>
                             </div>
                         `;
 
-                        categoryContainer.append(vehicleCard);
-                        hasResults = true;
+                        row.append(vehicleCard);
                     });
+
+                    // Ajouter la ligne de véhicules à la catégorie
+                    categoryContainer.append(row);
+                    $('#vehicles-container').append(categoryContainer);
                 });
 
                 // Afficher un message lorsque aucun résultat n'est trouvé
-                if (!hasResults) {
+                if ($.isEmptyObject(categories)) {
                     $('#vehicles-container').append('<p>Aucun véhicule correspondant aux critères de recherche n\'a été trouvé.</p>');
                 }
             }
@@ -64,4 +69,62 @@ $(document).ready(function() {
     $('#filter-form select, #filter-form input').on('change', function() {
         performSearch();
     });
+
+    // Vérifier si une recherche est déjà effectuée lors du chargement de la page
+    if ($('#filter-form select, #filter-form input').val() !== '') {
+        performSearch();
+    }
 });
+
+
+    // Afficher un message lorsque aucun résultat n'est trouvé
+    if (!hasResults) {
+        $('#vehicles-container').append('<p>Aucun véhicule correspondant aux critères de recherche n\'a été trouvé.</p>');
+    
+    // Afficher le titre "Résultats de la recherche" si des résultats sont disponibles
+    if (hasResults) {
+        $('#vehicles-container').prepend('<div class="container category-container"><div class="row"><div class="col-12"><h2 class="category-title">Résultats de la recherche</h2></div></div></div>');
+    } else {
+        $('#vehicles-container').find('.category-container:first').hide();
+    }
+    
+        // Gérer le cas où l'utilisateur revient à "Toutes les catégories"
+    $('#filter-form select[name="category"]').on('change', function() {
+    if ($(this).val() === '') {
+        // Recharger la page pour afficher les catégories et les véhicules initiaux
+        location.reload();
+    }
+    });
+    };
+
+
+//Price change
+
+$(document).ready(function() {
+    // Événement lors de la modification de la barre de sélection du prix
+    $('#price-slider').on('input', function() {
+        let price = $(this).val();
+        $('.price-labels .min-price').text(price !== '0' ? price + ' €' : 'Tous les prix');
+    });
+});
+
+
+// Générer les options de l'année
+function generateYearOptions(startYear, endYear) {
+    var select = document.getElementById('vehicle_year');
+    select.innerHTML = ''; // Réinitialiser les options existantes
+
+    for (var year = startYear; year <= endYear; year++) {
+        var option = document.createElement('option');
+        option.value = year;
+        option.text = year;
+        select.appendChild(option);
+    }
+}
+
+// Appeler la fonction de génération d'options au chargement de la page
+window.onload = function() {
+    generateYearOptions(1960, 2099);
+};
+
+  

@@ -97,3 +97,28 @@
     display: inline-block;
     transition: all 0.3s ease;
   }
+
+  /*Barre des price*/
+  .price-range {
+    margin-top: 20px;
+  }
+  
+  .price-range input[type="range"] {
+    width: 100%;
+  }
+  
+  .price-range .price-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+  }
+  
+  .price-range .price-labels span {
+    font-size: 12px;
+  }
+
+  .form-range {
+    width: 100%;
+}
+
+  
