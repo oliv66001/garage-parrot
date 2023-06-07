@@ -6,6 +6,7 @@ use App\Entity\Vehicle;
 use App\Entity\Categorie;
 use Psr\Log\LoggerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -27,7 +28,7 @@ class VehicleRepository extends ServiceEntityRepository
         $this->logger = $logger;
     }
 
-    
+
 
     public function save(Vehicle $entity, bool $flush = false): void
     {
@@ -59,40 +60,39 @@ class VehicleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-   
 
-    public function search(?string $category, $price, $year, $km): array
+
+    public function searchByYear(?string $category, $price, $year, $kilometer): array
     {
-
         $qb = $this->createQueryBuilder('v')
-            ->leftJoin('v.categorie', 'c');
-    
-            if ($category) {
-                $qb->andWhere('c.name = :category')
-                    ->setParameter('category', $category);
-            }
-            
-    
+            ->leftJoin('v.categorie', 'c')
+            ->select('v')
+            ->where('1 = 1');
+
+        if ($category) {
+            $qb->andWhere('c.name = :category')
+                ->setParameter('category', $category);
+        }
+
         if ($price) {
             $qb->andWhere('v.price <= :price')
                 ->setParameter('price', $price);
         }
-    
-        if ($year) {
+
+        if (!empty($year)) {
             $qb->andWhere('v.year >= :year')
                 ->setParameter('year', $year);
         }
-    
-        if ($km) {
-            $qb->andWhere('v.kilometer <= :km')
-                ->setParameter('km', $km);
+
+        if ($kilometer) {
+            $qb->andWhere('v.kilometer <= :kilometer')
+                ->setParameter('kilometer', $kilometer);
         }
-    
+
         // Add sorting by year and price
         $qb->orderBy('v.year', 'DESC')
             ->addOrderBy('v.price', 'DESC');
-    
+
         return $qb->getQuery()->getResult();
     }
-
 }

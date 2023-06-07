@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    // Fonction pour effectuer la recherche
     function performSearch() {
         $.ajax({
             url: $('#filter-form').attr('action'),
@@ -9,7 +8,6 @@ $(document).ready(function() {
             success: function(data) {
                 // Vider le conteneur des résultats
                 $('#vehicles-container').empty();
-
                 // Parcourir les données renvoyées et trier les véhicules par catégorie
                 let categories = {};
                 $.each(data, function(categoryId, vehicles) {
@@ -24,107 +22,141 @@ $(document).ready(function() {
                     });
                 });
 
-                // Parcourir les catégories et afficher les véhicules dans chaque catégorie
+                // Afficher les véhicules de la catégorie sélectionnée (s'il y en a)
+                let selectedCategory = $('#filter-form select[name="category"]').val();
+                let selectedPrice = parseInt($('#filter-form input[name="price"]').val());
+                let selectedYear = parseInt($('#filter-form select[name="year"]').val()) || 0;
+                let selectedKm = parseInt($('#filter-form input[name="kilometer"]').val()) || 0;
+
+                let hasResults = false; // Variable pour indiquer s'il y a des résultats
+                
+            if (selectedCategory !== '') {
+                let categoryVehicles = categories[selectedCategory];
+                if (categoryVehicles) {
+                    let categoryContainer = $('<div class="container category-container" id="category-' + selectedCategory + '">');
+                    categoryContainer.append('<div class="row"><div class="col-12"><h2 class="category-title">' + selectedCategory + '</h2></div></div>');
+                    let row = $('<div class="row">');
+                    $.each(categoryVehicles, function(i, vehicle) {
+                        let date = new Date(vehicle.year.date);
+                        let year = date.getFullYear();
+                        if (vehicle.price <= selectedPrice && (selectedYear === 0 || year >= selectedYear) && (selectedKm === 0 || vehicle.kilometer <= selectedKm)) {
+                            let vehicleCard = `
+                                <div class="col-lg-4 col-md-6 mb-4 vehicle">
+                                    <div class="card h-100">
+                                        <img class="card-img-top" src="${vehicle.image}" alt="${vehicle.brand}" class="zoom-card-img card-img-top img-fluid">
+                                        <div class="card-body">
+                                            <h4 class="card-title">${vehicle.brand}</h4>
+                                            <p class="card-text">${vehicle.description}</p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-muted">${vehicle.price}€</small>
+                                            <a href="/vehicle/${vehicle.slug}" class="btn btn2">Détail véhicule</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            row.append(vehicleCard);
+                            hasResults = true; // Indiquer qu'il y a des résultats
+                        }
+                    });
+                    categoryContainer.append(row);
+                    $('#vehicles-container').append(categoryContainer);
+                }
+            } else {
+                // Afficher les véhicules de toutes les catégories
                 $.each(categories, function(categoryId, vehicles) {
                     let categoryContainer = $('<div class="container category-container" id="category-' + categoryId + '">');
                     categoryContainer.append('<div class="row"><div class="col-12"><h2 class="category-title">' + categoryId + '</h2></div></div>');
                     let row = $('<div class="row">');
-
-                    // Ajouter chaque véhicule de la catégorie à la ligne
                     $.each(vehicles, function(i, vehicle) {
-                        console.log('Adding vehicle:', vehicle);
-                        let vehicleCard = `
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="card h-100">
-                                    <img class="card-img-top" src="${vehicle.image}" alt="${vehicle.brand}" class="zoom-card-img card-img-top img-fluid">
-                                    <div class="card-body">
-                                        <h4 class="card-title">${vehicle.brand}</h4>
-                                        <p class="card-text">${vehicle.description}</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <small class="text-muted">${vehicle.price}€</small>
-                                        <a href="${vehicle.slug}" class="btn btn2">Détail véhicule</a>
+                        let date = new Date(vehicle.year.date);
+                        let year = date.getFullYear();
+                        if (vehicle.price <= selectedPrice && (selectedYear === 0 || year >= selectedYear) && (selectedKm === 0 || vehicle.kilometer <= selectedKm)) {
+                            
+                            let vehicleCard = `
+                                <div class="col-lg-4 col-md-6 mb-4 vehicle">
+                                    <div class="card h-100">
+                                        <img class="card-img-top" src="${vehicle.image}" alt="${vehicle.brand}" class="zoom-card-img card-img-top img-fluid">
+                                        <div class="card-body">
+                                            <h4 class="card-title">${vehicle.brand}</h4>
+                                            <p class="card-text">${vehicle.description}</p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-muted">${vehicle.price}€</small>
+                                            <a href="/vehicle/${vehicle.slug}" class="btn btn2">Détail véhicule</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        `;
-
-                        row.append(vehicleCard);
+                            `;
+                            row.append(vehicleCard);
+                            hasResults = true; // Indiquer qu'il y a des résultats
+                            
+                        }
                     });
-
-                    // Ajouter la ligne de véhicules à la catégorie
                     categoryContainer.append(row);
                     $('#vehicles-container').append(categoryContainer);
                 });
-
-                // Afficher un message lorsque aucun résultat n'est trouvé
-                if ($.isEmptyObject(categories)) {
-                    $('#vehicles-container').append('<p>Aucun véhicule correspondant aux critères de recherche n\'a été trouvé.</p>');
-                }
             }
-        });
-    }
-
-    // Événement lors de la modification de la catégorie dans le formulaire
-    $('#filter-form select, #filter-form input').on('change', function() {
-        performSearch();
+            if (!hasResults) {
+                $('#vehicles-container').append('<h3 class="no-results text-center">Aucun véhicule trouvé.</h3>');
+            }
+        }
     });
 
-    // Vérifier si une recherche est déjà effectuée lors du chargement de la page
-    if ($('#filter-form select, #filter-form input').val() !== '') {
-        performSearch();
-    }
-});
-
-
-    // Afficher un message lorsque aucun résultat n'est trouvé
-    if (!hasResults) {
-        $('#vehicles-container').append('<p>Aucun véhicule correspondant aux critères de recherche n\'a été trouvé.</p>');
-    
-    // Afficher le titre "Résultats de la recherche" si des résultats sont disponibles
-    if (hasResults) {
-        $('#vehicles-container').prepend('<div class="container category-container"><div class="row"><div class="col-12"><h2 class="category-title">Résultats de la recherche</h2></div></div></div>');
-    } else {
-        $('#vehicles-container').find('.category-container:first').hide();
-    }
-    
-        // Gérer le cas où l'utilisateur revient à "Toutes les catégories"
-    $('#filter-form select[name="category"]').on('change', function() {
-    if ($(this).val() === '') {
-        // Recharger la page pour afficher les catégories et les véhicules initiaux
-        location.reload();
-    }
-    });
-    };
-
-
-//Price change
-
-$(document).ready(function() {
-    // Événement lors de la modification de la barre de sélection du prix
-    $('#price-slider').on('input', function() {
-        let price = $(this).val();
-        $('.price-labels .min-price').text(price !== '0' ? price + ' €' : 'Tous les prix');
-    });
-});
-
-
-// Générer les options de l'année
-function generateYearOptions(startYear, endYear) {
-    var select = document.getElementById('vehicle_year');
-    select.innerHTML = ''; // Réinitialiser les options existantes
-
-    for (var year = startYear; year <= endYear; year++) {
-        var option = document.createElement('option');
-        option.value = year;
-        option.text = year;
-        select.appendChild(option);
-    }
+    $('#vehicles-container').empty().find('.no-results').remove();
 }
 
-// Appeler la fonction de génération d'options au chargement de la page
-window.onload = function() {
-    generateYearOptions(1960, 2099);
-};
+// Événement lors de la modification de la catégorie dans le formulaire
+$('#filter-form select, #filter-form input').on('change', function() {
+    performSearch();
+});
 
-  
+// Vérifier si une recherche est déjà effectuée lors du chargement de la page
+if ($('#filter-form select, #filter-form input').val() !== '') {
+    performSearch();
+}
+
+// Gérer le cas où l'utilisateur revient à "Toutes les catégories"
+//$('#filter-form select[name="category"]').on('change', function() {
+//    if ($(this).val() === '') {
+//        // Recharger la page pour afficher les catégories et les véhicules initiaux
+//        location.reload();
+//    }
+//});
+
+// Gérer les dates de mise en circulation
+$('#time-select').on('change', function() {
+    let year = $(this).val();
+    // Afficher simplement l'année sélectionnée
+    $('.year-labels .min-year').text(year);
+    // Appeler performSearch pour mettre à jour les véhicules affichés
+    performSearch();
+});
+
+// Événement lors de la modification de la barre de sélection du prix
+$('#price-slider').on('input', function() {
+    let price = $(this).val();
+    $('.price-labels .min-price').text(price !== '0' ? price + ' €' : '0 €');
+});
+
+// Événement lors de la modification de la barre de sélection du kilométrage
+$('#km-slider').on('input', function() {
+    let km = $(this).val();
+    $('.km-labels .min-km').text(km !== '0' ? km + 'kilometer' : 'Tous les km');
+});
+
+$('button[name="remove"]').on('click', function(e) {
+    e.preventDefault(); // Empêche l'envoi du formulaire (et donc le rafraîchissement de la page)
+    
+    // Réinitialise chaque champ du formulaire
+    $('#filter-form select[name="category"]').val('');
+    $('#price-slider').val(100000);
+    $('#time-select').val('');
+    $('#km-slider').val(400000);
+
+    // Réaffiche tous les véhicules
+    performSearch();
+});
+
+
+});

@@ -4,12 +4,12 @@ namespace App\Form;
 
 use App\Entity\Vehicle;
 use App\Entity\Categorie;
+use Doctrine\DBAL\Types\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -35,14 +35,14 @@ class VehicleFormType extends AbstractType
             ->add('price', NumberType::class, [
                 'label' => 'Prix',
             ])
-            ->add('year', ChoiceType::class, [
-                'choices' => $this->generateYearChoices(),
+            ->add('year', DateType::class, [
                 'label' => 'Année',
                 'required' => false,
-                'placeholder' => 'Toutes les années',
+                'widget' => 'single_text',
+                'format' => 'yyyy',
                 'attr' => [
-                    'class' => 'form-select'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('contact', TextType::class, [
                 'label' => 'Contact',

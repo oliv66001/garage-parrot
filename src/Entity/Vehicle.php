@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\VehicleRepository;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\MyTrait\SlugTrait;
+use App\Repository\VehicleRepository;
 
 #[ORM\Entity(repositoryClass: VehicleRepository::class)]
 class Vehicle
@@ -39,10 +40,14 @@ class Vehicle
     #[ORM\ManyToOne(inversedBy: 'vehicleType')]
     private ?Categorie $categorie = null;
 
-    #[ORM\Column]
-    private ?int $year = null;
+    #[ORM\Column(type:"date")]
+    private ?DateTimeInterface $year = null;
 
     
+    public function __construct()
+    {
+        $this->year = new \DateTime(date('Y-m-d'));
+    }
 
     public function getId(): ?int
     {
@@ -143,12 +148,13 @@ class Vehicle
         return $this;
     }
 
+
     /**
      * Get the value of year
      *
-     * @return ?int
+     * @return ?DateTimeInterface
      */
-    public function getYear(): ?int
+    public function getYear(): ?DateTimeInterface
     {
         return $this->year;
     }
@@ -156,11 +162,11 @@ class Vehicle
     /**
      * Set the value of year
      *
-     * @param ?int $year
+     * @param ?DateTimeInterface $year
      *
      * @return self
      */
-    public function setYear(?int $year): self
+    public function setYear(?DateTimeInterface $year): self
     {
         $this->year = $year;
 

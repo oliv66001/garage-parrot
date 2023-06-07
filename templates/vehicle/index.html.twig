@@ -21,29 +21,40 @@
 					</select>
 				</div>
 				<div class="col-sm-3">
-					<div class="price-range">
-						<input type="range" class="form-range" id="price-slider" name="price" min="0" max="100000" step="1000" value="{{ app.request.query.get('price') }}">
+					
+						<input type="range" class="form-range" id="price-slider" name="price" min="0" max="100000" step="1000" value="{{ app.request.query.get('price')|default(100000) }}">
+
 						<div class="price-labels">
 							<span class="min-price">0 €</span>
 							<span class="max-price">100000 €</span>
-						</div>
+
+						
 					</div>
 				</div>
+
 				<div class="col-sm-3">
-					<select class="form-select" name="year">
+					<select class="form-select" id="time-select" name="year">
 						<option value="">Toutes les années</option>
-						{% for year in years %}
-							<option value="{{ year }}">{{ year }}</option>
+						{% for year in range(currentYear, 1960, -1) %}
+							<option value="{{ year }}" {% if app.request.query.get('year') == year %} selected {% endif %}>{{ year }}</option>
+
 						{% endfor %}
+
 					</select>
 				</div>
+
 				<div class="col-sm-3">
-					<input type="number" class="form-control" name="km" placeholder="Km max" value="{{ app.request.query.get('km') }}">
+					<input type="range" id="km-slider" class="form-range" name="kilometer" placeholder="Km max" min="0" max="400000" step="1000" value="{{ app.request.query.get('kilometer')|default(400000) }}">
+					<div class="km-labels">
+						<span class="min-km">de 0 km</span>
+						<span class="max-km">à 400000 km</span>
+					</div>
 				</div>
+
 			</div>
-			<div class="row mt-3">
-				<div class="col-sm-12">
-					<button type="submit" name="category" class="btn btn">Réinitialiser</button>
+			<div class="row mt-3 justify-content-center">
+				<div class="col-sm-12 text-center">
+					<button type="submit" name="remove" class="btn btn2 text-center">Réinitialiser</button>
 				</div>
 			</div>
 		</form>
@@ -52,68 +63,111 @@
 	<hr>
 
 	<div id="vehicles-container">
+		{% set hasVehicles = false %}
 		{% if vehicles is not empty %}
-			{% if app.request.query.get('category') is not empty or app.request.query.get('price') is not empty or app.request.query.get('year') is not empty or app.request.query.get('km') is not empty %}
-				<div class="container category-container">
-					<div class="row">
-						<div class="col-12">
-							<h2 class="category-title">Résultats de la recherche</h2>
+
+			{% if app.request.query.get('category') is not empty %}
+				{% set selectedCategory = categories|filter(category => category.name == app.request.query.get('category'))|first %}
+				{% if selectedCategory is not null %}
+					<div class="container category-container" id="category-{{ selectedCategory.getId }}">
+						<div class="row">
+							<div class="col-12">
+								<h2 class="category-title">{{ selectedCategory.getName }}</h2>
+							</div>
+						</div>
+						<div class="row">
+							{% set vehicles = selectedCategory.getVehicleType %}
+							{% if vehicles|length > 0 %}
+								{% set hasVehicles = true %}
+								{% set sortedVehicles = vehicles|sort((a, b) => a.getYear().diff(b.getYear()).invert ? -1 : 1 or b.getPrice() - a.getPrice()) %}
+								{% for vehicle in sortedVehicles %}
+									<div class="col-lg-4 col-md-6 mb-4 vehicle">
+										<div class="card h-100">
+											<img class="card-img-top" src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" class="zoom-card-img card-img-top img-fluid">
+											<div class="card-body">
+												<h4 class="card-title">{{ vehicle.brand }}</h4>
+												<p class="card-text">{{ vehicle.description }}</p>
+											</div>
+											<div class="card-footer">
+
+												<small class="text-muted">{{ vehicle.price }}€</small>
+												<a href="{{ path('app_vehicle_detail', {'slug': vehicle.slug }) }}" class="btn btn2">Détail véhicule</a>
+											</div>
+										</div>
+									</div>
+								{% endfor %}
+							{% endif %}
 						</div>
 					</div>
-					<div class="row">
-						{% for vehicle in vehicles %}
-							<div class="col-lg-4 col-md-6 mb-4">
-								<div class="card h-100">
-									<img class="card-img-top" src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" class="zoom-card-img card-img-top img-fluid">
-									<div class="card-body">
-										<h4 class="card-title">{{ vehicle.brand }}</h4>
-										<p class="card-text">{{ vehicle.description }}</p>
-									</div>
-									<div class="card-footer">
-										<small class="text-muted">{{ vehicle.price }}€</small>
-										<a href="{{ path('app_vehicle_detail', {'slug': vehicle.slug }) }}" class="btn btn2">Détail véhicule</a>
-									</div>
-								</div>
-							</div>
-						{% endfor %}
-					</div>
-				</div>
+				{% endif %}
+
 			{% endif %}
 		{% endif %}
 
-		{% for category in categories %}
-			{% set vehicles = category.getVehicleType %}
-			{% if vehicles|length > 0 %}
-				<div class="container category-container" id="category-{{ category.getId }}">
+		{% if app.request.query.get('category') is not empty %}
+			{% set selectedCategory = categories|filter(category => category.name == app.request.query.get('category'))|first %}
+			{% if selectedCategory is not null %}
+				<div class="container category-container" id="category-{{ selectedCategory.getId }}">
 					<div class="row">
 						<div class="col-12">
-							<h2 class="category-title">{{ category.getName }}</h2>
+							<h2 class="category-title">{{ selectedCategory.getName }}</h2>
 						</div>
 					</div>
 					<div class="row">
-						{% set sortedVehicles = vehicles|sort((a, b) => b.year - a.year or b.price - a.price) %}
-						{% for vehicle in sortedVehicles %}
-							<div class="col-lg-4 col-md-6 mb-4">
-								<div class="card h-100">
-									<img class="card-img-top" src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" class="zoom-card-img card-img-top img-fluid">
-									<div class="card-body">
-										<h4 class="card-title">{{ vehicle.brand }}</h4>
-										<p class="card-text">{{ vehicle.description }}</p>
-									</div>
-									<div class="card-footer">
-										<small class="text-muted">{{ vehicle.price }}€</small>
-										<a href="{{ path('app_vehicle_detail', {'slug': vehicle.slug }) }}" class="btn btn2">Détail véhicule</a>
+						{% set vehicles = selectedCategory.getVehicleType %}
+						{% if vehicles|length > 0 %}
+							{% set sortedVehicles = vehicles|sort((a, b) => a.getYear().diff(b.getYear()).invert ? -1 : 1 or b.getPrice() - a.getPrice()) %}
+							{% for vehicle in sortedVehicles %}
+								<div class="col-lg-4 col-md-6 mb-4 vehicle">
+									<div class="card h-100">
+										<img class="card-img-top" src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" class="zoom-card-img card-img-top img-fluid">
+										<div class="card-body">
+											<h4 class="card-title">{{ vehicle.brand }}</h4>
+											<p class="card-text">{{ vehicle.description }}</p>
+										</div>
+										<div class="card-footer">
+											<small class="text-muted">{{ vehicle.price }}€</small>
+											<a href="{{ path('app_vehicle_detail', {'slug': vehicle.slug }) }}" class="btn btn2">Détail véhicule</a>
+										</div>
 									</div>
 								</div>
-							</div>
-						{% endfor %}
+							{% endfor %}
+						{% endif %}
 					</div>
 				</div>
 			{% endif %}
-		{% endfor %}
-
-		{% if vehicles is empty %}
-			<p>Aucun véhicule correspondant aux critères de recherche n'a été trouvé.</p>
+		{% else %}
+			{% for category in categories %}
+				{% set vehicles = category.getVehicleType %}
+				{% if vehicles|length > 0 %}
+					<div class="container category-container" id="category-{{ category.getId }}">
+						<div class="row">
+							<div class="col-12">
+								<h2 class="category-title">{{ category.getName }}</h2>
+							</div>
+						</div>
+						<div class="row">
+							{% set sortedVehicles = vehicles|sort((a, b) => a.getYear().diff(b.getYear()).invert ? -1 : 1 or b.getPrice() - a.getPrice()) %}
+							{% for vehicle in sortedVehicles %}
+								<div class="col-lg-4 col-md-6 mb-4 vehicle">
+									<div class="card h-100">
+										<img class="card-img-top" src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" class="zoom-card-img card-img-top img-fluid">
+										<div class="card-body">
+											<h4 class="card-title">{{ vehicle.brand }}</h4>
+											<p class="card-text">{{ vehicle.description }}</p>
+										</div>
+										<div class="card-footer">
+											<h5>{{ vehicle.year.format('Y-m-d') }}</h5>
+											<small class="text-muted">{{ vehicle.price }}€</small>
+											<a href="{{ path('app_vehicle_detail', {'slug': vehicle.slug }) }}" class="btn btn2">Détail véhicule</a>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
 		{% endif %}
 	</div>
 
@@ -122,6 +176,4 @@
 
 {% block javascripts %}
 	<script src="{{ asset('assets/js/zoom.js') }}?v={{ random() }}" defer></script>
-
-
 {% endblock %}

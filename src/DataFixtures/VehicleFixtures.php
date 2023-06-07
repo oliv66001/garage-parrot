@@ -25,7 +25,7 @@ class VehicleFixtures extends Fixture
             $vehicle->setDescription($faker->text);
             $vehicle->setImage($faker->imageUrl());
             $vehicle->setKilometer($faker->numberBetween(0, 200000));
-            $vehicle->setYear($faker->numberBetween(1980, 2022));
+            $vehicle->setYear($faker->dateTimeBetween('1980-01-01', '2022-12-31'));
             $vehicle->setPrice($faker->numberBetween(10000, 50000));
             $categoryReference = 'categorie_' . rand(0, 9);
             $vehicle->setCategorie($this->getReference($categoryReference));
