@@ -2,9 +2,9 @@
 
 namespace App\Service;
 
-use Exception;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class PictureService
 {
@@ -83,13 +83,20 @@ class PictureService
 
         // On crée le dossier de destination s'il n'existe pas
         if(!file_exists($path . '/mini/')){
-            mkdir($path . '/mini/', 0755, true);
+            if (!mkdir($path . '/mini/', 0755, true)) {
+                throw new Exception('Failed to create directory: ' . $path . '/mini/');
+            }
         }
 
         // On stocke l'image recadrée
         imagewebp($resized_picture, $path . '/mini/' . $width . 'x' . $height . '-' . $fichier);
 
-        $picture->move($path . '/', $fichier);
+        try {
+            $picture->move($path . '/', $fichier);
+        } catch (\Exception $e) {
+            throw new \Exception('Failed to move file: ' . $e->getMessage());
+        }
+        
 
         return $fichier;
     }

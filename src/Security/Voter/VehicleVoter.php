@@ -41,7 +41,7 @@ class VehicleVoter extends Voter
         if(!$user instanceof UserInterface) return false;
 
         // On vérifie si l'utilisateur est admin
-        if($this->security->isGranted('ROLE_ADMIN')) return true;
+        if($this->security->isGranted('ROLE_COLAB_ADMIN')) return true;
 
         // On vérifie les permissions
         switch($attribute){
@@ -60,6 +60,6 @@ class VehicleVoter extends Voter
         return $this->security->isGranted('ROLE_COLAB_ADMIN');
     }
     private function canDelete(){
-        return $this->security->isGranted('ROLE_ADMIN');
+        return $this->security->isGranted('ROLE_COLAB_ADMIN');
     }
 }

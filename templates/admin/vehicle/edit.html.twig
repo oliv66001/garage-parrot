@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Administration des véhicules{% endblock %}
+
+{% block body %}
+    <main class="container">
+        <section class="row">
+            <div class="col-12">
+                <h1>Modifier un véhicule</h1>
+                {% include "admin/vehicle/_form.html.twig" with {'button_label': 'Modifier'} %}
+            </div>
+        </section>
+    </main>
+    {{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
+{% endblock %}

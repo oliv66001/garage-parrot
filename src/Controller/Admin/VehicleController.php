@@ -2,18 +2,19 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Vehicle;
 use App\Entity\Image;
+use App\Entity\Vehicle;
 use App\Form\VehicleFormType;
-use App\Repository\VehicleRepository;
 use App\Service\PictureService;
+use App\Repository\VehicleRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\BusinessHoursRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/vehicle', name: 'admin_vehicle_')]
 /**
@@ -22,11 +23,12 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class VehicleController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(VehicleRepository $vehicleRepository): Response
+    public function index(VehicleRepository $vehicleRepository, BusinessHoursRepository $businessHoursRepository,): Response
     {
-
+        $this->denyAccessUnlessGranted('ROLE_COLAB_ADMIN');
+        $business_hours = $businessHoursRepository->findAllOrderedByDay();
         $vehicle = $vehicleRepository->findAll();
-        return $this->render('admin/vehicle/index.html.twig', compact('vehicle'));
+        return $this->render('admin/vehicle/index.html.twig', compact('vehicle', 'business_hours'));
     }
 
     #[Route('/ajout', name: 'add')]
@@ -42,10 +44,12 @@ class VehicleController extends AbstractController
         Request $request,
         EntityManagerInterface $em,
         SluggerInterface $slugger,
-        PictureService $pictureService
+        PictureService $pictureService,
+        BusinessHoursRepository $businessHoursRepository,
     ): Response {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_COLAB_ADMIN');
 
+        $business_hours = $businessHoursRepository->findAllOrderedByDay();
         // Création d'un nouveau véhicule
         $vehicle = new Vehicle();
 
@@ -53,22 +57,24 @@ class VehicleController extends AbstractController
         $vehicleForm = $this->createForm(VehicleFormType::class, $vehicle);
 
         $vehicleForm->handleRequest($request);
-
+       
         //Vérification du soumission du formulaire
         if ($vehicleForm->isSubmitted() && $vehicleForm->isValid()) {
 
             // Récuperation des images
             $images = $vehicleForm->get('images')->getData();
-
+                
             foreach ($images as $image) {
                 $folder = 'vehicle';
 
+
                 // Generate a unique name for the file before saving it
                 $fichier = $pictureService->add($image, $folder, 300, 300);
-
+                
                 $img = new Image();
                 $img->setName($fichier);
                 $vehicle->addImage($img);
+               
                 // Move the file to the directory where brochures are stored
 
             }
@@ -86,7 +92,7 @@ class VehicleController extends AbstractController
             return $this->redirectToRoute('admin_vehicle_index', ['slug' => $vehicle->getSlug()]);
         }
 
-        return $this->render('admin/vehicle/add.html.twig', compact('vehicleForm'));
+        return $this->render('admin/vehicle/add.html.twig', compact('vehicleForm', 'business_hours'));
     }
 
 
@@ -96,11 +102,13 @@ class VehicleController extends AbstractController
         Request $request,
         EntityManagerInterface $em,
         SluggerInterface $slugger,
-        PictureService $pictureService
+        PictureService $pictureService,
+        BusinessHoursRepository $businessHoursRepository,
     ): Response {
         //Vérification si l'user peut éditer avec le voter
-        $this->denyAccessUnlessGranted('DISHE_EDIT', $vehicle);
+        $this->denyAccessUnlessGranted('ROLE_COLAB_ADMIN', $vehicle);
 
+        $business_hours = $businessHoursRepository->findAllOrderedByDay();
         // Création du formulaire
         $vehicleForm = $this->createForm(VehicleFormType::class, $vehicle);
 
@@ -108,7 +116,7 @@ class VehicleController extends AbstractController
 
         //Vérification du soumission du formulaire
         if ($vehicleForm->isSubmitted() && $vehicleForm->isValid()) {
-
+           
             // Récuperation des images
             $images = $vehicleForm->get('images')->getData();
 
@@ -132,32 +140,33 @@ class VehicleController extends AbstractController
 
 
             //Message flash
-            $this->addFlash('success', 'Le produit a bien été modifier');
+            $this->addFlash('success', 'Le véhicule a bien été modifier');
 
-            //Redirection vers la page de détails du produit
+            //Redirection vers la page de détails du véhicule
             return $this->redirectToRoute('admin_vehicle_index');
         }
 
         return $this->render('admin/vehicle/edit.html.twig', [
             'vehicleForm' => $vehicleForm->createView(),
-            'vehicle' => $vehicle
+            'vehicle' => $vehicle,
+            'business_hours' => $business_hours,
 
         ]);
     }
 
     // Ajoutez l'annotation de la route en haut de votre méthode, en changeant le nom de la route et le chemin si nécessaire
-    #[Route('/suppression/vehicle/{id}', name: 'delete_dishe', methods: ['DELETE'])]
-    public function deleteDishe(
+    #[Route('/suppression/vehicle/{id}', name: 'delete_vehicle', methods: ['DELETE'])]
+    public function deleteVehicle(
         Vehicle $vehicle,
         Request $request,
         EntityManagerInterface $em
     ): JsonResponse {
-       
+
 
         $data = json_decode($request->getContent(), true);
 
         // On vérifie si le token est valide
-        if ($this->isCsrfTokenValid('delete_dishe' . $vehicle->getId(), $data['_token'])) {
+        if ($this->isCsrfTokenValid('delete_vehicle' . $vehicle->getId(), $data['_token'])) {
 
 
             // On supprime le produit de la base
@@ -168,7 +177,6 @@ class VehicleController extends AbstractController
 
 
             return new JsonResponse(['success' => true, 'message' => 'Produit supprimé avec succès'], 200);
-
         }
 
         // Echec de la suppréssion
@@ -184,7 +192,7 @@ class VehicleController extends AbstractController
         PictureService $pictureService
     ): JsonResponse {
         //Vérification si l'user peut supprimer avec le voter
-        // $this->denyAccessUnlessGranted('DISHE_EDIT', $image->getVehicle());
+        $this->denyAccessUnlessGranted('ROLE_COLAB_ADMIN', $image->getVehicle());
 
         $data = json_decode($request->getContent(), true);
 

@@ -7,6 +7,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\MyTrait\SlugTrait;
 use App\Repository\VehicleRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: VehicleRepository::class)]
 class Vehicle
@@ -25,7 +27,7 @@ class Vehicle
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
     #[ORM\Column]
@@ -40,13 +42,18 @@ class Vehicle
     #[ORM\ManyToOne(inversedBy: 'vehicleType')]
     private ?Categorie $categorie = null;
 
-    #[ORM\Column(type:"date")]
+    #[ORM\Column(type: "date")]
     private ?DateTimeInterface $year = null;
 
-    
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: "vehicle", orphanRemoval: true, cascade: ["persist"])]
+    private $images;
+
+
+
     public function __construct()
     {
         $this->year = new \DateTime(date('Y-m-d'));
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -169,6 +176,36 @@ class Vehicle
     public function setYear(?DateTimeInterface $year): self
     {
         $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setVehicle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getVehicle() === $this) {
+                $image->setVehicle(null);
+            }
+        }
 
         return $this;
     }

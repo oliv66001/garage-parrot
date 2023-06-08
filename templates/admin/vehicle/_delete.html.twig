@@ -1,0 +1,3 @@
+<form method="DELETE" action="{{ path('admin_vehicle_delete_vehicle', {'id': vehicle.id}) }}">
+   <a class="btn btn2" href="{{ path('admin_vehicle_delete_vehicle', {'id': vehicle.id}) }}" data-delete data-type="product" data-token="{{ csrf_token('delete_vehicle' ~ vehicle.id) }}">Supprimer</a>
+</form>
