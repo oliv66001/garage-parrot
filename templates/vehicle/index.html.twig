@@ -138,42 +138,53 @@
 			{% endif %}
 		{% else %}
 			{% for category in categories %}
-				{% set vehicles = category.getVehicleType %}
-				{% if vehicles|length > 0 %}
-					<div class="container category-container" id="category-{{ category.getId }}">
-						<div class="row">
-							<div class="col-12">
-								<h2 class="category-title">{{ category.getName }}</h2>
+	{% set vehicles = category.getVehicleType %}
+	{% if vehicles|length > 0 %}
+		<div class="container category-container" id="category-{{ category.getId }}">
+			<div class="row">
+				<div class="col-12">
+					<h2 class="category-title">{{ category.getName }}</h2>
+				</div>
+			</div>
+			<div class="row">
+				{% set sortedVehicles = vehicles|sort((a, b) => a.getYear().diff(b.getYear()).invert ? -1 : 1 or b.getPrice() - a.getPrice()) %}
+				{% for vehicle in sortedVehicles %}
+					<div class="col-lg-4 col-md-6 mb-4 vehicle">
+						<div class="card h-100">
+						
+							{% if vehicle.images|length > 0 %}
+								<img src="{{ asset('assets/uploads/vehicle/mini/300x300-' ~ vehicle.images[0].name ) }}" alt="{{ vehicle.brand }}" class="card-img-top img-fluid">
+							{% elseif vehicle.image %}
+								<img src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" class="card-img-top img-fluid">
+                            {% else %}
+                                <img src="{{ asset('assets/image/Garage.png') }}" width="300" height="300" alt="Image par défaut" class="card-img-top img-fluid">
+                            {% endif %}
+						
+							<div class="card-body">
+								<h4 class="card-title">{{ vehicle.brand }}</h4>
+								<p class="card-text">{{ vehicle.description }}</p>
+							</div>
+							<div class="card-footer">
+								<h5>{{ vehicle.year.format('Y-m-d') }}</h5>
+								<small class="text-muted">{{ vehicle.price }}€</small>
+								<a href="{{ path('app_vehicle_detail', {"slug": vehicle.slug }) }}" class="btn btn4">Détail véhicule</a>
 							</div>
 						</div>
-						<div class="row">
-							{% set sortedVehicles = vehicles|sort((a, b) => a.getYear().diff(b.getYear()).invert ? -1 : 1 or b.getPrice() - a.getPrice()) %}
-							{% for vehicle in sortedVehicles %}
-								<div class="col-lg-4 col-md-6 mb-4 vehicle">
-									<div class="card h-100">
-										<img class="card-img-top" src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" class="zoom-card-img card-img-top img-fluid">
-										<div class="card-body">
-											<h4 class="card-title">{{ vehicle.brand }}</h4>
-											<p class="card-text">{{ vehicle.description }}</p>
-										</div>
-										<div class="card-footer">
-											<h5>{{ vehicle.year.format('Y-m-d') }}</h5>
-											<small class="text-muted">{{ vehicle.price }}€</small>
-											<a href="{{ path('app_vehicle_detail', {'slug': vehicle.slug }) }}" class="btn btn2">Détail véhicule</a>
-										</div>
-									</div>
-								</div>
-							{% endfor %}
-						</div>
 					</div>
-				{% endif %}
-			{% endfor %}
-		{% endif %}
-	</div>
+					
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+{% endfor %}
+	{% endif %}
 
-	{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
+{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
+	
 {% endblock %}
+
 
 {% block javascripts %}
 	<script src="{{ asset('assets/js/zoom.js') }}?v={{ random() }}" defer></script>
+	<script src="{{ asset('assets/js/card.js') }}?v={{ random() }}" defer></script>
 {% endblock %}

@@ -45,10 +45,8 @@ class Vehicle
     #[ORM\Column(type: "date")]
     private ?DateTimeInterface $year = null;
 
-    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: "vehicle", orphanRemoval: true, cascade: ["persist"])]
+    #[ORM\OneToMany(targetEntity:"App\Entity\Image", mappedBy:"vehicle", cascade: ["persist"])]
     private $images;
-
-
 
     public function __construct()
     {
@@ -209,4 +207,5 @@ class Vehicle
 
         return $this;
     }
+
 }

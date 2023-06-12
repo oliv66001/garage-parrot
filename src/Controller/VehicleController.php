@@ -103,26 +103,32 @@ class VehicleController extends AbstractController
         VehicleRepository $vehicleRepository,
         int $page = 1
     ): Response {
-        $vehicles = $vehicleRepository->findByCategory($category, $page, 6);
+        $vehicle = $vehicleRepository->findByCategory($category, $page, 6);
 
         $businessHours = $businessHoursRepository->findAll();
 
         return $this->render('vehicle/category.html.twig', [
             'category' => $category,
-            'vehicles' => $vehicles,
+            'vehicle' => $vehicle,
             'business_hours' => $businessHours,
         ]);
     }
 
-    #[Route('/detail/{slug}', name: 'detail')]
-    public function detail(Vehicle $vehicle, BusinessHoursRepository $businessHoursRepository, VehicleRepository $vehicleRepository): Response
+    #[Route('/vehicle/{slug}', name: 'detail')]
+    public function detail(string $slug, VehicleRepository $vehicleRepository, Vehicle $vehicle, BusinessHoursRepository $businessHoursRepository): Response
     {
+
+        $vehicle = $vehicleRepository->findOneBy(['slug' => $slug]);
         $businessHours = $businessHoursRepository->findAll();
         $year = new DateTime();
         $formattedYear = $year->format('Y-m-d');
 
+        if (!$vehicle) {
+            throw $this->createNotFoundException('Ce véhicule n\'existe pas.');
+        }
+
         return $this->render('vehicle/detail.html.twig', [
-            'vehicles' => $vehicle,
+            'vehicle' => $vehicle,
             'business_hours' => $businessHours,
             'year' => $formattedYear,
         ]);

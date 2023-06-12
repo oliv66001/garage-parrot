@@ -3,6 +3,11 @@
 {% block title %}Page d'accueil{% endblock %}
 
 {% block body %}
+<div class="triangle triangle-left" style="background-image: url('{{ image_left_url }}');"></div>
+<div class="triangle triangle-right" style="background-image: url('{{ image_right_url }}');"></div>
+
+{{ include('testimony/index.html.twig') }}
+
 
 
 

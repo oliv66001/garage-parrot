@@ -9,7 +9,15 @@
                 <h1>Modifier un véhicule</h1>
                 {% include "admin/vehicle/_form.html.twig" with {'button_label': 'Modifier'} %}
             </div>
+            <div class=" me-auto p-2 text-center mt-4">
+            <h5>Supprimer un véhicule définitivement</h5>
+				 {% include "admin/vehicle/_delete.html.twig" with {'button_label': 'Supprimer'} %}
+				</div>
         </section>
     </main>
-    {{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/delete.js') }}" defer></script>
 {% endblock %}

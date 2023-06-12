@@ -34,3 +34,10 @@ img.zoom-card-img:hover {
     transform: scale(1.1); 
 }
 
+/*Image détail véhicule*/
+#detailImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+

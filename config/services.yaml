@@ -10,6 +10,9 @@ parameters:
     
 services:
      # ...
+
+    App\Repository\TestimonyRepository: ~
+            
     App\DataFixtures\:
         resource: '../src/DataFixtures/*'
         tags: ['doctrine.fixture.orm']

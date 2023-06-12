@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste de tout les témoignages{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">Liste de tout les témoignages</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for testimonial in all_testimonies %}
+                <div class="col-12 col-md-4">
+                    <div class="card mb-3 text-center border-primary card-custom">
+                        <div class="card-header text-white bg-primary card-header-custom">
+                            <h5 class="card-title">{{ testimonial.name }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ testimonial.message }}</p>
+                        </div>
+                        <div class="card-footer text-muted card-footer-custom">
+                            <small>Posté le {{ testimonial.createdAt|date('d/m/Y') }}</small>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12 text-center">
+                    <p>Aucun témoignage à afficher.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+    {{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
+{% endblock %}

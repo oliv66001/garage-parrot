@@ -16,8 +16,10 @@ class Image
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(targetEntity: Vehicle::class, inversedBy: "images")]
-    private ?Vehicle $vehicle = null;
+     
+    #[ORM\ManyToOne(targetEntity:"App\Entity\Vehicle", inversedBy:"images")]
+    #[ORM\JoinColumn(nullable:false)]
+    private $vehicle;
 
     public function getId(): ?int
     {
@@ -36,12 +38,18 @@ class Image
         return $this;
     }
 
-    public function getVehicle(): ?Vehicle
+    /**
+     * Get the value of vehicle
+     */
+    public function getVehicle()
     {
         return $this->vehicle;
     }
 
-    public function setVehicle(?Vehicle $vehicle): self
+    /**
+     * Set the value of vehicle
+     */
+    public function setVehicle($vehicle): self
     {
         $this->vehicle = $vehicle;
 

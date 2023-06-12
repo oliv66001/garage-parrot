@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<section class="container">
+		<div class="row justify-content-center">
+			<div class="col-12">
+
+				<h1>Témoignages non validés</h1>
+
+				{% for testimony in unvalidated_testimonies %}
+					<h2>{{ testimony.name }}</h2>
+					<p>{{ testimony.message }}</p>
+
+					{% if is_granted('ROLE_COLAB_ADMIN') %}
+						<a href="{{ path('admin_testimony_validate', {'id': testimony.id}) }}" class="btn btn2 mt-3">Valider</a>
+					{% endif %}
+				{% else %}
+					<p>Aucun témoignage à valider.</p>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+{% endblock %}

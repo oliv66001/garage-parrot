@@ -47,6 +47,17 @@
     background-color: var(--hoverbtn-color);
     color: var(--templates-color);
   }
+
+  .btn5{
+    background-color: var(--hoverbtn-color);
+    color: var(--text-color);
+  }
+
+  .btn5:hover {
+    background-color: var(--button-color);
+    color: var(--templates-color);
+  }
+
   
   .btnTime {
     background-color: var(--button-color);

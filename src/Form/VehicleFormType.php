@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Vehicle;
 use App\Entity\Categorie;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\All;
@@ -13,6 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -21,8 +24,8 @@ class VehicleFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 
-
-        $builder
+      
+          $builder
             ->add('brand', TextType::class, [
                 'label' => 'Marque',
                 'attr' => [
@@ -39,7 +42,7 @@ class VehicleFormType extends AbstractType
                 'label' => false,
                 'multiple' => true,
                 'mapped' => false,
-                'required' => true,
+                'required' => false,
                 'attr' => [
                 'class' => 'form-control'
                 ],
@@ -52,6 +55,7 @@ class VehicleFormType extends AbstractType
                 )
                         ],
             ])
+           
             ->add('kilometer', NumberType::class, [
                 'label' => 'Kilométrage',
                 'attr' => [
@@ -80,19 +84,11 @@ class VehicleFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-            ])
-        ;
-    }
-
-    private function generateYearChoices(): array
-    {
-        $currentYear = (int) date('Y');
-        $startYear = 1990;
-        $years = range($currentYear, $startYear, -1);
-        $choices = array_combine($years, $years);
-
-        return $choices;
-    }
+            ]);
+           
+           
+            
+        }
 
     public function configureOptions(OptionsResolver $resolver): void
     {

@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <aside class="col-lg-6 col-md-6 col-sm-12 mb-3">
-            <article class="card mb-3">
+            <article class="card mb-3 h-100">
                 <div class="card-header">
                     <h3 class="text-center">Catégories</h3>
                 </div>
@@ -12,7 +12,7 @@
             </article>
         </aside>
          <aside class="col-lg-6 col-md-6 col-sm-12 mb-3">
-            <article class="card mb-3">
+            <article class="card mb-3 h-100">
                 <div class="card-header">
                     <h3 class="text-center">Véhicules et images</h3>
                 </div>
@@ -24,7 +24,7 @@
         </aside>
           {% if is_granted('ROLE_ADMIN') %}
          <aside class="col-lg-6 col-md-6 col-sm-12 mb-3">
-            <article class="card mb-3">
+            <article class="card mb-3 h-100">
           <div class="card-header">
             <h3 class="text-center">Utilisateurs</h3>
           </div>
@@ -39,21 +39,20 @@
         
         {% endif %}
          <aside class="col-lg-6 col-md-6 col-sm-12 mb-3">
-            <article class="card mb-3">
+            <article class="card mb-3 h-100">
           <div class="card-header">
-            <h3 class="text-center">Menus</h3>
+            <h3 class="text-center">Témoiniages</h3>
           </div>
          <div class="card-body text-center">
             <p>
-              <a class="btn4" href="#">liste</a></p>
-            <p>
-              <a class="btn4" href="#">Ajouter</a></p>
+              <a class="btn4" href="{{ path('admin_testimony_index') }}">liste</a></p>
+           
           </div>
         </article>
         </aside>
         {% if is_granted('ROLE_ADMIN') %}
          <aside class="col-lg-6 col-md-6 col-sm-12 mb-3">
-            <article class="card mb-3">
+            <article class="card mb-3 h-100">
           <div class="card-header">
             <h3 class="text-center">Horraires</h3>
           </div>
