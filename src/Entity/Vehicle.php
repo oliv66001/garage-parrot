@@ -36,8 +36,8 @@ class Vehicle
     #[ORM\Column]
     private ?int $price = null;
 
-    #[ORM\OneToOne(mappedBy: 'subject', cascade: ['persist', 'remove'])]
-    private ?Contact $contact = null;
+    #[ORM\OneToMany(targetEntity: Contact::class, mappedBy: 'subject')]
+    private $contacts;
 
     #[ORM\ManyToOne(inversedBy: 'vehicleType')]
     private ?Categorie $categorie = null;
@@ -55,6 +55,7 @@ class Vehicle
     {
         $this->year = new \DateTime(date('Y-m-d'));
         $this->images = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,28 +119,6 @@ class Vehicle
     public function setPrice(int $price): self
     {
         $this->price = $price;
-
-        return $this;
-    }
-
-    public function getContact(): ?Contact
-    {
-        return $this->contact;
-    }
-
-    public function setContact(?Contact $contact): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($contact === null && $this->contact !== null) {
-            $this->contact->setSubject(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($contact !== null && $contact->getSubject() !== $this) {
-            $contact->setSubject($this);
-        }
-
-        $this->contact = $contact;
 
         return $this;
     }

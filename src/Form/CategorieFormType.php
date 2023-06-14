@@ -17,12 +17,16 @@ class CategorieFormType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Nom',
+                'attr' => [
+                    'placeholder' => 'Nom de la catégorie',
+                    'class' => 'form-control',
+                ],
             ])
-            ->add('vehicleType', CollectionType::class, [
-                'entry_type' => VehicleFormType::class,
-                'entry_options' => ['label' => false],
-                'label' => false,
-            ])
+            //->add('vehicleType', CollectionType::class, [
+            //    'entry_type' => VehicleFormType::class,
+            //    'entry_options' => ['label' => false],
+            //    'label' => false,
+            //])
             
         ;
     }

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire de contact{% endblock %}
+
+{% block body %}
+
+<h1 class="text-center">Formulaire de contact</h1>
+
+<section class="container">
+<div class="row justify-content-center">
+<div class="col-md-6">
+
+{{ form_start(formContact) }}
+<div class="form-group text-center">
+{{ form_row(formContact.firstname) }}
+{{ form_row(formContact.lastname) }}
+{{ form_row(formContact.mail) }}
+{{ form_row(formContact.phone) }}
+{{ form_row(formContact.subject) }}
+{{ form_row(formContact.message) }}
+{{ form_row(formContact.submit) }}
+{{ form_end(formContact) }}
+</div>
+</div>
+</div>
+</section>
+{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
+{% endblock %}

@@ -1,69 +1,73 @@
 {% extends "base.html.twig" %}
 
 {% block title %}Détails de
-    {{ vehicle.brand }}
+	{{ vehicle.brand }}
 {% endblock %}
 
 {% block body %}
-    <main class="container">
-        <section class="row">
-            <div class="col-12">
-                <h1 class="text-center">{{ vehicle.brand }}</h1>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div id="carouselExampleIndicators" class="carousel slide">
-                    <div class="carousel-indicators">
-                        {% for iteration in 1.. vehicle.images|length %}
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to=" {{ iteration - 1 }} " {{ (loop.first) ? 'class="active" aria-current="true"' : ''}} aria-label="Slide {{ iteration }}"></button>
-                        {% endfor %}
-                    </div>
-                    <div class="carousel-inner">
-                        {% for image in vehicle.images %}
-                            <div class="carousel-item {{ (loop.first) ? 'active' : '' }}">
-                                <img src="{{ asset('assets/uploads/vehicle/mini/300x300-') ~ image.name }}" id="detailImg" alt="{{ vehicle.brand }}" class="d-block img-fluid w-100">
-                            </div>
-                        {% endfor %}
-                    </div>
+	<main class="container">
+		<section class="row">
+			<div class="col-12">
+				<h1 class="text-center">{{ vehicle.brand }}</h1>
+			</div>
+			<div class="col-12 col-md-6 col-lg-4">
+				<div id="carouselExampleIndicators" class="carousel slide">
+					<div class="carousel-indicators">
+						{% for iteration in 1.. vehicle.images|length %}
+							<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to=" {{ iteration - 1 }} " {{ (loop.first) ? 'class="active" aria-current="true"' : ''}} aria-label="Slide {{ iteration }}"></button>
+						{% endfor %}
+					</div>
+					<div class="carousel-inner">
+						{% for image in vehicle.images %}
+							<div class="carousel-item {{ (loop.first) ? 'active' : '' }}">
+								<img src="{{ asset('assets/uploads/vehicle/mini/300x300-') ~ image.name }}" id="detailImg" alt="{{ vehicle.brand }}" class="d-block img-fluid w-100">
+							</div>
+						{% endfor %}
+					</div>
 
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-8">
-                <p>
-                    <h4>Marque :</h4>
-                    {{ vehicle.brand }}
-                </p>
-                <p>
-                    <h4>Description :</h4>
-                    {{  vehicle.description }}
-                </p>
-                <p>
-                    <h4>Catégorie :</h4>
-                    {{ vehicle.categorie.name }}
-                </p>
-                <p>
-                    <h4>Année d'immatriculation :</h4>
-                    {{ vehicle.year.format('Y-m-d') }}
-                </p>
-                <p>
-                    <h4>Nombre de kilomètres :</h4>
-                    {{ vehicle.kilometer }}
-                    km
-                </p>
-                <p>
-                    <h4>Prix :</h4>
-                    {{ vehicle.price }}
-                    €
-                </p>
-            </div>
-        </section>
-    </main>
-    {{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+			</div>
+			<div class="col-12 col-md-6 col-lg-8">
+				<p>
+					<h4>Marque :</h4>
+					{{ vehicle.brand }}
+				</p>
+				<p>
+					<h4>Description :</h4>
+					{{  vehicle.description }}
+				</p>
+				<p>
+					<h4>Catégorie :</h4>
+					{{ vehicle.categorie.name }}
+				</p>
+				<p>
+					<h4>Année d'immatriculation :</h4>
+					{{ vehicle.year.format('Y-m-d') }}
+				</p>
+				<p>
+					<h4>Nombre de kilomètres :</h4>
+					{{ vehicle.kilometer }}
+					km
+				</p>
+				<p>
+					<h4>Prix :</h4>
+					{{ vehicle.price }}
+					€
+				</p>
+				<a href="{{ path('app_contact_vehicle', {'id': vehicle.id}) }}" class="btn btn2 mt-3">Contact</a>
+
+				<a href="{{ path('app_vehicle_index')}}" class="btn btn3 mt-3">Retour</a>
+			</div>
+
+		</section>
+	</main>
+	{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
 {% endblock %}

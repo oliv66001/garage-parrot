@@ -2,9 +2,11 @@
 	<div class="row justify-content-center">
 		<div class="col">
 			{{ form_start(categoryForm) }}
+			<div class="mt-3">
 			{{ form_row(categoryForm.name) }}
+			</div>
 			<div>
-				<button class="btn btn mt-2" type="submit">
+				<button class="btn btn mt-3" type="submit">
 					{{ button_label | default ('Ajouter') }}
 				</button>
 			</div>

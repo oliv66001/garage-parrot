@@ -1,11 +1,23 @@
- <h1>Nouveau message de {{ contact.fullName }}</h1>
-    <p>
-        Nom : {{ contact.fullName }}<br>
-        Email : {{ contact.email }}<br>
-        Téléphone : {{ contact.phone }}<br>
-        Sujet : {{ contact.subject }}
-    </p>
-    <p>
-        Message :<br>
-        {{ contact.message }}
-    </p>
+<h1>Nouveau message de
+	{{ contact.lastname }}</h1>
+<p>
+	Nom :
+	{{ contact.firstname }}<br>
+	Email :
+	{{ contact.mail }}<br>
+	Téléphone :
+	{{ contact.phone }}<br>
+	Sujet :
+	{{ contact.subject.brand }}<br>
+	Année :
+	{{ contact.subject.year }}<br>
+	Kilométrage :
+	{{ contact.subject.kilometer }}<br>
+    Prix :
+    {{ contact.subject.price }}
+
+</p>
+<p>
+	Message :<br>
+	{{ contact.message }}
+</p>

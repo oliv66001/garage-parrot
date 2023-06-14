@@ -19,16 +19,16 @@ class SendMailService
             string $subject,
             string $template,
             array $context = [],
-            bool $addEmailsPrefix = true // Ajoutez ce paramètre ici
+            bool $addEmailsPrefix = true 
         ): void
     {
-        $email = (new TemplatedEmail())
+        $mail = (new TemplatedEmail())
             ->from($from)
             ->to($to)
             ->subject($subject)
             ->htmlTemplate(($addEmailsPrefix ? 'emails/' : '') . $template . '.html.twig') // Modifiez cette ligne
             ->context($context);
 
-        $this->mailer->send($email);
+        $this->mailer->send($mail);
     }
 }

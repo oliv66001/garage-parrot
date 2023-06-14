@@ -70,23 +70,28 @@ class CategorieController extends AbstractController
     }
    
     
- #[Route("/categorie/delete/{id}", name:"delete_categorie", methods:["DELETE"])]
- 
-public function delete(Request $request, Categorie $category, EntityManagerInterface $em): Response
-{
-    $data = json_decode($request->getContent(), true);
-
-    if ($this->isCsrfTokenValid('delete_categorie' . $category->getId(), $data['_token'])) {
-        $em->remove($category);
-        $em->flush();
-
-        $this->addFlash('success', 'Catégorie supprimée avec succès.');
-
-        return new JsonResponse(['success' => true, 'message' => 'Catégorie supprimée avec succès'], 200);
+    #[Route("/categorie/delete/{id}", name:"delete_categorie", methods:["DELETE"])]
+    public function delete(Request $request, Categorie $category, EntityManagerInterface $em): Response
+    {
+        $data = json_decode($request->getContent(), true);
+    
+        // Avant de procéder à la suppression, vérifiez si la catégorie contient des véhicules
+        if (count($category->getVehicleType()) > 0) {
+            // Si la catégorie contient des véhicules, renvoyez une erreur
+            return new JsonResponse(['error' => 'Cette catégorie contient des véhicules et ne peut pas être supprimée'], 400);
+        }
+    
+        if ($this->isCsrfTokenValid('delete_categorie' . $category->getId(), $data['_token'])) {
+            $em->remove($category);
+            $em->flush();
+    
+            $this->addFlash('success', 'Catégorie supprimée avec succès.');
+    
+            return new JsonResponse(['success' => true, 'message' => 'Catégorie supprimée avec succès'], 200);
+        }
+    
+        // Échec de la suppression
+        return new JsonResponse(['error' => 'Token invalide'], 400);
     }
-
-    // Échec de la suppression
-    return new JsonResponse(['error' => 'Token invalide'], 400);
-}
-
+    
 }

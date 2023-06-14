@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use DateTime;
 use DateInterval;
+use App\Entity\Contact;
 use App\Entity\Vehicle;
 use App\Entity\Categorie;
 use Psr\Log\LoggerInterface;
@@ -55,8 +56,8 @@ class VehicleController extends AbstractController
         $vehicles = $vehicleRepository->searchByYear($year, $categoryName, $price, $kilometer);
     
         // Get only vehicles that should be displayed on the homepage
-        $displayOnHomePage = true;
-        $vehiclesForHomePage = $vehicleRepository->findByDisplayOnHomePage($displayOnHomePage);
+        //$displayOnHomePage = true;
+        //$vehiclesForHomePage = $vehicleRepository->findByDisplayOnHomePage($displayOnHomePage);
     
         // Check if no vehicles found and render the main index page
         if (empty($vehicles)) {
@@ -89,7 +90,7 @@ class VehicleController extends AbstractController
         return $this->render('vehicle/index.html.twig', [
             'categories' => $categories,
             'vehicles' => $vehicles,
-            'vehiclesForHomePage' => $vehiclesForHomePage,
+            //'vehiclesForHomePage' => $vehiclesForHomePage,
             'business_hours' => $businessHours,
             'currentYear' => $currentYear,
             'year' => $year,
@@ -136,4 +137,26 @@ class VehicleController extends AbstractController
             'year' => $formattedYear,
         ]);
     }
+
+    #[Route('/vehicle/{slug}/contact', name: 'vehicle_contact')]
+public function contactVehicle(Vehicle $vehicle, Request $request, EntityManagerInterface $em): Response
+{
+    $contact = new Contact();
+    $contact->setSubject($vehicle);
+    
+    $form = $this->createForm(ContactFormType::class, $contact);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $em->persist($contact);
+        $em->flush();
+
+        // Redirect or show a success message
+    }
+
+    return $this->render('contact/index.html.twig', [
+        'formContact' => $form->createView(),
+    ]);
+}
+
 }

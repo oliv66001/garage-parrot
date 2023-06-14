@@ -29,8 +29,10 @@ class Contact
     #[ORM\Column(type: Types::TEXT)]
     private ?string $message = null;
 
-    #[ORM\OneToOne(inversedBy: 'contact', cascade: ['persist', 'remove'])]
-    private ?Vehicle $subject = null;
+    #[ORM\ManyToOne(targetEntity: Vehicle::class, inversedBy: 'contacts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $subject;
+    
 
     public function getId(): ?int
     {
