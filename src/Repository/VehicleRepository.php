@@ -60,6 +60,7 @@ class VehicleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+   
 
 
     public function searchByYear(?string $category, $price, $year, $kilometer): array
@@ -95,4 +96,15 @@ class VehicleRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findByDisplayOnHomePage(bool $displayOnHomePage)
+    {
+        return $this->createQueryBuilder('v')
+            ->innerJoin('v.images', 'i')
+            ->where('i.displayOnHomePage = :displayOnHomePage')
+            ->setParameter('displayOnHomePage', $displayOnHomePage)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

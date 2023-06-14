@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class VehicleFormType extends AbstractType
@@ -38,6 +39,10 @@ class VehicleFormType extends AbstractType
                     'class' => 'form-control',
                 ],
             ])
+            ->add('displayOnHomePage', CheckboxType::class, [
+                'label'    => 'Afficher sur la page d\'accueil  ',
+                'required' => false,
+            ])
             ->add('images', FileType::class, [
                 'label' => false,
                 'multiple' => true,
@@ -49,7 +54,7 @@ class VehicleFormType extends AbstractType
                 'constraints' => [
                     new All(
                         new Image([
-                            'maxWidth' => 3000,
+                            'maxWidth' => 1700,
                             'maxWidthMessage' => 'L\'image doit faire {{ max_width }} pixels de large au maximum'
                 ])
                 )

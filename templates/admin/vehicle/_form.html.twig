@@ -26,11 +26,16 @@
 				{# Affichage des images #}
 				
 				{% if app.request.attributes.get('_route') == 'admin_vehicle_edit' %}
+				<h2 class="text-center mt-3">Images</h2>
+				<div class="mb-3">
+				<h6 class="text-center">
+					{{ form_row(vehicleForm.displayOnHomePage)}}</h6>
+				</div>
 
-
-					<h2 class="text-center mt-3">Images</h2>
+					
 					{% for image in vehicle.images %}
 						<div>
+							
 							<img src=" {{ asset('assets/uploads/vehicle/mini/300x300-' ~ image.name) }} " alt=" {{ vehicle.brand }} " width="150">
 							<a class="btn" href=" {{ path('admin_vehicle_delete_image', {id: image.id, 'deleteVehicle': false})}} " data-delete data-type="image" data-token=" {{ csrf_token('delete' ~ image.id) }} ">Supprimer</a>
 						</div>
@@ -39,7 +44,9 @@
 
 
 				{% endif %}
+				
 				{{ form_row(vehicleForm.images) }}
+				
 				<div class="text-center">
 					<button type="submit" class="btn btn2 mt-3">{{ button_label|default('Ajouter') }}</button>
 				</div>

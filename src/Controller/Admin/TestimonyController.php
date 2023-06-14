@@ -4,12 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Testimony;
 use App\Form\TestimonyType;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Repository\TestimonyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin', name: 'admin_testimony_')]
@@ -21,13 +22,14 @@ class TestimonyController extends AbstractController
     {
         $unvalidatedTestimonies = $testimonyRepository->findBy(['validation' => false]);
     
+        
         return $this->render('admin/testimony/index.html.twig', [
             'unvalidated_testimonies' => $unvalidatedTestimonies,
         ]);
     }
     
     
-    #[Route("/admin/testimony/{id}/validate", name: "validate", methods: ["POST"])]
+    #[Route("/admin/testimony/{id}/validate", name: "validate")]
     public function validate(int $id, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_COLAB_ADMIN');
@@ -35,12 +37,41 @@ class TestimonyController extends AbstractController
     
         if (!$testimony) {
             throw $this->createNotFoundException('No testimony found for id ' . $id);
+            
         }
-    
-        $testimony->setValidation(true); // Set validation to true
+        $this->addFlash('success', 'Le témoignage a bien été validé');
+        $testimony->setValidation(true);
         $em->flush();
     
-        return $this->redirectToRoute('testimony_index');
+        return $this->redirectToRoute('admin_testimony_index');
     }    
+
+    #[Route("/admin/testimony/{id}/delete", name: "delete", methods: ['DELETE'])]
+    public function testimonyDelete(
+        Testimony $testimony,
+        Request $request,
+        EntityManagerInterface $em
+    ): JsonResponse {
+
+
+        $data = json_decode($request->getContent(), true);
+
+        // On vérifie si le token est valide
+        if ($this->isCsrfTokenValid('delete_testimony' . $testimony->getId(), $data['_token'])) {
+
+
+            // On supprime le produit de la base
+            $em->remove($testimony);
+            $em->flush();
+
+            $this->addFlash('success', 'Message supprimé avec succès.');
+
+
+            return new JsonResponse(['success' => true, 'message' => 'Message supprimé avec succès'], 200);
+        }
+
+        // Echec de la suppréssion
+        return new JsonResponse(['error' => 'Token invalide'], 400);
+    }
 
 }

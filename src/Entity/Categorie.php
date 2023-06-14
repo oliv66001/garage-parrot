@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Categorie
 {
 
@@ -89,4 +90,5 @@ public function removeVehicleType(Vehicle $vehicleType): self
 
         return $this;
     }
+
 }

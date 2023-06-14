@@ -19,15 +19,18 @@ class CategorieController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(CategorieRepository $categorieRepository): Response
     {
-        $categorie = $categorieRepository->findBy([], ['categoryOrder' => 'ASC']);
-        return $this->render('admin/categorie/index.html.twig', compact('categorie'));
+        $categorie = $categorieRepository->findBy([], ['id' => 'DESC']);
+        return $this->render('admin/categorie/index.html.twig',[
+            'categorie' => $categorie,
+        ]
+        );
     }
 
     #[Route('/ajouter', name: 'add')]
-    public function add(Request $request, EntityManagerInterface $em, CategorieFormType $category, Categorie $categorie): Response
+    public function add(Request $request, EntityManagerInterface $em, CategorieFormType $category, CategorieRepository $categorieRepository): Response
     {
         $category = new Categorie();
-
+        $categorie = $categorieRepository->findBy([], ['id' => 'DESC']);
         $form = $this->createForm(CategorieFormType::class, $category);
         $form->handleRequest($request);
 

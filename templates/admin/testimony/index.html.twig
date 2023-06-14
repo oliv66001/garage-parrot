@@ -3,21 +3,35 @@
 {% block body %}
 	<section class="container">
 		<div class="row justify-content-center">
-			<div class="col-12">
+			<div class="col">
 
-				<h1>Témoignages non validés</h1>
+				<h1 class="text-center">Témoignages non validés</h1>
 
 				{% for testimony in unvalidated_testimonies %}
-					<h2>{{ testimony.name }}</h2>
-					<p>{{ testimony.message }}</p>
+					<h2 class="text-center mt-3">{{ testimony.name }}</h2>
+					<p class="text-center">{{ testimony.message }}</p>
 
 					{% if is_granted('ROLE_COLAB_ADMIN') %}
-						<a href="{{ path('admin_testimony_validate', {'id': testimony.id}) }}" class="btn btn2 mt-3">Valider</a>
+						<div class="text-center">
+							<a href="{{ path('admin_testimony_validate', {'id': testimony.id}) }}" class="btn btn2 text-center mt-3">Valider</a>
+						</div>
+						<div class="text-center mt-3">
+							<form method="post" action="{{ path('admin_testimony_delete', {'id': testimony.id}) }}" onsubmit="return confirm('Voulez-vous supprimer ce message ?')">
+								<input type="hidden" name="_method" value="DELETE">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete_testimony' ~ testimony.id) }}">
+								<button class="btn btn3">Supprimer</button>
+							</form>
+						</div>
 					{% endif %}
 				{% else %}
-					<p>Aucun témoignage à valider.</p>
+					<p class="text-center">Aucun témoignage à valider.</p>
 				{% endfor %}
 			</div>
 		</div>
 	</section>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('assets/js/delete.js') }}" defer></script>
 {% endblock %}

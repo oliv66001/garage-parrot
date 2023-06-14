@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ImageRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
@@ -18,7 +19,7 @@ class Image
 
      
     #[ORM\ManyToOne(targetEntity:"App\Entity\Vehicle", inversedBy:"images")]
-    #[ORM\JoinColumn(nullable:false)]
+    #[ORM\JoinColumn(nullable:true)]
     private $vehicle;
 
     public function getId(): ?int
@@ -55,4 +56,5 @@ class Image
 
         return $this;
     }
+
 }

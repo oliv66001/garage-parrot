@@ -45,8 +45,11 @@ class Vehicle
     #[ORM\Column(type: "date")]
     private ?DateTimeInterface $year = null;
 
-    #[ORM\OneToMany(targetEntity:"App\Entity\Image", mappedBy:"vehicle", cascade: ["persist"])]
+    #[ORM\OneToMany(targetEntity: "App\Entity\Image", mappedBy: "vehicle", cascade: ["persist"])]
     private $images;
+
+    #[ORM\Column(length: 255, nullable: false)]
+    private ?bool $displayOnHomePage = false;
 
     public function __construct()
     {
@@ -208,4 +211,30 @@ class Vehicle
         return $this;
     }
 
+
+    /**
+     * Get the value of displayOnHomePage
+     *
+     * @return ?bool
+     */
+    public function getDisplayOnHomePage(): ?bool
+    {
+        return $this->displayOnHomePage;
+    }
+
+    /**
+     * Set the value of displayOnHomePage
+     *
+     * @param ?bool $displayOnHomePage
+     *
+     * @return self
+     */
+    public function setDisplayOnHomePage(?bool $displayOnHomePage): self
+    {
+        $this->displayOnHomePage = $displayOnHomePage;
+
+        return $this;
+    }
+
+   
 }

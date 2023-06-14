@@ -41,3 +41,22 @@ img.zoom-card-img:hover {
     object-fit: cover;
 }
 
+/*caroussel*/
+.carousel-item img {
+    height: 600px; 
+    object-fit: cover; 
+    width:80%;
+}
+
+.carousel-item {
+    transition: transform .5s ease-in-out;
+}
+
+.carousel-item:hover {
+    transform: scale(0.95); 
+}
+
+
+
+
+

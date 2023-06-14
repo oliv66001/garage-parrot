@@ -45,23 +45,24 @@ class VehicleController extends AbstractController
         $date = new DateTime(date('Y-m-d'));
         $businessHours = $businessHoursRepository->findAll();
         $this->logger->info('Searching vehicles');
-
         // Fetch search parameters
         $categoryName = $request->query->get('category');
         $price = $request->query->get('price');
         $year = $request->query->get('year');
         $kilometer = $request->query->get('kilometer');
-
+    
         // Fetch vehicles from the database based on search parameters
         $vehicles = $vehicleRepository->searchByYear($year, $categoryName, $price, $kilometer);
-        // Assuming a custom method `searchByYear()` in your repository
-
+    
+        // Get only vehicles that should be displayed on the homepage
+        $displayOnHomePage = true;
+        $vehiclesForHomePage = $vehicleRepository->findByDisplayOnHomePage($displayOnHomePage);
+    
         // Check if no vehicles found and render the main index page
         if (empty($vehicles)) {
-
             return new RedirectResponse($this->generateUrl('app_vehicle_index'));
         }
-
+    
         // For AJAX requests, respond with a JSON object of vehicles
         if ($request->isXmlHttpRequest()) {
             $response = [];
@@ -80,14 +81,15 @@ class VehicleController extends AbstractController
                     'kilometer' => $vehicle->getKilometer(),
                 ];
             }
-
+    
             return new JsonResponse($response);
         }
-
+    
         // Render the main index page
         return $this->render('vehicle/index.html.twig', [
             'categories' => $categories,
             'vehicles' => $vehicles,
+            'vehiclesForHomePage' => $vehiclesForHomePage,
             'business_hours' => $businessHours,
             'currentYear' => $currentYear,
             'year' => $year,
@@ -95,6 +97,7 @@ class VehicleController extends AbstractController
             'kilometer' => $kilometer,
         ]);
     }
+    
 
     #[Route('/{categoryId}', name: 'category', requirements: ['categoryId' => '\d+'])]
     public function category(
