@@ -1,42 +1,66 @@
 {% block body %}
-    <h1 class="text-center">Témoignage client</h1>
-    <section class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                {{ form_start(form) }}
-                    {{ form_widget(form) }}
+	<h1 class="text-center">Témoignage client</h1>
+	<section class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				{{ form_start(form) }}
+				{{ form_row(form.name, {'attr': {'placeholder': 'Nom'}}) }}
+				<div class="rating">
+					{% for i in 1..5 %}
+						<span class="star" data-value="{{ i }}">★</span>
+					{% endfor %}
+					{{ form_widget(form.rating, { 'attr': { 'class': 'hidden-rating' }, 'label': false }) }}
+				</div>
 
-                    {% if is_granted('ROLE_COLAB_ADMIN') %}
-                    <div class="text-center">
-                        <button type="submit" class="btn btn2 mt-3 text-center">Valider</button>
-                    </div>
-                    {% endif %}
-                {{ form_end(form) }}
-            </div>
-        </div>
-        <hr class="mt-3 mb-3">
 
-        <!-- Display the list of validated testimonies -->
-        <div class="row justify-content-center">
-            <h2 class="col-12 text-center mt-3 mb-3">Témoignages de nos clients</h2>
-            {% for testimony in testimony %}
-                <div class="col-12 col-md-4">
-                    <div class="card mb-3 text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ testimony.name }}</h5>
-                            <p class="card-text">{{ testimony.message }}</p>
-                        </div>
-                    </div>
-                </div>
-            {% else %}
-                <p class="col-12 text-center">Aucun témoignage validé.</p>
-            {% endfor %}
-        </div>
+				{{ form_row(form.message, {'attr': {'placeholder': 'Message'}}) }}
 
-        <div class="row justify-content-center">
-            <div class="col-12 text-center">
-                <a href="{{ path('all_testimonies') }}" class="btn btn2">Voir tous les témoignages</a>
-            </div>
-        </div>
-    </section>
+				<div class="text-center">
+					<button type="submit" class="btn btn2 mt-3 text-center">Valider</button>
+				</div>
+
+				{{ form_end(form) }}
+			</div>
+		</div>
+		<hr
+		class="mt-3 mb-3">
+
+		<!-- Display the list of validated testimonies -->
+		<div class="row justify-content-center">
+			<h2 class="col-12 text-center mt-3 mb-3">Témoignages de nos clients</h2>
+			{% for testimony in testimony %}
+				<div class="col-12 col-md-4">
+					<div class="card mb-3 text-center">
+						<div class="card-body">
+							<h5 class="card-title">{{ testimony.name }}</h5>
+							<p class="card-text">
+								{% for i in 1..5 %}
+									{% if i <= testimony.rating %}
+										<i class="fas fa-star"></i>
+									{% else %}
+										<i class="far fa-star"></i>
+									{% endif %}
+								{% endfor %}
+							</p>
+
+
+							<p class="card-text">{{ testimony.message }}</p>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<p class="col-12 text-center">Aucun témoignage validé.</p>
+			{% endfor %}
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="col-12 text-center">
+				<a href="{{ path('all_testimonies') }}" class="btn btn2">Voir tous les témoignages</a>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('assets/js/star.js') }}" defer></script>
 {% endblock %}

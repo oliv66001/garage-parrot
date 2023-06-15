@@ -9,6 +9,7 @@
 
 				{% for testimony in unvalidated_testimonies %}
 					<h2 class="text-center mt-3">{{ testimony.name }}</h2>
+					<p class="text-center">{{ testimony.rating }}</p>
 					<p class="text-center">{{ testimony.message }}</p>
 
 					{% if is_granted('ROLE_COLAB_ADMIN') %}

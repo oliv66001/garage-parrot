@@ -21,6 +21,8 @@ class TestimonyController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $rating = $request->request->get('rating');
+            $testimony->setRating($rating);
             $testimony->setCreatedAt(new \DateTimeImmutable('now'));
             $testimony->setValidation(false); // Set validation to false by default
             $em->persist($testimony);

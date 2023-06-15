@@ -9,8 +9,19 @@
             {% for testimonial in all_testimonies %}
                 <div class="col-12 col-md-4">
                     <div class="card mb-3 text-center border-primary card-custom">
-                        <div class="card-header text-white bg-primary card-header-custom">
+                        <div class="card-header text-white card-header-custom">
                             <h5 class="card-title">{{ testimonial.name }}</h5>
+                        </div>
+                         <div class="card-body">
+                           <p class="card-text">
+								{% for i in 1..5 %}
+									{% if i <= testimonial.rating %}
+										<i class="fas fa-star"></i>
+									{% else %}
+										<i class="far fa-star"></i>
+									{% endif %}
+								{% endfor %}
+							</p>
                         </div>
                         <div class="card-body">
                             <p class="card-text">{{ testimonial.message }}</p>

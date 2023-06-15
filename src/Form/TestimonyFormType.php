@@ -6,6 +6,7 @@ use App\Entity\Testimony;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Form\Type\RatingType;
 
 class TestimonyFormType extends AbstractType
 {
@@ -18,6 +19,10 @@ class TestimonyFormType extends AbstractType
                 'class' => 'form-control'
             ],
             ])
+            ->add('rating', RatingType::class, [
+                'label' => 'Rate this product',
+            ])
+            
             ->add('message', null, ['label'=>'Message',
             'attr' => [
                 'placeholder' => 'Votre message',

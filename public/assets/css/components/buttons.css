@@ -58,6 +58,36 @@
     color: var(--templates-color);
   }
 
+  /*stars*/
+
+  .star {
+    cursor: pointer;
+    transition: color 0.2s;
+    font-size: 40px;
+}
+
+.star.highlight {
+    color: gold;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.rating-star ~ input[type="radio"] {
+  display: none;
+}
+
+.hidden-rating {
+  display: none;
+}
+
+
+
+
+  
+
+
   
   .btnTime {
     background-color: var(--button-color);

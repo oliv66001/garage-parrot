@@ -14,6 +14,7 @@ class TestimonyFixtures extends Fixture
         for ($i = 1; $i <= 10; $i++) {
             $testimony = new Testimony();
             $testimony->setName('Test User ' . $i);
+            $testimony->setRating(rand(1, 5));
             $testimony->setMessage('This is a fake message from user ' . $i . '.');
             $testimony->setCreatedAt(new \DateTimeImmutable('now'));
             $testimony->setValidation(false); // Set validation to false by default
