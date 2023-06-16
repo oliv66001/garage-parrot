@@ -169,14 +169,14 @@ class VehicleController extends AbstractController
         if ($this->isCsrfTokenValid('delete_vehicle' . $vehicle->getId(), $data['_token'])) {
 
 
-            // On supprime le produit de la base
+            // On supprime le véhicule de la base
             $em->remove($vehicle);
             $em->flush();
 
-            $this->addFlash('success', 'Produit supprimé avec succès.');
+            $this->addFlash('success', 'Véhicule supprimé avec succès.');
 
 
-            return new JsonResponse(['success' => true, 'message' => 'Produit supprimé avec succès'], 200);
+            return new JsonResponse(['success' => true, 'message' => 'Véhicule supprimé avec succès'], 200);
         }
 
         // Echec de la suppréssion

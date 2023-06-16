@@ -1,10 +1,10 @@
-let links = document.querySelectorAll("[data-delete]");
+let productLinks = document.querySelectorAll("[data-delete][data-type='repair']");
 
-for (let link of links) {
+for (let link of productLinks) {
     link.addEventListener("click", function (e) {
         e.preventDefault();
-       
-        if (confirm("Voulez-vous supprimer cette catégorie ?")) {
+
+        if (confirm("Voulez-vous supprimer définitivement ce véhicule ?")) {
             fetch(this.getAttribute("href"), {
                 method: "DELETE",
                 headers: {
@@ -18,10 +18,10 @@ for (let link of links) {
                 if (data.success) {
                     this.parentElement.remove();
 
-                    // Afficher le message flash
+                      // Afficher le message flash
                     alert(data.message);
-                    // Redirection vers la liste des catégories (remplacez 'category_list' par le nom de la route approprié)
-                    window.location.href = '/admin/categorie';
+                    // Redirection vers la route 'admin_repair_index'
+                    window.location.href = '/admin/repair';
                 } else {
                     alert(data.error);
                 }

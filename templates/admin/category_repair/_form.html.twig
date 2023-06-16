@@ -1,0 +1,17 @@
+<section class="container">
+	<div class="row justify-content-center">
+		<div class="col">
+			{{ form_start(categoryRepairForm) }}
+			<div class="mt-3">
+			{{ form_row(categoryRepairForm.name) }}
+			</div>
+			<div>
+				<button class="btn btn mt-3" type="submit">
+					{{ button_label | default ('Ajouter') }}
+				</button>
+			</div>
+			{{ form_end(categoryRepairForm) }}
+
+		</div>
+	</div>
+</section>

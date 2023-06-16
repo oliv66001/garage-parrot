@@ -6,7 +6,7 @@ use App\Entity\Testimony;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Form\Type\RatingType;
+use App\Form\RatingType;
 
 class TestimonyFormType extends AbstractType
 {

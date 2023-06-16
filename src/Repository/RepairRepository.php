@@ -39,6 +39,16 @@ class RepairRepository extends ServiceEntityRepository
         }
     }
 
+//    public function findByCategory($categoryId)
+//    {
+//        return $this->createQueryBuilder('r')
+//            ->innerJoin('r.category', 'c')
+//            ->where('c.id = :categoryId')
+//            ->setParameter('categoryId', $categoryId)
+//            ->getQuery()
+//            ->getResult();
+//    }
+
 //    /**
 //     * @return Repair[] Returns an array of Repair objects
 //     */

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réparations par catégorie{% endblock %}
+
+{% block body %}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Description</th>
+        <th scope="col">Prix</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for repair in repairs %}
+    <tr>
+        <th scope="row">{{ repair.id }}</th>
+        <td>{{ repair.name }}</td>
+        <td>{{ repair.description }}</td>
+        <td>{{ repair.price }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

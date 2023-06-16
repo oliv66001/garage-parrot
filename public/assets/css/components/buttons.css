@@ -67,7 +67,7 @@
 }
 
 .star.highlight {
-    color: gold;
+    color: var(--button2-color);
 }
 
 input[type="radio"] {
@@ -82,14 +82,11 @@ input[type="radio"] {
   display: none;
 }
 
+.fa-star{
+  color: var(--button2-color);
+}
 
-
-
-  
-
-
-  
-  .btnTime {
+.btnTime {
     background-color: var(--button-color);
     color: var(--text-color);
     font-family: 'Roboto', sans-serif;

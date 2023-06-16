@@ -3,8 +3,8 @@ let links = document.querySelectorAll("[data-delete]");
 for (let link of links) {
     link.addEventListener("click", function (e) {
         e.preventDefault();
-       
-        if (confirm("Voulez-vous supprimer cette catégorie ?")) {
+
+        if (confirm("Voulez-vous supprimer cette catégorie de l'atelier ?")) {
             fetch(this.getAttribute("href"), {
                 method: "DELETE",
                 headers: {
@@ -21,7 +21,7 @@ for (let link of links) {
                     // Afficher le message flash
                     alert(data.message);
                     // Redirection vers la liste des catégories (remplacez 'category_list' par le nom de la route approprié)
-                    window.location.href = '/admin/categorie';
+                    window.location.href = '/admin/category_repair';
                 } else {
                     alert(data.error);
                 }

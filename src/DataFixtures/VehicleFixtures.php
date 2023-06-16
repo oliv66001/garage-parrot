@@ -23,10 +23,11 @@ class VehicleFixtures extends Fixture
             $vehicle->setBrand($faker->company);
             $vehicle->setSlug($this->slugger->slug($vehicle->getBrand())->lower());
             $vehicle->setDescription($faker->text);
-            $vehicle->setImage($faker->imageUrl());
+            $vehicle->setImage($faker->imageUrl(640, 360, 'vehicle', true));
             $vehicle->setKilometer($faker->numberBetween(0, 200000));
             $vehicle->setYear($faker->dateTimeBetween('1980-01-01', '2022-12-31'));
             $vehicle->setPrice($faker->numberBetween(10000, 50000));
+            $vehicle->setDisplayOnHomePage(rand(1, 0));
             $categoryReference = 'categorie_' . rand(0, 9);
             $vehicle->setCategorie($this->getReference($categoryReference));
 

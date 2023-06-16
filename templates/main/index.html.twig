@@ -15,7 +15,7 @@
 						{% endfor %}
 					</div>
 					<div class="carousel-inner">
-						{% set defaultImageShown = false %}
+						{% set isRealImageShown = false %}
 						{% for vehicle in vehicle %}
 							{% if vehicle.images is defined and vehicle.images|length > 0 %}
 								{% set image = vehicle.images[0] %}
@@ -23,18 +23,22 @@
 								<div class="carousel-item {{ loop.first ? 'active' : '' }}">
 									<img src="{{ asset('assets/uploads/vehicle/' ~ image.name) }}" alt="{{ vehicle.brand }}" class="d-block w-100">
 								</div>
-							{% else %}
-								{% if not defaultImageShown %}
-									<div class="carousel-item {{ loop.first ? 'active' : '' }}">
-										<img src="{{ asset('assets/uploads/sports-car-ge0bf24608_640.jpg') }}" alt="Default image" class="d-block w-100">
-									</div>
-									{% set defaultImageShown = true %}
-								{% endif %}
+								{% set isRealImageShown = true %}
 							{% endif %}
 						{% endfor %}
 
-
+						{# If no real image has been shown, show the default one #}
+						{% if not isRealImageShown %}
+							{% for vehicle in vehicle %}
+								<div class="carousel-item {{ loop.first ? 'active' : '' }}">
+									{% if vehicle.image %}
+										<img src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" class="d-block w-100">
+									{% endif %}
+								</div>
+							{% endfor %}
+						{% endif %}
 					</div>
+
 					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
 						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 						<span class="visually-hidden">Précédent</span>
@@ -51,6 +55,10 @@
 
 
 	<hr>
+
+	{#{{ include('repair/list.html.twig') }}#}
+
+
 	{{ include('testimony/index.html.twig') }}
 	{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
 {% endblock %}

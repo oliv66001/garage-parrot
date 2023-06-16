@@ -23,6 +23,10 @@ class Repair
     #[ORM\Column]
     private ?int $price = null;
 
+    #[ORM\ManyToOne(targetEntity:"App\Entity\CategoryRepair", inversedBy:"repairs")]
+    #[ORM\JoinColumn(nullable: false)]
+    private $category = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +64,30 @@ class Repair
     public function setPrice(int $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of category
+     *
+     * @return ?CategoryRepair
+     */
+    public function getCategory(): ?CategoryRepair
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set the value of category
+     *
+     * @param ?CategoryRepair $category
+     *
+     * @return self
+     */
+    public function setCategory(?CategoryRepair $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
