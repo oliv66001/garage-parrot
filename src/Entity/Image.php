@@ -22,6 +22,10 @@ class Image
     #[ORM\JoinColumn(nullable:true)]
     private $vehicle;
 
+    #[ORM\OneToOne(targetEntity:"App\Entity\CategoryRepair", inversedBy:"image", cascade:["persist", "remove"])]
+    #[ORM\JoinColumn(nullable:true)]
+    private $categoryRepair;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -57,4 +61,18 @@ class Image
         return $this;
     }
 
+
+    public function getCategoryRepair(): ?CategoryRepair
+{
+    return $this->categoryRepair;
+}
+
+public function setCategoryRepair(?CategoryRepair $categoryRepair): self
+{
+    $this->categoryRepair = $categoryRepair;
+
+    return $this;
+}
+
+  
 }

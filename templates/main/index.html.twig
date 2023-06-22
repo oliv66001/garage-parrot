@@ -4,35 +4,36 @@
 {% endblock %}
 
 {% block body %}
-	<main>
+	<main class="container-fluid">
 		<section class="row">
 			<div class="col-12">
 
 				<div id="carouselExampleIndicators" class="carousel slide">
 					<div class="carousel-indicators">
-						{% for vehicle in vehicle %}
+						{% for vehicle in vehicles %}
 							<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ loop.index0 }}" {{ loop.first ? 'class="active"' : ''}} aria-label="Slide {{ loop.index }}"></button>
 						{% endfor %}
 					</div>
 					<div class="carousel-inner">
 						{% set isRealImageShown = false %}
-						{% for vehicle in vehicle %}
+						{% for vehicle in vehicles %}
 							{% if vehicle.images is defined and vehicle.images|length > 0 %}
 								{% set image = vehicle.images[0] %}
-								{# You can adjust the index to choose the image you want #}
+								
 								<div class="carousel-item {{ loop.first ? 'active' : '' }}">
-									<img src="{{ asset('assets/uploads/vehicle/' ~ image.name) }}" alt="{{ vehicle.brand }}" class="d-block w-100">
+									<img src="{{ asset('assets/uploads/vehicle/' ~ image.name) }}" alt="{{ vehicle.brand }}" class="w-100 img-fluid rounded">
 								</div>
 								{% set isRealImageShown = true %}
 							{% endif %}
 						{% endfor %}
-
-						{# If no real image has been shown, show the default one #}
+						
+					
+						
 						{% if not isRealImageShown %}
-							{% for vehicle in vehicle %}
+							{% for vehicle in vehicles %}
 								<div class="carousel-item {{ loop.first ? 'active' : '' }}">
 									{% if vehicle.image %}
-										<img src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" class="d-block w-100">
+										<img src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" class="w-100 img-fluid rounded">
 									{% endif %}
 								</div>
 							{% endfor %}
@@ -51,13 +52,10 @@
 
 			</div>
 		</section>
+			<hr class="mt-3 mb-3">
 	</main>
 
-
-	<hr>
-
-	{#{{ include('repair/list.html.twig') }}#}
-
+	{{ include('repair/category_repairs.twig')}}
 
 	{{ include('testimony/index.html.twig') }}
 	{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}

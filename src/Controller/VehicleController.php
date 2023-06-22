@@ -78,6 +78,7 @@ class VehicleController extends AbstractController
                     'price' => $vehicle->getPrice(),
                     'image' => $vehicle->getImage(),
                     'slug' => $vehicle->getSlug(),
+                    'id' => $vehicle->getId(),
                     'year' => $vehicle->getYear(),
                     'kilometer' => $vehicle->getKilometer(),
                 ];
@@ -132,7 +133,7 @@ class VehicleController extends AbstractController
         }
 
         return $this->render('vehicle/detail.html.twig', [
-            'vehicle' => $vehicle,
+            'vehicles' => $vehicle,
             'business_hours' => $businessHours,
             'year' => $formattedYear,
         ]);

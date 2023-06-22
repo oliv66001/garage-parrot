@@ -25,6 +25,9 @@ class CategoryRepair
     #[ORM\OneToMany(targetEntity: "App\Entity\Repair", mappedBy: "category")]
     private $repairs;
 
+    #[ORM\OneToOne(targetEntity: "App\Entity\Image", mappedBy: "categoryRepair", cascade: ["persist"])]
+    private $image;
+
     public function __construct()
     {
         $this->repairs = new ArrayCollection();
@@ -75,6 +78,23 @@ class CategoryRepair
             }
         }
 
+        return $this;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+    
+    public function setImage(?Image $image): self
+    {
+        $this->image = $image;
+    
+        // Important: assurez-vous d'avoir cette ligne
+        if ($image !== null) {
+            $image->setCategoryRepair($this);
+        }
+    
         return $this;
     }
 }

@@ -5,9 +5,10 @@
 
 {% block body %}
 	<h1 class="text-center">Nos véhicules d'occasion</h1>
-	<hr>
+	
 
 	<div class="container">
+	<hr class="mt-3 mb-3">
 		<form id="filter-form" method="get" action="{{ path('app_vehicle_index') }}">
 			<div class="row">
 				<div class="col-sm-3">
@@ -60,9 +61,10 @@
 		</form>
 	</div>
 
-	<hr>
+	
 
 	<div id="vehicles-container">
+	<hr class="mt-3 mb-3">
 		{% set hasVehicles = false %}
 		{% if vehicles is not empty %}
 
@@ -162,14 +164,15 @@
 						
 							<div class="card-body">
 								<h4 class="card-title">{{ vehicle.brand }}</h4>
-								<p class="card-text">{{ vehicle.description }}</p>
+								<p class="card-text">{{ vehicle.kilometer }} km</p>
 							</div>
 							<div class="card-footer">
+								<p>Mise en circulation</p>
 								<h5>{{ vehicle.year.format('Y-m-d') }}</h5>
 								<small class="text-muted">{{ vehicle.price }}€</small>
-								<a href="{{ path('app_vehicle_detail', {"slug": vehicle.slug }) }}" class="btn btn4">Détail véhicule</a>
+								<a href="{{ path('app_vehicle_detail', {"slug": vehicle.slug }) }}" class="btn btn2">Détail véhicule</a>
 								
-							<a href="{{ path('app_contact_vehicle', {'id': vehicle.id}) }}" class="btn btn2 mt-3">Contact</a>
+							<a href="{{ path('app_contact_vehicle', {'id': vehicle.id}) }}" class="btn btn mt-3">Contact</a>
 
 
 							</div>

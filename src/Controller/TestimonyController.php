@@ -24,10 +24,11 @@ class TestimonyController extends AbstractController
             $rating = $request->request->get('rating');
             $testimony->setRating($rating);
             $testimony->setCreatedAt(new \DateTimeImmutable('now'));
-            $testimony->setValidation(false); // Set validation to false by default
+            $testimony->setValidation(false); 
             $em->persist($testimony);
             $em->flush();
         
+            $this->addFlash('success', 'Votre témoignage a bien été envoyé, il sera publié après validation par l\'administrateur');
             return $this->redirectToRoute('testimony_index');
         }
         

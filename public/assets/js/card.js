@@ -1,7 +1,7 @@
 let card = document.querySelector('.card');
 
 window.addEventListener('mousemove', e => {
-  document.querySelectorAll('.card').forEach(card => {  // Sélectionnez toutes les cartes et appliquez l'effet à chacune
+  document.querySelectorAll('.card').forEach(card => {  
       const x = e.pageX - card.offsetLeft;
       const y = e.pageY - card.offsetTop;
       card.style.setProperty('--x', `${ x }px`);

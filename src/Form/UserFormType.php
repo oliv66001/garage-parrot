@@ -47,7 +47,6 @@ class UserFormType extends AbstractType
                         'Utilisateur' => 'ROLE_USER',
                         'Employé Admin' => 'ROLE_COLAB_ADMIN',
                         'Administrateur' => 'ROLE_ADMIN',
-
                     ],
                     'multiple' => true,
                     'expanded' => true,
@@ -58,8 +57,16 @@ class UserFormType extends AbstractType
                     'label_attr' => [
                         'class' => 'form-check-label'
                     ],
+                    'choice_attr' => function($choice, $key, $value) {
+                        // Si la valeur est 'ROLE_USER', alors ajoute l'attribut 'disabled'
+                        if ($value == 'ROLE_USER') {
+                            return ['disabled' => 'disabled'];
+                        }
+                        return [];
+                    },
                 ]
             )
+            
             ->add( 'password',
                 PasswordType::class, [
                 'label' => 'Mot de passe',

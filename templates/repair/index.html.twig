@@ -4,18 +4,8 @@
 
 {% block body %}
 
-<div class="row">
-    {% for category in categories %}
-    <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card h-100">
-            <img class="card-img-top" src="{{ asset('assets/image/Garage.png') }}" alt="{{ category.name }}">
-            <div class="card-body">
-                <h4 class="card-title">{{ category.name }}</h4>
-                <a href="{{ path('repairs_by_category', {'id': category.id}) }}" class="btn btn-primary">Voir les réparations</a>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-</div>
+{{ include('repair/category_repairs.twig')}}
 
+
+{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
 {% endblock %}

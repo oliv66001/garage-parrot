@@ -1,38 +1,49 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Liste des catégories de réparations
+	Liste des catégories de réparations
 {% endblock %}
 
 {% block body %}
-    <section class="container">
-        <div class="row justify-content-center">
-            {% include "_partials/_adminnav.html.twig" %}
-            <main class="col p-2">
- 
-                <table class="table">
-                    <thead>
-                        <tr class="text-center">
-                            <th>Id</th>
-                            <th>Nom de la catégorie</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for categoryRepair in categoryRepairs %}
-                    
-                            <tr class="text-center">
-                                <td>{{ categoryRepair.id }}</td>
-                                <td>{{ categoryRepair.name }}</td>
-                                                          <td class="align-middle">
-                                <a href="{{ path('admin_category_repair_edit', {'id': categoryRepair.id}) }}" class="btn btn2">Modifier</a>
-                            </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+	<section class="container">
+		<div class="row justify-content-center">
+			{% include "_partials/_adminnav.html.twig" %}
+			<main class="col p-2">
 
-            </main>
-        </div>
-    </section>
+				<table class="table">
+					<thead>
+						<tr class="text-center">
+							<th>Id</th>
+							<th>Nom de la catégorie</th>
+							<th>image</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for categoryRepair in categoryRepairs %}
+
+							<tr class="text-center">
+								<td>{{ categoryRepair.id }}</td>
+								<td>{{ categoryRepair.name }}</td>
+								<td>
+									{% if categoryRepair.image %}
+										<img src="{{ asset('assets/uploads/vehicle/mini/300x300-' ~ categoryRepair.image.name) }}" alt="{{ categoryRepair.name }}" class="img-thumbnail">
+                                        {% else %}
+									<img src="{{ asset('assets/image/Garage.png') }}" width='300px' height='300px' alt="Image par défaut" class="img-thumbnail">
+								
+									{% endif %}
+								</td>
+
+
+								<td class="align-middle">
+									<a href="{{ path('admin_category_repair_edit', {'id': categoryRepair.id}) }}" class="btn btn2">Modifier</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+
+			</main>
+		</div>
+	</section>
 {% endblock %}

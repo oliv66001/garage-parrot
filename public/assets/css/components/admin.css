@@ -1,0 +1,12 @@
+/*Table*/
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+    border-bottom: 2px solid var(--text-color);
+}

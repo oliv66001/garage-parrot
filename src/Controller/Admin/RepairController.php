@@ -18,31 +18,32 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RepairController extends AbstractController
 {
-  // #[Route('/reparation', name: 'repair_index')]
-  // public function index(RepairRepository $repairRepository, BusinessHoursRepository $businessHoursRepository, CategoryRepairRepository $categoryRepairRepository): Response
-  // {
-  //     $categories = $categoryRepairRepository->findAll();
-  //     $repairs = $repairRepository->findAll();
-  //     $business_hours = $businessHoursRepository->findAllOrderedByDay();
+    #[Route('/reparation', name: 'repair_index')]
+    public function index(RepairRepository $repairRepository, BusinessHoursRepository $businessHoursRepository, CategoryRepairRepository $categoryRepairRepository): Response
+    {
+        $categories = $categoryRepairRepository->findAll();
+        $repairs = $repairRepository->findAll();
+        $business_hours = $businessHoursRepository->findAllOrderedByDay();
 
-  //     return $this->render('repair/index.html.twig', [
-  //         'categories' => $categories,
-  //         'repairs' => $repairs,
-  //         'business_hours' => $business_hours,
-  //     ]);
-  // 
-  // }
+        return $this->render('repair/index.html.twig', [
+            'categories' => $categories,
+            'repairs' => $repairs,
+            'business_hours' => $business_hours,
+        ]);
+    }
 
-//    #[Route('/reparation/categories/{id}', name: 'repairs_by_category')]
-//public function repairsByCategory(CategoryRepair $category, RepairRepository $repairRepository): Response
-//{
-//    $repairs = $repairRepository->findBy(['category' => $category]);
-//
-//    return $this->render('repairs/by_category.html.twig', [
-//        'category' => $category,
-//        'repairs' => $repairs,
-//    ]);
-//}
+    #[Route('/reparation/categories/{id}', name: 'repairs_by_category')]
+    public function repairsByCategory(CategoryRepair $category, RepairRepository $repairRepository, BusinessHoursRepository $businessHoursRepository): Response
+    {
+        $business_hours = $businessHoursRepository->findAllOrderedByDay();
+        $repairs = $repairRepository->findBy(['category' => $category]);
+
+        return $this->render('repair/by_category.html.twig', [
+            'business_hours' => $business_hours,
+            'category' => $category,
+            'repairs' => $repairs,
+        ]);
+    }
 
 
     #[Route('/admin/reparations/new', name: 'admin_repair_new')]

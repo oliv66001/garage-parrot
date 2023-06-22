@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mieux nous connaitres{% endblock %}
+
+{% block body %}
+<section class="about-us">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="text-center">A propos de notre garage</h1>
+        <meta name="description" content="Découvrez l'histoire et la philosophie de notre garage familial, proposant des services de réparation et des véhicules d'occasions .">
+      </div>
+    </div>
+    <div class="row">
+  <div class="col-md-6">
+    <h3 class="text-center">Notre histoire</h3>
+    <p>
+      Fondé en 1998, notre garage est le fruit de la passion et du travail acharné de notre famille. Depuis lors, nous nous efforçons de proposer une large gamme de service et de voitures d'occasions à nos clients. Nous sommes fiers de pouvoir compter sur une équipe de professionnels qualifiés et expérimentés, qui mettent tout en œuvre pour vous offrir un service de qualité et des véhicules fiables.
+    </p>
+  </div>
+
+  <div class="col-md-6">
+    <h3 class="text-center">Notre philosophie</h3>
+    <p>
+      Dans notre garage, nous sommes convaincus que la satisfaction de nos clients est la clé de notre succès. C'est pourquoi nous mettons tout en œuvre pour vous offrir un service de qualité et des véhicules fiables. Nous sommes également fiers de promouvoir une démarche écoresponsable en minimisant notre empreinte écologique.
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h3 class="text-center">Notre équipe</h3>
+       <p>
+      Notre équipe est composée de professionnels passionnés, qui mettent tout en œuvre pour vous offrir des services de qualité et des véhicules fiables. Nous sommes fiers de pouvoir compter sur une équipe de professionnels qualifiés et expérimentés, qui mettent tout en œuvre pour vous offrir un service de qualité et des véhicules fiables.
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h3 class="text-center">Nos engagements</h3>
+    <p>
+      Chez nous, la satisfaction de nos clients est notre priorité. Nous nous engageons à respecter les normes de qualité les plus strictes et à vous offrir un service de qualité et des véhicules fiables. Nous sommes également fiers de promouvoir une démarche écoresponsable en minimisant notre empreinte écologique.
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h3 class="text-center">Venez nous rencontrer</h3>
+    <p>
+      Nous vous invitons à venir découvrir notre garage et notre équipe. Nous sommes à votre disposition pour répondre à toutes vos questions et vous conseiller dans le choix de votre véhicule.
+    </p>
+  </div>
+</div>
+  </div>
+</section>
+
+{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
+{% endblock %}

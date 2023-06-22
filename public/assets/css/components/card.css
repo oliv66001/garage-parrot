@@ -23,13 +23,14 @@ article.card{
 .card {
   position: relative;
   z-index: 1;
-  background: #fff;
+  background: var(--template-color);
   max-width: 320px;
   margin: 0 auto 10px;
   padding: 40px;
   text-align: center;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  box-shadow: 0 0 20px var(--text-color);
   border-radius: 5px;
+  border: 5px solid var(--button-color);
   transform-style: preserve-3d; /* Pour activer les transformations 3D */
   transition: transform 0.5s;
 }
@@ -83,6 +84,60 @@ h5.card-title:hover{
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
 }
+
+.card-text{
+    border: 2px solid var(--button-color);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-color);
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    z-index: 1;
+    text-size-adjust: 100%;
+}
+
+/*.cards{
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.card{
+display: inline-block;
+color: var(--text-color);
+background-color: var(--button2-color);
+border:none;
+cursor: pointer;
+border-radius: 3px;
+position: relative;
+overflow: hidden;
+font-size: 25px;
+box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+transform: shew(0deg);
+transition: all 0.3s;
+border:1px solid var(--button-color);
+}
+
+.crad:hover{
+  box-shadow: 0 8px 25px var(--text-color);
+}
+
+.card:hover:before{
+ content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: radial-gradient(
+    circle at var(--x, 0) var(--y, 0), var(--button2-color), transparent 50%
+  );
+  pointer-events: none;
+  transition: background 0.3s;
+}*/
 
 
 

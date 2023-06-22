@@ -62,7 +62,7 @@ class MainController extends AbstractController
             'repairs' => $repairs,
             'business_hours' => $businessHours,
             'testimony' => $testimony,
-            'vehicle' => $vehicle,
+            'vehicles' => $vehicle,
             'category' => $category,
             'form' => $form->createView(),
         ]);

@@ -1,14 +1,15 @@
-<section class="container">
+<section class="container-fluid">
 	<div class="row justify-content-center">
-		<div class="col">
+		<div class="col-10">
 			{{ form_start(userForm) }}
 			{{ form_row(userForm.username) }}
 			
 			{{ form_row(userForm.email) }}
 			{{ form_row(userForm.password) }}
-			
-			{{ form_row(userForm.roles) }}
-			
+		
+				
+			{{ form_row(userForm.roles, {'label': 'Rôles', 'attr': {'class': 'form-control'}}) }}
+						
 			<div>
 				<button class="btn btn mt-2" type="submit">
 					{{ button_label | default ('Ajouter') }}

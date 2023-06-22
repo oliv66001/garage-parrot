@@ -46,11 +46,12 @@ $(document).ready(function() {
                                         <img class="card-img-top" src="${vehicle.image}" alt="${vehicle.brand}" class="zoom-card-img card-img-top img-fluid">
                                         <div class="card-body">
                                             <h4 class="card-title">${vehicle.brand}</h4>
-                                            <p class="card-text">${vehicle.description}</p>
+                                            <p class="card-text">${vehicle.kilometer}km</p>
                                         </div>
                                         <div class="card-footer">
                                             <small class="text-muted">${vehicle.price}€</small>
                                             <a href="/vehicle/${vehicle.slug}" class="btn btn2">Détail véhicule</a>
+                                            <a class="btn mt-3" href="/contact/${vehicle.id}">Contact</a>
                                         </div>
                                     </div>
                                 </div>
@@ -84,10 +85,12 @@ $(document).ready(function() {
                                         <div class="card-footer">
                                             <small class="text-muted">${vehicle.price}€</small>
                                             <a href="/vehicle/${vehicle.slug}" class="btn btn2">Détail véhicule</a>
+                                            <a class="btn mt-3" href="/contact/${vehicle.id}">Contact</a>
                                         </div>
                                     </div>
                                 </div>
                             `;
+                           
                             row.append(vehicleCard);
                             hasResults = true; // Indiquer qu'il y a des résultats
                             
