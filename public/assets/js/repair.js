@@ -1,10 +1,9 @@
-let productLinks = document.querySelectorAll("[data-delete][data-type='repair']");
+let productLinks = document.querySelectorAll("[data-delete]");
 
 for (let link of productLinks) {
     link.addEventListener("click", function (e) {
         e.preventDefault();
-
-        if (confirm("Voulez-vous supprimer définitivement ce véhicule ?")) {
+        if (confirm("Voulez-vous supprimer définitivement cette réparation ?")) {
             fetch(this.getAttribute("href"), {
                 method: "DELETE",
                 headers: {
@@ -21,7 +20,7 @@ for (let link of productLinks) {
                       // Afficher le message flash
                     alert(data.message);
                     // Redirection vers la route 'admin_repair_index'
-                    window.location.href = '/admin/repair';
+                    window.location.href = '/admin/reparations';
                 } else {
                     alert(data.error);
                 }

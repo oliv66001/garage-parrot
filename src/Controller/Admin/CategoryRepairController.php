@@ -119,7 +119,7 @@ class CategoryRepairController extends AbstractController
     }
     
 
-    #[Route('/admin/category_repair/delete/{id}', name: 'admin_category_repair_delete', methods: ['DELETE'])]
+    #[Route('/admin/categorie-réparation/delete/{id}', name: 'admin_category_repair_delete', methods: ['DELETE'])]
     #[IsGranted('ROLE_COLAB_ADMIN')]
     public function delete(CategoryRepair $categoryRepair, EntityManagerInterface $em, Request $request): JsonResponse
     {

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Repair;
+use App\Form\RepairFormType;
 use App\Entity\CategoryRepair;
 use App\Repository\RepairRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -45,6 +46,19 @@ class RepairController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/reparations', name: 'admin_repair_index')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function adminIndex(RepairRepository $repairRepository, BusinessHoursRepository $businessHoursRepository): Response
+    {
+        $repairs = $repairRepository->findAll();
+        $business_hours = $businessHoursRepository->findAllOrderedByDay();
+
+        return $this->render('admin/repair/index.html.twig', [
+            'repairs' => $repairs,
+            'business_hours' => $business_hours,
+            'repair' => null,
+        ]);
+    }
 
     #[Route('/admin/reparations/new', name: 'admin_repair_new')]
     #[IsGranted('ROLE_ADMIN')]
@@ -65,14 +79,20 @@ class RepairController extends AbstractController
         }
 
         return $this->render('admin/repair/new.html.twig', [
-            'form' => $form->createView(),
+            'repairForm' => $form->createView(),
         ]);
     }
 
-    #[Route('/admin/reparations/{id}/edit', name: 'admin_repair_edit')]
+    #[Route('/admin/reparations/edit/{id}', name: 'admin_repair_edit')]
     #[IsGranted('ROLE_ADMIN')]
-    public function edit(Repair $repair, Request $request, EntityManagerInterface $em): Response
+    public function edit(int $id, RepairRepository $repairRepository, Request $request, EntityManagerInterface $em): Response
     {
+        $repair = $repairRepository->find($id);
+
+        if (!$repair) {
+            throw $this->createNotFoundException('Réparation non trouvée');
+        }
+
         $form = $this->createForm(RepairFormType::class, $repair);
 
         $form->handleRequest($request);
@@ -85,9 +105,11 @@ class RepairController extends AbstractController
         }
 
         return $this->render('admin/repair/edit.html.twig', [
-            'form' => $form->createView(),
+            'repair' => $repair,
+            'repairForm' => $form->createView(),
         ]);
     }
+
 
 
     #[Route('/admin/reparations/{id}/delete', name: 'admin_repair_delete', methods: ['DELETE'])]

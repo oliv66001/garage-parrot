@@ -168,7 +168,8 @@
 							</div>
 							<div class="card-footer">
 								<p>Mise en circulation</p>
-								<h5>{{ vehicle.year.format('Y-m-d') }}</h5>
+								<h5>{{ vehicle.year.format('d-m-Y') }}</h5>
+								<p>Prix : </p>
 								<small class="text-muted">{{ vehicle.price }}€</small>
 								<a href="{{ path('app_vehicle_detail', {"slug": vehicle.slug }) }}" class="btn btn2">Détail véhicule</a>
 								

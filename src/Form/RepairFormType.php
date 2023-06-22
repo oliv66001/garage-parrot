@@ -3,10 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Repair;
+use App\Entity\CategoryRepair;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -36,6 +39,14 @@ class RepairFormType extends AbstractType
                     'class' => "form-control"
                 ]
                 ])
+                ->add('category', EntityType::class, [
+                    'label' => 'Catégorie',
+                    'class' => CategoryRepair::class,
+                    'choice_label' => 'name',
+                    'attr' => [
+                        'class' => 'form-control',
+                    ],
+                    ])
         ;
     }
 

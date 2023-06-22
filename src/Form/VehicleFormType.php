@@ -76,8 +76,9 @@ class VehicleFormType extends AbstractType
             ->add('year', DateType::class, [
                 'label' => 'Année',
                 'required' => false,
+                'html5' => false,
                 'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd',
+                'format' => 'dd/MM/yyyy',
                 'attr' => [
                     'class' => 'form-control',
                 ],

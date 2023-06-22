@@ -1,0 +1,3 @@
+<form method="DELETE" action="{{ path('admin_repair_delete', {'id': repair.id}) }}">
+  <a href="{{ path('admin_repair_delete', {'id': repair.id}) }}" data-delete data-method="DELETE" data-token="{{ csrf_token('delete_repair' ~ repair.id) }}" class="btn btn3">Supprimer</a>
+</form>

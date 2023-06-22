@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Liste des réparations
+{% endblock %}
+
+{% block body %}
+	<section class="container">
+		<div class="row justify-content-center">
+			{% include "_partials/_adminnav.html.twig" %}
+			<main class="col p-2">
+
+				<table class="table">
+					<thead>
+						<tr class="text-center">
+							<th>Nom</th>
+							<th>Description</th>
+							<th>Prix</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for repair in repairs %}
+
+							<tr class="text-center">
+								
+								<td>{{ repair.name }}</td>
+                                <td>{{ repair.description }}</td>
+                                <td>{{ repair.price }}</td>
+								<td class="align-middle">
+									<a href="{{ path('admin_repair_edit', {'id': repair.id}) }}" class="btn btn2">Modifier</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+
+			</main>
+		</div>
+	</section>
+{% endblock %}
