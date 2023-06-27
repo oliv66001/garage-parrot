@@ -93,7 +93,7 @@ class VehicleController extends AbstractController
             return $this->redirectToRoute('admin_vehicle_index', ['slug' => $vehicle->getSlug()]);
         }
 
-        return $this->render('admin/vehicle/add.html.twig', compact('vehicleForm', 'business_hours'));
+        return $this->render('admin/vehicle/add.html.twig', compact('vehicleForm', 'business_hours', 'vehicleOption'));
     }
 
 
