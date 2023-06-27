@@ -2,11 +2,11 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\BusinessHours;
+use App\Entity\Businesshours;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class BusinessHoursFixtures extends Fixture
+class BusinesshoursFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
@@ -22,7 +22,7 @@ class BusinessHoursFixtures extends Fixture
         ];
 
         foreach ($openingHoursData as $day => $times) {
-            $businessHours = new BusinessHours();
+            $businessHours = new Businesshours();
             $businessHours->setDay($day);
             $businessHours->setOpenTimeMorning($times[0]);
             $businessHours->setClosedTimeMorning($times[1]);

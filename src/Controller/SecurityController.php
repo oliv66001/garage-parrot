@@ -7,7 +7,7 @@ use App\Form\ResetPasswordFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ResetPasswordRequestFormType;
-use App\Repository\BusinessHoursRepository;
+use App\Repository\BusinesshoursRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,7 +51,7 @@ class SecurityController extends AbstractController
         UserRepository $usersRepository, 
         TokenGeneratorInterface $tokenGenerator, 
         EntityManagerInterface $entityManager, 
-        BusinessHoursRepository $businessHoursRepository,
+        BusinesshoursRepository $businessHoursRepository,
         SendMailService $mail): Response
     {
         $businessHours = $businessHoursRepository->findAll();
@@ -106,7 +106,7 @@ class SecurityController extends AbstractController
     Request $request, 
     UserRepository $usersRepository, 
     EntityManagerInterface $entityManager, 
-    BusinessHoursRepository $businessHoursRepository,
+    BusinesshoursRepository $businessHoursRepository,
     UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $businessHours = $businessHoursRepository->findAll();

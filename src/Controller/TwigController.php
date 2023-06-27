@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Repository\BusinessHoursRepository;
+use App\Repository\BusinesshoursRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TwigController extends AbstractController
 {
-    public function getBusinessHours(BusinessHoursRepository $businessHoursRepository)
+    public function getBusinesshours(BusinesshoursRepository $businessHoursRepository)
     {
         $businessHours = $businessHoursRepository->findAll();
 
