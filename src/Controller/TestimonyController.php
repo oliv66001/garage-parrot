@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Testimony;
+use App\Form\TestimonyFormType;
 use App\Repository\TestimonyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\BusinessHoursRepository;
@@ -17,7 +18,7 @@ class TestimonyController extends AbstractController
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $testimony = new Testimony();
-        $form = $this->createForm(TestimonyType::class, $testimony);
+        $form = $this->createForm(TestimonyFormType::class, $testimony);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -43,9 +44,11 @@ class TestimonyController extends AbstractController
     #[Route('/all-testimonies', name: 'all_testimonies')]
     public function allTestimonies(TestimonyRepository $testimonyRepository, BusinessHoursRepository $businessHours): Response
     {
+
         $businessHours = $businessHours->findAll();
         $allTestimonies = $testimonyRepository->findBy(['validation' => true], ['createdAt' => 'DESC']);
-
+       
+        
         return $this->render('testimony/all_testimonies.html.twig', [
             'all_testimonies' => $allTestimonies,
             'business_hours' => $businessHours,
