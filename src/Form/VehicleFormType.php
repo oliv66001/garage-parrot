@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Vehicle;
 use App\Entity\Categorie;
+use App\Entity\VehicleOption;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
@@ -90,7 +91,9 @@ class VehicleFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-            ]);
+            ])
+            
+            ;
            
            
             

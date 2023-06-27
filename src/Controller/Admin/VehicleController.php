@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class VehicleController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(VehicleRepository $vehicleRepository, BusinessHoursRepository $businessHoursRepository,): Response
+    public function index(VehicleRepository $vehicleRepository, BusinessHoursRepository $businessHoursRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_COLAB_ADMIN');
         $business_hours = $businessHoursRepository->findAllOrderedByDay();
@@ -45,10 +45,11 @@ class VehicleController extends AbstractController
         EntityManagerInterface $em,
         SluggerInterface $slugger,
         PictureService $pictureService,
-        BusinessHoursRepository $businessHoursRepository,
+        BusinessHoursRepository $businessHoursRepository
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_COLAB_ADMIN');
 
+       
         $business_hours = $businessHoursRepository->findAllOrderedByDay();
         // Création d'un nouveau véhicule
         $vehicle = new Vehicle();
@@ -92,7 +93,7 @@ class VehicleController extends AbstractController
             return $this->redirectToRoute('admin_vehicle_index', ['slug' => $vehicle->getSlug()]);
         }
 
-        return $this->render('admin/vehicle/add.html.twig', compact('vehicleForm', 'business_hours'));
+        return $this->render('admin/vehicle/add.html.twig', compact('vehicleForm', 'business_hours', 'vehicleOption'));
     }
 
 
@@ -103,7 +104,7 @@ class VehicleController extends AbstractController
         EntityManagerInterface $em,
         SluggerInterface $slugger,
         PictureService $pictureService,
-        BusinessHoursRepository $businessHoursRepository,
+        BusinessHoursRepository $businessHoursRepository
     ): Response {
         //Vérification si l'user peut éditer avec le voter
         $this->denyAccessUnlessGranted('ROLE_COLAB_ADMIN', $vehicle);
