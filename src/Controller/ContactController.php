@@ -10,7 +10,7 @@ use App\Form\ContactFormType;
 use App\Service\SendMailService;
 use App\Repository\VehicleRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\BusinessHoursRepository;
+use App\Repository\BusinesshoursRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +22,7 @@ class ContactController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     #[Route('/contact/{id}', name: 'app_contact_vehicle', defaults: ['id' => null])]
 
-    public function index(Request $request, EntityManagerInterface $em, SendMailService $sendMailService, LoggerInterface $logger, BusinessHoursRepository $businessHoursRepository, VehicleRepository $vehicleRepository, $id = null): Response
+    public function index(Request $request, EntityManagerInterface $em, SendMailService $sendMailService, LoggerInterface $logger, BusinesshoursRepository $businessHoursRepository, VehicleRepository $vehicleRepository, $id = null): Response
     {
 
         $vehicle = null;
