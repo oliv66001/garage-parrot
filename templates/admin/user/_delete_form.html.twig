@@ -1,5 +1,4 @@
 <form
 	method="DELETE" action="{{ path('admin_user_delete_user', {'id': user.id}) }}">
-	{# Assurez-vous que l'URL de suppression contient l'ID de l'utilisateur à supprimer #}
 	<a class="btn btn2" href="{{ path('admin_user_delete_user', {'id': user.id}) }}" data-delete data-token="{{ csrf_token('delete_user' ~ user.id) }}">Supprimer le compte</a>
 </form>

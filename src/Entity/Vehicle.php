@@ -51,11 +51,14 @@ class Vehicle
     #[ORM\Column(length: 255, nullable: false)]
     private ?bool $displayOnHomePage = false;
 
+  
+
     public function __construct()
     {
-        $this->year = new \DateTime(date('Y-m-d'));
+        $this->year = new \DateTime(date('d-m-Y'));
         $this->images = new ArrayCollection();
         $this->contacts = new ArrayCollection();
+       
     }
 
     public function getId(): ?int
@@ -215,5 +218,5 @@ class Vehicle
         return $this;
     }
 
-   
+
 }

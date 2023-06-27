@@ -21,17 +21,17 @@
 						{% set defaultImageUsed = false %}
 						{% for image in vehicles.images %}
 							<div class="carousel-item {% if loop.first %}active{% endif %}">
-								<img src="{{ asset('assets/uploads/vehicle/mini/300x300-' ~ image.name ) }}" alt="{{ vehicles.brand }}" class="img">
+								<img id="detail" src="{{ asset('assets/uploads/vehicle/mini/300x300-' ~ image.name ) }}" alt="{{ vehicles.brand }}" class="img">
 							</div>
 							{% set defaultImageUsed = true %}
 						{% endfor %}
 						{% if not defaultImageUsed and vehicles.image %}
 							<div class="carousel-item active">
-								<img src="{{ vehicles.image }}" alt="{{ vehicles.brand }}" width="300" height="300" class="img">
+								<img id="detail" src="{{ vehicles.image }}" alt="{{ vehicles.brand }}" width="300" height="300" class="img">
 							</div>
 						{% elseif not defaultImageUsed %}
 							<div class="carousel-item active">
-								<img src="{{ asset('assets/image/Garage.png') }}" width="300" height="300" alt="Image par défaut" class="img">
+								<img id="detail" src="{{ asset('assets/image/Garage.png') }}" width="300" height="300" alt="Image par défaut" class="img">
 							</div>
 						{% endif %}
 					</div>
@@ -46,7 +46,7 @@
 				</div>
 
 			</div>
-			<div class="col-12 col-md-6 col-lg-8">
+			<div class="col-8 col-md-6 col-lg-8">
 				<p>
 					<h4>Marque :</h4>
 					{{ vehicles.brand }}
@@ -73,11 +73,14 @@
 					{{ vehicles.price }}
 					€
 				</p>
+
+				</div>
+			
+			<div class="text-center">
 				<a href="{{ path('app_contact_vehicle', {'id': vehicles.id}) }}" class="btn btn2 mt-3">Contact</a>
 
 				<a href="{{ path('app_vehicle_index')}}" class="btn btn3 mt-3">Retour</a>
-			</div>
-
+		</div>
 		</section>
 	</main>
 	{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}

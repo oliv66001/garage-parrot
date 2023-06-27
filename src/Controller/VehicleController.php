@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use DateTime;
-use DateInterval;
+
 use App\Entity\Contact;
 use App\Entity\Vehicle;
 use App\Entity\Categorie;
@@ -12,7 +12,7 @@ use App\Repository\VehicleRepository;
 use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\BusinessHoursRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\VehicleOptionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

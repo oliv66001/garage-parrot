@@ -9,7 +9,7 @@ parameters:
     locale: 'fr_FR'
     
 services:
-     # ...
+    
 
     App\Repository\TestimonyRepository: ~
             
