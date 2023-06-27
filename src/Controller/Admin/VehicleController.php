@@ -48,7 +48,7 @@ class VehicleController extends AbstractController
         BusinesshoursRepository $businessHoursRepository
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_COLAB_ADMIN');
-
+       
        
         $business_hours = $businessHoursRepository->findAllOrderedByDay();
         // Création d'un nouveau véhicule
