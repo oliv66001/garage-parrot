@@ -11,4 +11,3 @@ app_vehicle_detail:
 admin_repair_delete:
     path: /admin/repair/{id}/delete
     controller: App\Controller\Admin\RepairController::delete
-
