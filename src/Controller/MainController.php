@@ -11,7 +11,7 @@ use App\Repository\VehicleRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\TestimonyRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\BusinesshoursRepository;
+use App\Repository\BusinessHoursRepository;
 use App\Repository\CategoryRepairRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +32,7 @@ class MainController extends AbstractController
     }
 
     #[Route('/', name: 'app_main')]
-    public function index(BusinesshoursRepository $businessHoursRepository, TestimonyRepository $testimonyRepository, Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager, VehicleRepository $vehicleRepository, CategoryRepairRepository $categoryRepairRepository): Response
+    public function index(BusinessHoursRepository $businessHoursRepository, TestimonyRepository $testimonyRepository, Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager, VehicleRepository $vehicleRepository, CategoryRepairRepository $categoryRepairRepository): Response
     {
 
         $categories = $categoryRepairRepository->findAll();

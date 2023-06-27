@@ -7,7 +7,7 @@ use App\Form\RepairFormType;
 use App\Entity\CategoryRepair;
 use App\Repository\RepairRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\BusinesshoursRepository;
+use App\Repository\BusinessHoursRepository;
 use App\Repository\CategoryRepairRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class RepairController extends AbstractController
 {
     #[Route('/reparation', name: 'repair_index')]
-    public function index(RepairRepository $repairRepository, BusinesshoursRepository $businessHoursRepository, CategoryRepairRepository $categoryRepairRepository): Response
+    public function index(RepairRepository $repairRepository, BusinessHoursRepository $businessHoursRepository, CategoryRepairRepository $categoryRepairRepository): Response
     {
         $categories = $categoryRepairRepository->findAll();
         $repairs = $repairRepository->findAll();
@@ -34,7 +34,7 @@ class RepairController extends AbstractController
     }
 
     #[Route('/reparation/categories/{id}', name: 'repairs_by_category')]
-    public function repairsByCategory(CategoryRepair $category, RepairRepository $repairRepository, BusinesshoursRepository $businessHoursRepository): Response
+    public function repairsByCategory(CategoryRepair $category, RepairRepository $repairRepository, BusinessHoursRepository $businessHoursRepository): Response
     {
         $business_hours = $businessHoursRepository->findAllOrderedByDay();
         $repairs = $repairRepository->findBy(['category' => $category]);
@@ -48,7 +48,7 @@ class RepairController extends AbstractController
 
     #[Route('/admin/reparations', name: 'admin_repair_index')]
     #[IsGranted('ROLE_ADMIN')]
-    public function adminIndex(RepairRepository $repairRepository, BusinesshoursRepository $businessHoursRepository): Response
+    public function adminIndex(RepairRepository $repairRepository, BusinessHoursRepository $businessHoursRepository): Response
     {
         $repairs = $repairRepository->findAll();
         $business_hours = $businessHoursRepository->findAllOrderedByDay();

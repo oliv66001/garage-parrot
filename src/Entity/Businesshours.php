@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\BusinesshoursRepository;
+use App\Repository\BusinessHoursRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: BusinesshoursRepository::class)]
-class Businesshours
+#[ORM\Entity(repositoryClass: BusinessHoursRepository::class)]
+class BusinessHours
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
