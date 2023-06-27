@@ -2,13 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\Businesshours;
+use App\Entity\BusinessHours;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class BusinesshoursFormType extends AbstractType
+class BusinessHoursFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -73,7 +73,7 @@ class BusinesshoursFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Businesshours::class,
+            'data_class' => BusinessHours::class,
         ]);
     }
 }

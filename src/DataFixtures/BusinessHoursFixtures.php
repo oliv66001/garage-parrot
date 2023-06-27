@@ -6,7 +6,7 @@ use App\Entity\Businesshours;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class BusinesshoursFixtures extends Fixture
+class BusinessHoursFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
@@ -22,7 +22,7 @@ class BusinesshoursFixtures extends Fixture
         ];
 
         foreach ($openingHoursData as $day => $times) {
-            $businessHours = new Businesshours();
+            $businessHours = new BusinessHours();
             $businessHours->setDay($day);
             $businessHours->setOpenTimeMorning($times[0]);
             $businessHours->setClosedTimeMorning($times[1]);
