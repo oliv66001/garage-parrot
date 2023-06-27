@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\BusinessHoursRepository;
+use App\Repository\BusinesshoursRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,7 +11,7 @@ class MentionLegalController extends AbstractController
 {
    
     #[Route('/mention/legal', name: 'app_mention_legal')]
-    public function index(BusinessHoursRepository $businessHoursRepository): Response
+    public function index(BusinesshoursRepository $businessHoursRepository): Response
     {
         $business_hours = $businessHoursRepository->findAll();
         return $this->render('mention_legal/index.html.twig', [
