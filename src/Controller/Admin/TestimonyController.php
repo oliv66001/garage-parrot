@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[IsGranted('ROLE_COLAB_ADMIN')]
 class TestimonyController extends AbstractController
 {
-    #[Route('/admin/testimony', name: 'index')]
+    #[Route('/testimony', name: 'index')]
     public function index(TestimonyRepository $testimonyRepository): Response
     {
         $unvalidatedTestimonies = $testimonyRepository->findBy(['validation' => false]);
@@ -29,7 +29,7 @@ class TestimonyController extends AbstractController
     }
     
     
-    #[Route("/admin/testimony/{id}/validate", name: "validate")]
+    #[Route("/testimony/{id}/validate", name: "validate")]
     public function validate(int $id, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_COLAB_ADMIN');
@@ -46,32 +46,33 @@ class TestimonyController extends AbstractController
         return $this->redirectToRoute('admin_testimony_index');
     }    
 
-    #[Route("/admin/testimony/{id}/delete", name: "delete", methods: ['DELETE'])]
+    #[Route("/testimony/{id}/delete", name: "delete", methods: ['DELETE'])]
+
     public function testimonyDelete(
         Testimony $testimony,
         Request $request,
         EntityManagerInterface $em
     ): JsonResponse {
-
-
+        // Récupérer les données de la requête
         $data = json_decode($request->getContent(), true);
-
+    
         // On vérifie si le token est valide
         if ($this->isCsrfTokenValid('delete_testimony' . $testimony->getId(), $data['_token'])) {
-
-
-            // On supprime le produit de la base
-            $em->remove($testimony);
-            $em->flush();
-
-            $this->addFlash('success', 'Message supprimé avec succès.');
-
-
-            return new JsonResponse(['success' => true, 'message' => 'Message supprimé avec succès'], 200);
+            // On supprime le témoignage de la base
+            try {
+                $em->remove($testimony);
+                $em->flush();
+    
+                $this->addFlash('success', 'Message supprimé avec succès.');
+    
+                return new JsonResponse(['success' => true, 'message' => 'Message supprimé avec succès'], 200);
+            } catch (\Exception $e) {
+                // S'il y a une exception, renvoyez une réponse JSON avec l'erreur
+                return new JsonResponse(['error' => $e->getMessage()], 500);
+            }
+        } else {
+            // Échec de la suppression
+            return new JsonResponse(['error' => 'Token invalide'], 400);
         }
-
-        // Echec de la suppréssion
-        return new JsonResponse(['error' => 'Token invalide'], 400);
     }
-
-}
+}    

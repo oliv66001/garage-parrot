@@ -17,11 +17,9 @@
 							<a href="{{ path('admin_testimony_validate', {'id': testimony.id}) }}" class="btn btn2 text-center mt-3">Valider</a>
 						</div>
 						<div class="text-center mt-3">
-							<form method="post" action="{{ path('admin_testimony_delete', {'id': testimony.id}) }}" onsubmit="return confirm('Voulez-vous supprimer ce message ?')">
-								<input type="hidden" name="_method" value="DELETE">
-								<input type="hidden" name="_token" value="{{ csrf_token('delete_testimony' ~ testimony.id) }}">
-								<button class="btn btn3">Supprimer</button>
-							</form>
+							<a href="{{ path('admin_testimony_delete', {'id': testimony.id}) }}" data-token="{{ csrf_token('delete_testimony' ~ testimony.id) }}" class="btn btn3 delete-testimony">
+								Supprimer
+							</a>
 						</div>
 					{% endif %}
 				{% else %}
@@ -33,6 +31,5 @@
 {% endblock %}
 
 {% block javascripts %}
-	{{ parent() }}
-	<script src="{{ asset('assets/js/delete.js') }}" defer></script>
+	<script src="{{ asset('assets/js/testimonydelete.js') }}" defer></script>
 {% endblock %}
