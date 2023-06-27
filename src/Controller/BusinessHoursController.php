@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\BusinessHoursRepository;
+use App\Repository\BusinesshoursRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,7 +11,7 @@ class BusinessHoursController extends AbstractController
 {
     private $businessHoursRepository;
 
-    public function __construct(BusinessHoursRepository $businessHoursRepository)
+    public function __construct(BusinesshoursRepository $businessHoursRepository)
     {
         $this->businessHoursRepository = $businessHoursRepository;
     }

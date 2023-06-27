@@ -6,7 +6,7 @@ use App\Entity\Testimony;
 use App\Form\TestimonyFormType;
 use App\Repository\TestimonyRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\BusinessHoursRepository;
+use App\Repository\BusinesshoursRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,7 +42,7 @@ class TestimonyController extends AbstractController
 
  
     #[Route('/all-testimonies', name: 'all_testimonies')]
-    public function allTestimonies(TestimonyRepository $testimonyRepository, BusinessHoursRepository $businessHours): Response
+    public function allTestimonies(TestimonyRepository $testimonyRepository, BusinesshoursRepository $businessHours): Response
     {
 
         $businessHours = $businessHours->findAll();

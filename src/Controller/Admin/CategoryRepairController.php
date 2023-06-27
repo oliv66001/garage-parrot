@@ -8,7 +8,7 @@ use App\Entity\CategoryRepair;
 use App\Service\PictureService;
 use App\Form\CategoryRepairFormType;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\BusinessHoursRepository;
+use App\Repository\BusinesshoursRepository;
 use App\Repository\CategoryRepairRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CategoryRepairController extends AbstractController
 {
     #[Route('/categories', name: 'categories_list')]
-    public function list(CategoryRepairRepository $categoryRepairRepository, BusinessHoursRepository $businessHoursRepository): Response
+    public function list(CategoryRepairRepository $categoryRepairRepository, BusinesshoursRepository $businessHoursRepository): Response
     {
         $categories = $categoryRepairRepository->findAll();
         $businessHours = $businessHoursRepository->findAll(); 

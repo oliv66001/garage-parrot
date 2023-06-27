@@ -8,7 +8,7 @@ use App\Form\VehicleFormType;
 use App\Service\PictureService;
 use App\Repository\VehicleRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\BusinessHoursRepository;
+use App\Repository\BusinesshoursRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class VehicleController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(VehicleRepository $vehicleRepository, BusinessHoursRepository $businessHoursRepository): Response
+    public function index(VehicleRepository $vehicleRepository, BusinesshoursRepository $businessHoursRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_COLAB_ADMIN');
         $business_hours = $businessHoursRepository->findAllOrderedByDay();
@@ -45,7 +45,7 @@ class VehicleController extends AbstractController
         EntityManagerInterface $em,
         SluggerInterface $slugger,
         PictureService $pictureService,
-        BusinessHoursRepository $businessHoursRepository
+        BusinesshoursRepository $businessHoursRepository
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_COLAB_ADMIN');
 
@@ -104,7 +104,7 @@ class VehicleController extends AbstractController
         EntityManagerInterface $em,
         SluggerInterface $slugger,
         PictureService $pictureService,
-        BusinessHoursRepository $businessHoursRepository
+        BusinesshoursRepository $businessHoursRepository
     ): Response {
         //Vérification si l'user peut éditer avec le voter
         $this->denyAccessUnlessGranted('ROLE_COLAB_ADMIN', $vehicle);

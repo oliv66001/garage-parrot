@@ -11,7 +11,7 @@ use Psr\Log\LoggerInterface;
 use App\Repository\VehicleRepository;
 use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\BusinessHoursRepository;
+use App\Repository\BusinesshoursRepository;
 use App\Repository\VehicleOptionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,7 +34,7 @@ class VehicleController extends AbstractController
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
         VehicleRepository $vehicleRepository,
-        BusinessHoursRepository $businessHoursRepository,
+        BusinesshoursRepository $businessHoursRepository,
         CategorieRepository $categorieRepository,
         EntityManagerInterface $entityManager,
         Request $request,
@@ -104,7 +104,7 @@ class VehicleController extends AbstractController
     #[Route('/{categoryId}', name: 'category', requirements: ['categoryId' => '\d+'])]
     public function category(
         Categorie $category,
-        BusinessHoursRepository $businessHoursRepository,
+        BusinesshoursRepository $businessHoursRepository,
         VehicleRepository $vehicleRepository,
         int $page = 1
     ): Response {
@@ -120,7 +120,7 @@ class VehicleController extends AbstractController
     }
 
     #[Route('/vehicle/{slug}', name: 'detail')]
-    public function detail(string $slug, VehicleRepository $vehicleRepository, Vehicle $vehicle, BusinessHoursRepository $businessHoursRepository): Response
+    public function detail(string $slug, VehicleRepository $vehicleRepository, Vehicle $vehicle, BusinesshoursRepository $businessHoursRepository): Response
     {
 
         $vehicle = $vehicleRepository->findOneBy(['slug' => $slug]);

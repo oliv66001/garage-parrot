@@ -6,7 +6,7 @@ use App\Entity\BusinessHours;
 use App\Form\BusinessHoursType;
 use App\Form\BusinessHoursFormType;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\BusinessHoursRepository;
+use App\Repository\BusinesshoursRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,13 +16,13 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 #[Route("/admin/business-hours", name: "admin_business_hours_")]
 class BusinessHoursController extends AbstractController
 {
-    private $BusinessHoursRepository;
+    private $BusinesshoursRepository;
 
     private $entityManager;
 
-    public function __construct(BusinessHoursRepository $BusinessHoursRepository, EntityManagerInterface $entityManager)
+    public function __construct(BusinesshoursRepository $BusinesshoursRepository, EntityManagerInterface $entityManager)
     {
-        $this->BusinessHoursRepository = $BusinessHoursRepository;
+        $this->BusinesshoursRepository = $BusinesshoursRepository;
         $this->entityManager = $entityManager;
     }
 
@@ -34,8 +34,8 @@ class BusinessHoursController extends AbstractController
             throw new AccessDeniedException('Seuls les administrateurs peuvent accéder à cette page.');
         }
 
-        $day = $this->BusinessHoursRepository->findAllOrderedByDay();
-        $hours = $this->BusinessHoursRepository->findAll();
+        $day = $this->BusinesshoursRepository->findAllOrderedByDay();
+        $hours = $this->BusinesshoursRepository->findAll();
         return $this->render('admin/business_hours/index.html.twig',  [
             'day' => $day,
             'hours' => $hours,
@@ -50,7 +50,7 @@ class BusinessHoursController extends AbstractController
             throw new AccessDeniedException('Only admins can edit business hours.');
         }
 
-        $hours = $this->BusinessHoursRepository->find($id);
+        $hours = $this->BusinesshoursRepository->find($id);
 
         if (!$hours) {
             throw $this->createNotFoundException('Les heures d\'ouverture demandées n\'existent pas.');
@@ -61,7 +61,7 @@ class BusinessHoursController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
-
+            $this->addFlash('success', 'Les heures d\'ouverture ont bien été modifiées.');
             return $this->redirectToRoute('admin_business_hours_index');
         }
 
@@ -72,9 +72,9 @@ class BusinessHoursController extends AbstractController
     }
 
     #[Route("/footer-data", name: "footer_data")]
-    public function footerData(BusinessHoursRepository $BusinessHoursRepository)
+    public function footerData(BusinesshoursRepository $BusinesshoursRepository)
     {
-        $openingHours = $BusinessHoursRepository->findAll();
+        $openingHours = $BusinesshoursRepository->findAll();
 
         return $this->render('_partials/_footer.html.twig', [
             'opening_hours' => $openingHours,
