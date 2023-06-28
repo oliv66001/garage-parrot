@@ -31,7 +31,9 @@ class TestimonyController extends AbstractController
         
             $this->addFlash('success', 'Votre témoignage a bien été envoyé, il sera publié après validation par l\'administrateur');
             return $this->redirectToRoute('testimony_index');
+            
         }
+      
         
 
         return $this->render('testimony/new.html.twig', [
