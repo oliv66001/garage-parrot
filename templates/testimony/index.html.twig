@@ -29,7 +29,7 @@
 		<hr class="mt-3 mb-3">
 			<h2 class="col-12 text-center mt-3 mb-3">Nos client témoigne de nos compétences</h2>
 			{% for testimony in testimony %}
-				<div class="col-12 col-md-4">
+				<div class="col-12 col-md-6">
 					<div class="card mb-3 text-center">
 						<div class="card-body">
 							<h5 class="card-title">{{ testimony.name }}</h5>
@@ -57,6 +57,12 @@
 			<div class="col-12 text-center">
 				<a href="{{ path('all_testimonies') }}" class="btn btn2">Voir tous les témoignages</a>
 			</div>
+			<hr class="mt-3 mb-3">
+			<div class="col-12 text-center">
+			<h3>Vous avez une question ?</h3>
+			<p>N'hésitez pas à nous contacter via notre formulaire par mail ou téléphone</p>
+				<a href="{{ path('app_contact') }}" class="btn btn">Contact</a>
+				</div>
 		</div>
 	</section>
 {% endblock %}

@@ -7,17 +7,23 @@
 	{{ contact.mail }}<br>
 	Téléphone :
 	{{ contact.phone }}<br>
-	Sujet :
-	{{ contact.subject.brand }}<br>
-	Année :
-	{{ contact.subject.year }}<br>
-	Kilométrage :
-	{{ contact.subject.kilometer }}<br>
+	{% if contact.subject is not null %}
+    Sujet :
+    {{ contact.subject.brand }}<br>
+    Kilométrage :
+    {{ contact.subject.kilometer }}Km<br>
+    Année :
+    {{ contact.subject.year|date('Y') }}<br>
     Prix :
-    {{ contact.subject.price }}
-
+    {{ contact.subject.price }}€<br>
+{% else %}
+    Sujet : Non spécifié<br>
+{% endif %}
 </p>
 <p>
 	Message :<br>
 	{{ contact.message }}
 </p>
+
+{% set logo_url = absolute_url(asset('https://crocobingo.fr/assets/images/Garage.png')) %}
+<img style="width: 150px; height: auto; background-color: #F7B801; padding: 10px; border-radius: 5px;" src="{{ logo_url }}" alt="Logo" />

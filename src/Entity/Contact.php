@@ -30,9 +30,8 @@ class Contact
     private ?string $message = null;
 
     #[ORM\ManyToOne(targetEntity: Vehicle::class, inversedBy: 'contacts')]
-    #[ORM\JoinColumn(nullable: false)]
     private $subject;
-    
+
 
     public function getId(): ?int
     {

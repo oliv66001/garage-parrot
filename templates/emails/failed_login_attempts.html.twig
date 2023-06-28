@@ -1,0 +1,11 @@
+<p>Bonjour {{ user.username }} ,</p>
+<p>Un utilisateur a échoué 5 tentatives de connexion. Les détails sont les suivants :</p>
+
+<p>Username: {{ user.username }}</p>
+<p>Email: {{ user.email }}</p>
+
+<p>Veuillez vérifier cette activité.</p>
+
+{% set logo_url = absolute_url(asset('https://crocobingo.fr/assets/images/Garage.png')) %}
+<img style="width: 150px; height: auto; background-color: #F7B801; padding: 10px; border-radius: 5px;" src="{{ logo_url }}" alt="Logo" />
+

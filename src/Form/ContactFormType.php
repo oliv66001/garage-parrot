@@ -65,13 +65,13 @@ class ContactFormType extends AbstractType
                 'class' => Vehicle::class,
                 'label' => 'Véhicule',
                 'required' => false,
-                'placeholder' => 'Choisissez un véhicule d\'occasion ou laisser vide',
+                'placeholder' => 'Choisissez un véhicule ou laisser vide',
                 'choice_label' => function (Vehicle $vehicle) {
-                    return sprintf('%s - %s - %s km - Année: %s', $vehicle->getBrand(), $vehicle->getKilometer(), $vehicle->getYear()->format('Y'), $vehicle->getPrice());
+                    return sprintf('%s - %s €- %s km - Année: %s', $vehicle->getBrand(), $vehicle->getPrice(), $vehicle->getKilometer(), $vehicle->getYear()->format('Y'));
                 },
                 'attr' => [
                     'class' => 'form-control',
-                    'readonly' => true,
+                    
                 ],
             ])
            

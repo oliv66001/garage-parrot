@@ -13,7 +13,7 @@
                 <thead>
                     <tr class="text-center">
                         <th scope="col-3">Nom</th>
-                        <th scope="col-6">Description</th>
+                        <th scope="col-5">Description</th>
                         <th scope="col-3">Prix</th>
                     </tr>
                 </thead>
@@ -21,14 +21,21 @@
                     {% for repair in repairs %}
                         <tr class="text-center">
                             <td>{{ repair.name }}</td>
+                            <div class="col-6 text-center">
                             <td>{{ repair.description }}</td>
-                            <td>{{ repair.price }}€</td>
+                            </div>
+                            <td>{{ repair.price }}€*</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            <p class="text-center">* Prix indicatif, tous nos prix sont en Euro et TTC.</p>
+            <hr class="my-4">
             <div class="text-center">
-            <a class="btn2" href="{{ path('app_contact')}}">Contact</a>
+            <h3 class="text-center">Vous souhaitez faire réparer votre véhicule ?</h3>
+            <p class="text-center">Contactez-nous pour prendre rendez-vous !</p>
+
+            <a class="btn" href="{{ path('app_contact')}}">Contact</a>
             </div>
         </div>
     </div>

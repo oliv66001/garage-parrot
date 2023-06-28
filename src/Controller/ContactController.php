@@ -22,7 +22,7 @@ class ContactController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     #[Route('/contact/{id}', name: 'app_contact_vehicle', defaults: ['id' => null])]
 
-    public function index(Request $request, EntityManagerInterface $em, SendMailService $sendMailService, LoggerInterface $logger, BusinesshoursRepository $businessHoursRepository, VehicleRepository $vehicleRepository, $id = null): Response
+    public function index(Request $request, EntityManagerInterface $em, SendMailService $mail, LoggerInterface $logger, BusinesshoursRepository $businessHoursRepository, VehicleRepository $vehicleRepository, $id = null): Response
     {
 
         $vehicle = null;
@@ -45,7 +45,7 @@ class ContactController extends AbstractController
             $em->flush();
 
             try {
-                $sendMailService->send(
+                $mail->send(
                     'garage-parrot@crocobingo.fr',
                     'vince.parrotg@gmail.com',
                     'Nouveau message de contact',
@@ -53,10 +53,11 @@ class ContactController extends AbstractController
                     ['contact' => $contact]
                 );
                 $this->addFlash('success', 'Votre message a bien été envoyé !');
-            } catch (Exception $e) {
-                $logger->error('Erreur lors de l\'envoi du courriel : ' . $e->getMessage());
+            }  catch (Exception $e) {
+                $logger->error('Erreur lors de l\'envoi du courriel : ', ['exception' => $e]);
                 $this->addFlash('error', 'Une erreur s\'est produite lors de l\'envoi de votre message. Veuillez réessayer plus tard.');
             }
+            
 
             return $this->redirectToRoute('app_main');
         }

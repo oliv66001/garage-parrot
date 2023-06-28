@@ -24,23 +24,23 @@ class RepairController extends AbstractController
     {
         $categories = $categoryRepairRepository->findAll();
         $repairs = $repairRepository->findAll();
-        $business_hours = $businessHoursRepository->findAllOrderedByDay();
+        $businessHours = $businessHoursRepository->findAll();
 
         return $this->render('repair/index.html.twig', [
             'categories' => $categories,
             'repairs' => $repairs,
-            'business_hours' => $business_hours,
+            'business_hours' => $businessHours,
         ]);
     }
 
     #[Route('/reparation/categories/{id}', name: 'repairs_by_category')]
     public function repairsByCategory(CategoryRepair $category, RepairRepository $repairRepository, BusinesshoursRepository $businessHoursRepository): Response
     {
-        $business_hours = $businessHoursRepository->findAllOrderedByDay();
+        $businessHours = $businessHoursRepository->findAll();
         $repairs = $repairRepository->findBy(['category' => $category]);
 
         return $this->render('repair/by_category.html.twig', [
-            'business_hours' => $business_hours,
+            'business_hours' => $businessHours,
             'category' => $category,
             'repairs' => $repairs,
         ]);
@@ -51,11 +51,11 @@ class RepairController extends AbstractController
     public function adminIndex(RepairRepository $repairRepository, BusinesshoursRepository $businessHoursRepository): Response
     {
         $repairs = $repairRepository->findAll();
-        $business_hours = $businessHoursRepository->findAllOrderedByDay();
+        $businessHours = $businessHoursRepository->findAll();
 
         return $this->render('admin/repair/index.html.twig', [
             'repairs' => $repairs,
-            'business_hours' => $business_hours,
+            'business_hours' => $businessHours,
             'repair' => null,
         ]);
     }

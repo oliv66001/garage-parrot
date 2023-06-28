@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -67,26 +68,27 @@ class UserFormType extends AbstractType
                 ]
             )
             
-            ->add( 'password',
-                PasswordType::class, [
+            ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
-               
-                    'attr' => [
-                        'class' => 'form-control'
-                    ],
-                    'constraints' => [
-                        new NotBlank([
-                            'message' => 'Please enter a password',
-                        ]),
-                        new Length([
-                            'min' => 6,
-                            'minMessage' => 'Your password should be at least {{ limit }} characters',
-                            // max length allowed by Symfony for security reasons
-                            'max' => 4096,
-                        ]),
-                   
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un mot de passe',
+                    ]),
+                    new Length([
+                        'min' => 8, 
+                        'minMessage' => 'Votre mot de passe doit être au moins de {{ limit }} characters',
+                        'max' => 4096,
+                    ]),
+                    new Regex([
+                        'pattern' => "/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/",
+                        'message' => 'Le mot de passe doit contenir au moins une lettre majuscule, un chiffre, un caractère spécial et comporter au moins 8 caractères.'
+                    ]),
                 ]
-                ]);
+            ]);
+            
     }
 
     public function configureOptions(OptionsResolver $resolver): void

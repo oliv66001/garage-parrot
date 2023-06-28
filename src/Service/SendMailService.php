@@ -26,7 +26,7 @@ class SendMailService
             ->from($from)
             ->to($to)
             ->subject($subject)
-            ->htmlTemplate(($addEmailsPrefix ? 'emails/' : '') . $template . '.html.twig') // Modifiez cette ligne
+            ->htmlTemplate(($addEmailsPrefix ? 'emails/' : '') . $template . '.html.twig')
             ->context($context);
 
         $this->mailer->send($mail);
