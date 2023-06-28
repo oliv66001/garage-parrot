@@ -16,7 +16,7 @@ Tappez la commande suivante pour installer les dépendances
 
 composer install
 
-si erreur tappez la commande suivante
+si erreur tapez la commande suivante
 
 composer update
 
