@@ -6,6 +6,7 @@ use App\Entity\Image;
 use App\Entity\Vehicle;
 use App\Form\VehicleFormType;
 use App\Service\PictureService;
+use App\Repository\ContactRepository;
 use App\Repository\VehicleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\BusinesshoursRepository;
@@ -160,30 +161,37 @@ class VehicleController extends AbstractController
     public function deleteVehicle(
         Vehicle $vehicle,
         Request $request,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        ContactRepository $contactRepository
     ): JsonResponse {
-
-
+    
         $data = json_decode($request->getContent(), true);
-
+    
         // On vérifie si le token est valide
         if ($this->isCsrfTokenValid('delete_vehicle' . $vehicle->getId(), $data['_token'])) {
-
-
+    
+            // On récupère les contacts liés au véhicule
+            $contacts = $contactRepository->findBy(['subject' => $vehicle]);
+    
+            // On supprime les contacts liés au véhicule
+            foreach ($contacts as $contact) {
+                $em->remove($contact);
+            }
+    
             // On supprime le véhicule de la base
             $em->remove($vehicle);
             $em->flush();
-
+    
             $this->addFlash('success', 'Véhicule supprimé avec succès.');
-
-
+    
+    
             return new JsonResponse(['success' => true, 'message' => 'Véhicule supprimé avec succès'], 200);
         }
-
+    
         // Echec de la suppréssion
         return new JsonResponse(['error' => 'Token invalide'], 400);
     }
-
+    
 
     #[Route('/suppression/image/{id}', name: 'delete_image', methods: ['DELETE'])]
     public function deleteImage(
