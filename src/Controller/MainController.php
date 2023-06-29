@@ -17,17 +17,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
 {
     private EntityManagerInterface $em;
     private ImageRepository $imageRepository;
+    private ImageRepository $imageRepository;
     private RepairRepository $repairRepository;
 
     public function __construct(EntityManagerInterface $em, ImageRepository $imageRepository, RepairRepository $repairRepository)
     {
         $this->em = $em;
+        $this->imageRepository = $imageRepository;
         $this->imageRepository = $imageRepository;
         $this->repairRepository = $repairRepository;
     }
@@ -44,6 +47,8 @@ class MainController extends AbstractController
         $form = $this->createForm(TestimonyFormType::class, $testimonyEntity);
         $businessHours = $businessHoursRepository->findAll();
 
+        $businessHours = $businessHoursRepository->findAll();
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $testimonyEntity->setValidation(false);
@@ -56,6 +61,7 @@ class MainController extends AbstractController
 
 
         $testimony = $testimonyRepository->findBy(['validation' => true], ['createdAt' => 'DESC'], 6);
+
 
 
         return $this->render('main/index.html.twig', [
