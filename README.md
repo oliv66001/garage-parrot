@@ -10,13 +10,13 @@ cd garage-parrot
 
 création d'un fichier .env.local à la racine du projet
 
-copier coller le contenu du fichier contenu dans l'anex du projet dans le fichier .env.local la base de donnée est déjà configurée pour une utilisation en local avec symfony cli le nom de la base de donnée est garage_parrot
+copier coller le contenu du fichier contenu dans l'annexe du projet dans le fichier .env.local la base de donnée est déjà configurée pour une utilisation en local avec symfony cli le nom de la base de donnée est garage_parrot
 
 ### Tappez la commande suivante pour installer les dépendances
 
 composer install
 
-si erreur tapez la commande suivante
+### si erreur tapez la commande suivante
 
 composer update
 
@@ -38,7 +38,7 @@ php bin/console doctrine:fixtures:load
 
 symfony server:start
 
-Pour la connexion en tant qu'administateur voir le fichier contenu dans l'anex du projet
+Pour la connexion en tant qu'administrateur voir le fichier contenu dans l'annexe du projet
 La création de nouveau collaborateur se fait via la page /admin/inscription
 
 
