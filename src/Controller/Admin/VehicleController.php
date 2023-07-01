@@ -72,6 +72,7 @@ class VehicleController extends AbstractController
 
                 // Generate a unique name for the file before saving it
                 $fichier = $pictureService->add($image, $folder, 300, 300);
+
                 
                 $img = new Image();
                 $img->setName($fichier);

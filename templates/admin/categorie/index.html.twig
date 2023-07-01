@@ -14,15 +14,13 @@
                     <thead>
                         <tr class="text-center">
                             <th class="text-center">Nom</th>
-                            <th class="text-center">Année du véhicule</th>
-							<th class="text-center">Marque du véhicule</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
                     {% for cat in categorie %}
                         <tr class="text-center">
                             <td>{{ cat.name }}</td>
-                            <td> 
+                            {#<td> 
                                 {% for vehicle in cat.vehicleType %}
                                     {{ vehicle.year|date('Y') }}
 									
@@ -30,7 +28,7 @@
 								<td>  {% for vehicle in cat.vehicleType %}
                                   {{ vehicle.brand }}
 									
-                                {% endfor %}</td>
+                                {% endfor %}</td>#}
                            
                             <td class="align-middle">
                                 <a href="{{ path('admin_categorie_edit', {'id': cat.id}) }}" class="btn btn2">Modifier</a>

@@ -42,11 +42,10 @@ img.zoom-card-img:hover {
 }
 
 
-/*caroussel*/
 .carousel-item img {
-    height: 600px; 
-    object-fit: cover; 
-    width:80%;
+    height: 700px; 
+    object-fit: contain; 
+    width:100%;
 }
 
 .carousel-item {
@@ -56,6 +55,7 @@ img.zoom-card-img:hover {
 .carousel-item:hover {
     transform: scale(0.95); 
 }
+
 
 /*footer*/
 

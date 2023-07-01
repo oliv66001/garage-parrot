@@ -19,7 +19,7 @@
 							<a class="nav-link" href="/">Accueil</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{ path('app_vehicle_index') }}">Occasion</a>
+							<a class="nav-link" href="{{ path('app_vehicle_index') }}">Occasions</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="{{ path('repair_index')}}">Atelier</a>
@@ -53,7 +53,7 @@
 							</li>
 						{% else %}
 							<li class="nav-item">
-								<a class="nav-link" href="{{ path('app_login') }}">Me connecter</a>
+								<a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
 							</li>
 						{% endif %}
 					</ul>
@@ -61,8 +61,9 @@
 			</div>
 		</nav>
 	</div>
-	<hr class="mt-3 mb-3">
+	
 </div>
+
 
 
 {% block javascripts %}

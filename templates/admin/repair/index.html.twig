@@ -15,7 +15,6 @@
 					<thead>
 						<tr class="text-center">
 							<th>Nom</th>
-							<th>Description</th>
 							<th>Prix</th>
 							<th>Actions</th>
 						</tr>
@@ -26,8 +25,7 @@
 							<tr class="text-center">
 								
 								<td>{{ repair.name }}</td>
-                                <td>{{ repair.description }}</td>
-                                <td>{{ repair.price }}</td>
+                                <td>{{ repair.price }}€</td>
 								<td class="align-middle">
 									<a href="{{ path('admin_repair_edit', {'id': repair.id}) }}" class="btn btn2">Modifier</a>
 								</td>
