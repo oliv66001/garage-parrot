@@ -56,6 +56,14 @@ img.zoom-card-img:hover {
     transform: scale(0.95); 
 }
 
+.carousel-control-prev-icon{
+    opacity: 0;
+}
+
+.carousel-control-next-icon{
+    opacity: 0;
+}
+
 
 /*footer*/
 

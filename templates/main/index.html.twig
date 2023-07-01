@@ -19,16 +19,13 @@
 						{% for vehicle in vehicles %}
 							{% if vehicle.images is defined and vehicle.images|length > 0 %}
 								{% set image = vehicle.images[0] %}
-								
+
 								<div class="carousel-item {{ loop.first ? 'active' : '' }}">
 									<img src="{{ asset('assets/uploads/vehicle/' ~ image.name) }}" alt="{{ vehicle.brand }}" class="w-100 img-fluid rounded">
 								</div>
 								{% set isRealImageShown = true %}
 							{% endif %}
 						{% endfor %}
-						
-					
-						
 						{% if not isRealImageShown %}
 							{% for vehicle in vehicles %}
 								<div class="carousel-item {{ loop.first ? 'active' : '' }}">
@@ -52,12 +49,11 @@
 
 			</div>
 		</section>
-			
+
 	</main>
-	</br>
+</br>
 
-	{{ include('repair/category_repairs.twig')}}
+{{ include('repair/category_repairs.twig')}}
 
-	{{ include('testimony/index.html.twig') }}
-	{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
-{% endblock %}
+{{ include('testimony/index.html.twig') }}
+{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}{% endblock %}
