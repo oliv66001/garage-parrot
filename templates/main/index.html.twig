@@ -7,53 +7,31 @@
 	<main class="container-fluid">
 		<section class="row">
 			<div class="col-12">
-
-				<div id="carouselExampleIndicators" class="carousel slide">
-					<div class="carousel-indicators">
+				{% set isRealImageShown = false %}
+				<div class="slick-carousel">
+					{% for vehicle in vehicles %}
+						{% if vehicle.images is defined and vehicle.images|length > 0 %}
+							{% set image = vehicle.images[0] %}
+							<div>
+								<img src="{{ asset('assets/uploads/vehicle/' ~ image.name) }}" alt="{{ vehicle.brand }}" class="img-fluid">
+							</div>
+						{% endif %}
+					{% endfor %}
+					{% if not isRealImageShown %}
 						{% for vehicle in vehicles %}
-							<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ loop.index0 }}" {{ loop.first ? 'class="active"' : ''}} aria-label="Slide {{ loop.index }}"></button>
-						{% endfor %}
-					</div>
-					<div class="carousel-inner">
-						{% set isRealImageShown = false %}
-						{% for vehicle in vehicles %}
-							{% if vehicle.images is defined and vehicle.images|length > 0 %}
-								{% set image = vehicle.images[0] %}
-
-								<div class="carousel-item {{ loop.first ? 'active' : '' }}">
-									<img src="{{ asset('assets/uploads/vehicle/' ~ image.name) }}" alt="{{ vehicle.brand }}" class="w-100 img-fluid rounded">
+							{% if vehicle.image %}
+								<div>
+									<img src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" class="w-100 img-fluid rounded">
 								</div>
-								{% set isRealImageShown = true %}
 							{% endif %}
 						{% endfor %}
-						{% if not isRealImageShown %}
-							{% for vehicle in vehicles %}
-								<div class="carousel-item {{ loop.first ? 'active' : '' }}">
-									{% if vehicle.image %}
-										<img src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" class="w-100 img-fluid rounded">
-									{% endif %}
-								</div>
-							{% endfor %}
-						{% endif %}
-					</div>
-
-					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Précédent</span>
-					</button>
-					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Suivant</span>
-					</button>
+					{% endif %}
 				</div>
 
+
 			</div>
-		</section>
 
-	</main>
-</br>
+		</div>
+	</section>
 
-{{ include('repair/category_repairs.twig')}}
-
-{{ include('testimony/index.html.twig') }}
-{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}{% endblock %}
+</main></br>{{ include('repair/category_repairs.twig')}}{{ include('testimony/index.html.twig') }}{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}{% endblock %}{% block javascripts %}<script src="{{ asset('assets/js/carousel.js') }}" defer></script>{% endblock %}

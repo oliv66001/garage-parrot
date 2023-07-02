@@ -57,11 +57,11 @@ class VehicleFormType extends AbstractType
                         new Image([
                             'maxWidth' => 1280,
                             'maxWidthMessage' => 'L\'image doit faire {{ max_width }} pixels de large au maximum',
-                            'maxHeight' => 700,
+                            'maxHeight' => 1280,
                             'maxHeightMessage' => 'L\'image doit faire {{ max_height }} pixels de haut au maximum',
-                            'minHeight' => 500,
+                            'minHeight' => 300,
                             'minHeightMessage' => 'L\'image doit faire {{ min_height }} pixels de haut au minimum',
-                            'minWidth' => 1000,
+                            'minWidth' => 300,
                             'minWidthMessage' => 'L\'image doit faire {{ min_width }} pixels de large au minimum',
                             
                 ])
