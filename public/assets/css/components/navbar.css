@@ -21,7 +21,11 @@
 
 /* Ajout d'un effet au survol des liens de navigation */
 .nav-link:hover{
-    color: var(--button-color);
+    color: var(--button2-color);
+}
+
+.navbar .navbar-nav .nav-link:hover{
+  color: var(--button2-color);
 }
 
 /* Changer l'apparence du menu déroulant */
