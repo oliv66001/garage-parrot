@@ -16,13 +16,15 @@ copier coller le contenu du fichier contenu dans l'annexe du projet dans le fich
 
 composer install
 
-### si erreur tapez la commande suivante
+### Si une erreur est soulevée lors de l'installation de composer, tapez la commande suivante.
 
 composer update
 
 ### Tappez la commande suivante pour créer la base de données
 
 php bin/console doctrine:database:create
+
+### Créer un dossier (migrations) à la racine du projet
 
 ### Tappez la commande suivante pour créer les tables
 
