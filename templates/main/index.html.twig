@@ -15,14 +15,14 @@
 							{% set image = vehicle.images[0] %}
 							{% set isRealImageShown = true %}
 							<div>
-								<img src="{{ asset('assets/uploads/vehicle/' ~ image.name) }}" alt="{{ vehicle.brand }}" style="width:700px; height: 500px" class="img-fluid">
+								<img src="{{ asset('assets/uploads/vehicle/' ~ image.name) }}" alt="{{ vehicle.brand }}" style="width:500px; height: 400px" class="img-fluid">
 							</div>
 						{% endif %}
 					{% endfor %}
 					{% if not isRealImageShown %}
 						{% for vehicle in vehicles %}
 							<div>
-								<img src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" style="width:700px; height: 500px" class="img-fluid">
+								<img src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" style="width:500px; height: 400px" class="img-fluid">
 							</div>
 						{% endfor %}
 					{% endif %}
