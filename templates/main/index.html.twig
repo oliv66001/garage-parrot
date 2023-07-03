@@ -7,12 +7,13 @@
 	<main class="container-fluid mb-5">
 		<div class="row">
 			<div class="col-12">
-				
-				<div id="demo">
 				{% set isRealImageShown = false %}
+				<div id="demo">
+				
 					{% for vehicle in vehicles %}
 						{% if vehicle.images is defined and vehicle.images|length > 0 %}
 							{% set image = vehicle.images[0] %}
+							{% set isRealImageShown = true %}
 							<div>
 								<img src="{{ asset('assets/uploads/vehicle/' ~ image.name) }}" alt="{{ vehicle.brand }}" style="width:700px; height: 500px" class="img-fluid">
 							</div>
@@ -20,11 +21,9 @@
 					{% endfor %}
 					{% if not isRealImageShown %}
 						{% for vehicle in vehicles %}
-							{% if vehicle.image %}
-								<div>
-									<img src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" style="width:700px; height: 500px" class="img-fluid">
-								</div>
-							{% endif %}
+							<div>
+								<img src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" style="width:700px; height: 500px" class="img-fluid">
+							</div>
 						{% endfor %}
 					{% endif %}
 				</div>
@@ -43,4 +42,5 @@
 {{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}{% endblock %}
 {% block javascripts %}
 
-<script src="{{ asset('assets/js/carousel.js') }}"></script>{% endblock %}
+<script src="{{ asset('assets/js/carousel.js') }}"></script>
+{% endblock %}
