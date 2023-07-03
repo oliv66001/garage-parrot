@@ -4,22 +4,22 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Modifier les heures d'ouverture</h1>
+	<h1 class="text-center">Modifier les heures d'ouverture</h1>
 	<section class="container">
 		<div class="row justify-content-center">
-			<div class="col-6">
+			<div class="col-6 text-center">
 				{{ form_start(form) }}
-				{{ form_row(form.day)}}
+				{{ form_row(form.day) }}
 				{{ form_row(form.openTimeMorning) }}
 				{{ form_row(form.closedTimeMorning) }}
-				{{ form_row(form.openTimeAfternoon)}}
-				{{ form_row(form.closedTimeAfternoon)}}
+				{{ form_row(form.openTimeAfternoon) }}
+				{{ form_row(form.closedTimeAfternoon) }}
 				<button class="btn btn3 mt-3" type="submit">
 					Sauvegarder les modifications
 				</button>
 				{{ form_end(form) }}
 
-				<a class="btn btn mt-3" href="{{ path('admin_business_hours_index') }}">Retour à la liste</a>
+				<a class="btn text-center mt-3" href="{{ path('admin_business_hours_index') }}">Retour à la liste</a>
 			</div>
 		</div>
 	</section>
