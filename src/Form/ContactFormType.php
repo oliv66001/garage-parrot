@@ -76,7 +76,7 @@ class ContactFormType extends AbstractType
             ])
            
             ->add('submit', SubmitType::class, [
-                'label' => 'Envoyer',
+                'label' => 'Envoyé',
                 'attr' => [
                     'class' => 'btn btn2 mt-3',
                     
