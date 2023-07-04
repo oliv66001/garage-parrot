@@ -68,6 +68,20 @@ h2{
     
 }
 
+/*Carrousel*/
+.carousel-image {
+    width: 620px;
+    height: 400px;
+}
+
+@media screen and (max-width: 500px) {
+    .carousel-image {
+        width: 350px;
+        height: 250px;
+    }
+}
+
+
 
 
 

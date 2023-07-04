@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<main class="container-fluid mb-5">
+	<main class="container-fluid mb-1">
 		<div class="row">
 			<div class="col-12">
 				{% set isRealImageShown = false %}
@@ -15,14 +15,14 @@
 							{% set image = vehicle.images[0] %}
 							{% set isRealImageShown = true %}
 							<div>
-								<img src="{{ asset('assets/uploads/vehicle/' ~ image.name) }}" alt="{{ vehicle.brand }}" style="width:500px; height: 400px" class="img-fluid">
+								<img src="{{ asset('assets/uploads/vehicle/' ~ image.name) }}" class="carousel-image img-fluid" alt="{{ vehicle.brand }}"  class="img-fluid">
 							</div>
 						{% endif %}
 					{% endfor %}
 					{% if not isRealImageShown %}
 						{% for vehicle in vehicles %}
 							<div>
-								<img src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" style="width:500px; height: 400px" class="img-fluid">
+								<img src="{{ vehicle.image }}" alt="{{ vehicle.brand }}" style="width:500px; height: 300px" class="img-fluid">
 							</div>
 						{% endfor %}
 					{% endif %}
@@ -34,7 +34,7 @@
 </main>
 </br>
 
-<div class="container mt-5">
+<div class="container mt-2">
 {{ include('repair/category_repairs.twig')}}
 </div>
 
