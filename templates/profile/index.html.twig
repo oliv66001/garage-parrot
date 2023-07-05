@@ -13,7 +13,34 @@
             <ol><a class="btn btn2 mt-3" href="{{ path('admin_index') }}">Administration</a></ol>
             <ol><a class="btn btn3 mt-3" href="{{ path('app_logout') }}">Déconnexion</a></ol>
         </ul>
+        <hr>
     </div>
-</ul>
+</div>
+</section>
+
+<section class="container">
+<div class="row">
+<div class="col">
+    <h2 class="text-center">Vos informations</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Adresse mail</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ app.user.username }}</td>
+                <td>{{ app.user.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+    </div>
+</div>
+</section>
+
 {{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
 {% endblock %}
