@@ -20,5 +20,5 @@
 ###< symfony/phpunit-bridge ###
 
 ###> Doctrine Migrations ###
-#/migrations/
+/migrations/
 ###< Doctrine Migrations ###
