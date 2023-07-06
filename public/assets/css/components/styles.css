@@ -9,12 +9,8 @@
         width: 340px;
         height: 280px;
     }
-
+    
 }
-
-
-
-
 
 body{
     background-color: var(--template-color);
@@ -54,9 +50,9 @@ img.zoom-card-img:hover {
 
 /*Image détail véhicule*/
 
-#detail{
-    
-    height: 300px;
+#detailCarousel {
+    width: 350px;
+    height: 350px;
 }
 
 h2{
@@ -85,6 +81,9 @@ h2{
     width: 50%;
     
 }
+
+
+
 
 
 

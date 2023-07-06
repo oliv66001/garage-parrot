@@ -20,18 +20,18 @@
 					<div class="carousel-inner">
 						{% set defaultImageUsed = false %}
 						{% for image in vehicles.images %}
-							<div class="carousel-item {% if loop.first %}active{% endif %}">
-								<img id="detail" src="{{ asset('assets/uploads/vehicle/mini/300x300-' ~ image.name ) }}" alt="{{ vehicles.brand }}" class="img">
+							<div class="carousel-item {% if loop.first %}active{% endif %} text-center">
+								<img  src="{{ asset('assets/uploads/vehicle/mini/300x300-' ~ image.name ) }}" alt="{{ vehicles.brand }}" class="img-fluid rounded" id="detailCarousel">
 							</div>
 							{% set defaultImageUsed = true %}
 						{% endfor %}
 						{% if not defaultImageUsed and vehicles.image %}
 							<div class="carousel-item active">
-								<img id="detail" src="{{ vehicles.image }}" alt="{{ vehicles.brand }}" width="300" height="300" class="img">
+								<img  src="{{ vehicles.image }}" alt="{{ vehicles.brand }}"  class="img-fluid rounded"  id="detailCarousel">
 							</div>
 						{% elseif not defaultImageUsed %}
 							<div class="carousel-item active">
-								<img id="detail" src="{{ asset('assets/image/Garage.png') }}" width="300" height="300" alt="Image par défaut" class="img">
+								<img  src="{{ asset('assets/image/Garage.png') }}"  alt="Image par défaut" class="img-fluid rounded"  id="detailCarousel">
 							</div>
 						{% endif %}
 					</div>
@@ -46,7 +46,7 @@
 				</div>
 
 			</div>
-			<div class="col-8 col-md-6 col-lg-8">
+			<div class="col-lg-8 col-md-6 col-sm-12 text-center">
 				<p>
 					<h4>Marque :</h4>
 					{{ vehicles.brand }}
