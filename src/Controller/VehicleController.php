@@ -171,20 +171,4 @@ class VehicleController extends AbstractController
         ]);
     }
 
-    #[Route('/vehicules/{id}/images', name: 'vehicle_images', methods: ['GET'])]
-    public function images(Vehicle $vehicle, ImageRepository $imageRepository): Response
-    {
-        $images = $imageRepository->findBy(['vehicle' => $vehicle]);
-
-        // Transforme les images en un format approprié pour la réponse JSON
-        $imageData = array_map(function ($image) {
-            return [
-                'id' => $image->getId(),
-                'name' => $image->getName(),
-                // Ajoutez ici d'autres propriétés de l'image que vous souhaitez inclure
-            ];
-        }, $images);
-
-        return $this->json($imageData);
-    }
 }
