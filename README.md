@@ -2,17 +2,17 @@
 
 ## Installation en local du site Garage-Parrot
 
-clone du projet
+## clone du projet
 
 git clone git@github.com:oliv66001/garage-parrot.git
 
 cd garage-parrot
 
-création d'un fichier .env.local à la racine du projet
+### création d'un fichier .env.local à la racine du projet
 
-copier coller le contenu du fichier contenu dans l'annexe du projet dans le fichier .env.local la base de donnée est déjà configurée pour une utilisation en local avec symfony cli le nom de la base de donnée est garage_parrot
+## copier coller le contenu du fichier contenu dans l'annexe du projet dans le fichier .env.local la base de donnée est déjà configurée pour une utilisation en local avec symfony cli le nom de la base de donnée est garage_parrot
 
-Vérifier que  "symfony/mailer": "6.2.*", est bien dans le fichier composer.json
+# Vérifier que  "symfony/mailer": "6.2.*", est bien dans le fichier composer.json
 
 ### Tappez la commande suivante pour installer les dépendances
 
