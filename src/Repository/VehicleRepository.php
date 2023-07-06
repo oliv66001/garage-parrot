@@ -68,7 +68,9 @@ class VehicleRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('v')
             ->leftJoin('v.categorie', 'c')
             ->select('v')
-            ->where('1 = 1');
+            ->where('1 = 1')
+            ->leftJoin('v.images', 'i')
+        ->addSelect('i');
 
         if ($category) {
             $qb->andWhere('c.name = :category')
@@ -89,6 +91,8 @@ class VehicleRepository extends ServiceEntityRepository
             $qb->andWhere('v.kilometer <= :kilometer')
                 ->setParameter('kilometer', $kilometer);
         }
+
+        
 
         // Add sorting by year and price
         $qb->orderBy('v.year', 'DESC')

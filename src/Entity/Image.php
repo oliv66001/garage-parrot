@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\ImageRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 class Image
 {
@@ -74,5 +73,4 @@ public function setCategoryRepair(?CategoryRepair $categoryRepair): self
     return $this;
 }
 
-  
 }

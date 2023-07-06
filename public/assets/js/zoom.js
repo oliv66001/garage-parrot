@@ -39,11 +39,14 @@ $(document).ready(function() {
                     $.each(categoryVehicles, function(i, vehicle) {
                         let date = new Date(vehicle.year.date);
                         let year = date.getFullYear();
+                        let imageUrl = vehicle.images && vehicle.images.length > 0 ? `/assets/uploads/vehicle/${vehicle.images[0].name}` : vehicle.image;
+
                         if (vehicle.price <= selectedPrice && (selectedYear === 0 || year >= selectedYear) && (selectedKm === 0 || vehicle.kilometer <= selectedKm)) {
-                            let vehicleCard = `
-                                <div class="col-lg-4 col-md-6 mb-4 vehicle">
+                            let vehicleCard = 
+                            
+                            `<div class="col-lg-4 col-md-6 mb-4 vehicle">
                                     <div class="card h-100">
-                                        <img class="card-img-top" src="${vehicle.image}" alt="${vehicle.brand}" class="zoom-card-img card-img-top img-fluid">
+                                   <img class="card-img-top" src="${imageUrl}" alt="${vehicle.brand}" class="zoom-card-img card-img-top img-fluid">
                                         <div class="card-body">
                                             <h4 class="card-title">${vehicle.brand}</h4>
                                             <p class="card-text">${vehicle.kilometer} km</p>
@@ -75,12 +78,13 @@ $(document).ready(function() {
                     $.each(vehicles, function(i, vehicle) {
                         let date = new Date(vehicle.year.date);
                         let year = date.getFullYear();
+                        let imageUrl = vehicle.images && vehicle.images.length > 0 ? `/assets/uploads/vehicle/${vehicle.images[0].name}` : vehicle.image;
                         if (vehicle.price <= selectedPrice && (selectedYear === 0 || year >= selectedYear) && (selectedKm === 0 || vehicle.kilometer <= selectedKm)) {
-                            
+                            console.log(vehicle);
                             let vehicleCard = `
                                 <div class="col-lg-4 col-md-6 mb-4 vehicle">
                                     <div class="card h-100">
-                                        <img class="card-img-top" src="${vehicle.image}" alt="${vehicle.brand}" class="zoom-card-img card-img-top img-fluid">
+                                   <img class="card-img-top" src="${imageUrl}" alt="${vehicle.brand}" class="zoom-card-img card-img-top img-fluid">
                                         <div class="card-body">
                                             <h4 class="card-title">${vehicle.brand}</h4>
                                             <p class="card-text">${vehicle.kilometer}km</p>

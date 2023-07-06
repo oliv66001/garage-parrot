@@ -9,6 +9,7 @@ use App\Entity\Contact;
 use App\Entity\Vehicle;
 use App\Entity\Categorie;
 use Psr\Log\LoggerInterface;
+use App\Repository\ImageRepository;
 use App\Repository\VehicleRepository;
 use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,34 +38,33 @@ class VehicleController extends AbstractController
         VehicleRepository $vehicleRepository,
         BusinesshoursRepository $businessHoursRepository,
         CategorieRepository $categorieRepository,
+        ImageRepository $imageRepository,
         EntityManagerInterface $entityManager,
         Request $request,
         int $page = 1
     ): Response {
         // Fetch categories from the database
         $categories = $categorieRepository->findAll();
+        $images = $imageRepository->findAll();
         $currentYear = (int)date('Y');
         $date = new DateTime(date('Y-m-d'));
         $businessHours = $businessHoursRepository->findAll();
         $this->logger->info('Searching vehicles');
         // Fetch search parameters
         $categoryName = $request->query->get('category');
+        $image = $request->query->get('image');
         $price = $request->query->get('price');
         $year = $request->query->get('year');
         $kilometer = $request->query->get('kilometer');
-    
+
         // Fetch vehicles from the database based on search parameters
         $vehicles = $vehicleRepository->searchByYear($year, $categoryName, $price, $kilometer);
-    
-        // Get only vehicles that should be displayed on the homepage
-        //$displayOnHomePage = true;
-        //$vehiclesForHomePage = $vehicleRepository->findByDisplayOnHomePage($displayOnHomePage);
-    
-        // Check if no vehicles found and render the main index page
+
+        // Redirect to the main index if no vehicles are found
         if (empty($vehicles)) {
             return new RedirectResponse($this->generateUrl('app_vehicle_index'));
         }
-    
+
         // For AJAX requests, respond with a JSON object of vehicles
         if ($request->isXmlHttpRequest()) {
             $response = [];
@@ -73,26 +73,36 @@ class VehicleController extends AbstractController
                 if (!isset($response[$categoryName])) {
                     $response[$categoryName] = [];
                 }
+
+                $imageEntities = $vehicle->getImages();
+                $images = [];
+                foreach ($imageEntities as $image) {
+                    $images[] = [
+                        'id' => $image->getId(),
+                        'name' => $image->getName(),
+                    ];
+                }
                 $response[$categoryName][] = [
                     'brand' => $vehicle->getBrand(),
                     'description' => $vehicle->getDescription(),
                     'price' => $vehicle->getPrice(),
-                    'image' => $vehicle->getImage(),
+                    'image' => $vehicle->getImage(), 
                     'slug' => $vehicle->getSlug(),
                     'id' => $vehicle->getId(),
                     'year' => $vehicle->getYear(),
                     'kilometer' => $vehicle->getKilometer(),
+                    'images' => $images, 
                 ];
             }
-    
+
             return new JsonResponse($response);
         }
-    
+
         // Render the main index page
         return $this->render('vehicle/index.html.twig', [
             'categories' => $categories,
             'vehicles' => $vehicles,
-            //'vehiclesForHomePage' => $vehiclesForHomePage,
+            'images' => $images,
             'business_hours' => $businessHours,
             'currentYear' => $currentYear,
             'year' => $year,
@@ -100,7 +110,7 @@ class VehicleController extends AbstractController
             'kilometer' => $kilometer,
         ]);
     }
-    
+
 
     #[Route('/{categoryId}', name: 'category', requirements: ['categoryId' => '\d+'])]
     public function category(
@@ -141,24 +151,40 @@ class VehicleController extends AbstractController
     }
 
     #[Route('/vehicle/{slug}/contact', name: 'vehicle_contact')]
-public function contactVehicle(Vehicle $vehicle, Request $request, EntityManagerInterface $em): Response
-{
-    $contact = new Contact();
-    $contact->setSubject($vehicle);
-    
-    $form = $this->createForm(ContactFormType::class, $contact);
-    $form->handleRequest($request);
+    public function contactVehicle(Vehicle $vehicle, Request $request, EntityManagerInterface $em): Response
+    {
+        $contact = new Contact();
+        $contact->setSubject($vehicle);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        $em->persist($contact);
-        $em->flush();
+        $form = $this->createForm(ContactFormType::class, $contact);
+        $form->handleRequest($request);
 
-        // Redirect or show a success message
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($contact);
+            $em->flush();
+
+            // Redirect or show a success message
+        }
+
+        return $this->render('contact/index.html.twig', [
+            'formContact' => $form->createView(),
+        ]);
     }
 
-    return $this->render('contact/index.html.twig', [
-        'formContact' => $form->createView(),
-    ]);
-}
+    #[Route('/vehicules/{id}/images', name: 'vehicle_images', methods: ['GET'])]
+    public function images(Vehicle $vehicle, ImageRepository $imageRepository): Response
+    {
+        $images = $imageRepository->findBy(['vehicle' => $vehicle]);
 
+        // Transforme les images en un format approprié pour la réponse JSON
+        $imageData = array_map(function ($image) {
+            return [
+                'id' => $image->getId(),
+                'name' => $image->getName(),
+                // Ajoutez ici d'autres propriétés de l'image que vous souhaitez inclure
+            ];
+        }, $images);
+
+        return $this->json($imageData);
+    }
 }

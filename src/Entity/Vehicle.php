@@ -218,5 +218,4 @@ class Vehicle
         return $this;
     }
 
-
 }
