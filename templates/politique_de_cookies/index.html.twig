@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Politique des cookies
+{% endblock %}
+
+{% block stylesheet %}
+<style>
+.container {
+    font-family: 'Roboto', sans-serif;
+    
+    line-height: 1.6;
+}
+
+h1.text-center {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1em;
+    margin-bottom: 10px;
+    text-align: justify;
+}
+
+.row {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+</style>
+{% endblock %}
+{% block body %}
+
+	<section class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-12 text-center">
+				<h1 class="text-center">Politique des cookies</h1>
+				Dernière mise à jour : 05/07/2023
+
+<h2>1. Introduction<h2>
+<p>Votre confidentialité est importante pour nous. Cette politique de cookies explique ce que sont les cookies, comment nous les utilisons et vos choix en matière de cookies.<p>
+
+<h2>2. Qu'est-ce qu'un cookie ?</h2>
+<p>Un cookie est un petit fichier de texte qui est téléchargé sur votre ordinateur ou appareil mobile lorsque vous visitez un site web. Les cookies sont largement utilisés par les propriétaires de sites web pour faire fonctionner leurs sites web, ou pour les faire fonctionner plus efficacement, ainsi que pour fournir des informations de reporting.</p>
+
+<h2>3. Comment nous utilisons les cookies</h2>
+<p>Nous utilisons les cookies pour comprendre comment vous interagissez avec notre site web, améliorer votre expérience de navigation, et à des fins d'analyse et de marketing.</p>
+
+<h2>4. Vos choix en matière de cookies</h2>
+<p>Lors de votre première visite sur notre site, une bannière de cookies apparaîtra, vous donnant la possibilité d'accepter ou de refuser l'utilisation de cookies.
+
+Si vous choisissez d'accepter l'utilisation de cookies, la bannière disparaîtra et nous utiliserons les cookies comme décrit dans cette politique. Vous pouvez changer d'avis et refuser les cookies à tout moment en revenant sur nos paramètres de cookies.
+
+Si vous choisissez de refuser l'utilisation de cookies, la bannière disparaîtra et nous n'utiliserons pas de cookies, sauf ceux qui sont strictement nécessaires pour le fonctionnement du site web.
+
+Vous pouvez également gérer les préférences de cookies dans les paramètres de votre navigateur web à tout moment. Cependant, veuillez noter que si vous supprimez des cookies ou refusez de les accepter, vous pourriez ne pas être en mesure d'utiliser toutes les fonctionnalités que nous offrons, vous pourriez ne pas être en mesure de stocker vos préférences, et certaines de nos pages pourraient ne pas s'afficher correctement.</p>
+
+<h2>5. Plus d'informations</h2>
+<p>Pour plus d'informations sur notre utilisation des cookies, ou si vous avez des questions, veuillez nous contacter à developpement.solution@gmail.com.</p>
+			</div>
+		</div>
+	</section>
+
+	{{ include('_partials/_footer.html.twig', { 'business_hours': business_hours }) }}
+{% endblock %}
